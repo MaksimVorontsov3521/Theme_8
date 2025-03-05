@@ -22,3 +22,27 @@ F:\Program\Theme 8\Client\Client\obj\Debug\net8.0-windows\refint\Client.dll
 F:\Program\Theme 8\Client\Client\obj\Debug\net8.0-windows\Client.pdb
 F:\Program\Theme 8\Client\Client\obj\Debug\net8.0-windows\Client.genruntimeconfig.cache
 F:\Program\Theme 8\Client\Client\obj\Debug\net8.0-windows\ref\Client.dll
+F:\Program\Theme_8\Client\Client\bin\Debug\net8.0-windows\Client.exe
+F:\Program\Theme_8\Client\Client\bin\Debug\net8.0-windows\Client.deps.json
+F:\Program\Theme_8\Client\Client\bin\Debug\net8.0-windows\Client.runtimeconfig.json
+F:\Program\Theme_8\Client\Client\bin\Debug\net8.0-windows\Client.dll
+F:\Program\Theme_8\Client\Client\bin\Debug\net8.0-windows\Client.pdb
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\MainWindow.g.cs
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Pages\Entrance.g.cs
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Pages\MainWorkPage.g.cs
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\App.g.cs
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client_MarkupCompile.cache
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client_MarkupCompile.lref
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\MainWindow.baml
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Pages\Entrance.baml
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Pages\MainWorkPage.baml
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client.g.resources
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client.GeneratedMSBuildEditorConfig.editorconfig
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client.AssemblyInfoInputs.cache
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client.AssemblyInfo.cs
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client.csproj.CoreCompileInputs.cache
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client.dll
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\refint\Client.dll
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client.pdb
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client.genruntimeconfig.cache
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\ref\Client.dll

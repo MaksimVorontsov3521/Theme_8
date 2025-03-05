@@ -40,11 +40,6 @@ namespace Client
             {
                 socket.Connect(ip, port);
                 socket.Send(bytes);
-                while (true)
-                {
-                    Thread.Sleep(1000);
-                    socket.Send(bytes);
-                }
             }
 
         }

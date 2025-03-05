@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Program\\Theme 8\\Client\\Client\\Client.csproj": {}
+    "F:\\Program\\Theme_8\\Client\\Client\\Client.csproj": {}
   },
   "projects": {
-    "F:\\Program\\Theme 8\\Client\\Client\\Client.csproj": {
+    "F:\\Program\\Theme_8\\Client\\Client\\Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Program\\Theme 8\\Client\\Client\\Client.csproj",
+        "projectUniqueName": "F:\\Program\\Theme_8\\Client\\Client\\Client.csproj",
         "projectName": "Client",
-        "projectPath": "F:\\Program\\Theme 8\\Client\\Client\\Client.csproj",
+        "projectPath": "F:\\Program\\Theme_8\\Client\\Client\\Client.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "F:\\Program\\Theme 8\\Client\\Client\\obj\\",
+        "outputPath": "F:\\Program\\Theme_8\\Client\\Client\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
