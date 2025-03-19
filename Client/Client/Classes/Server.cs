@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Reflection.PortableExecutable;
+using System.Windows;
 
 namespace Client
 {
@@ -28,18 +29,24 @@ namespace Client
 
         public void Connection(string login, string password)
         {
-            SendBytes(login+"\a"+password);
+            SendBytes(login+"\a"+password+"\a");
         }
 
         public void SendBytes(string message)
         {
-            // Преобразуем строку в массив байтов
-            byte[] bytes = Encoding.UTF8.GetBytes(message);
-            // Отправляем массив байтов другой программе
-            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            try
             {
-                socket.Connect(ip, port);
-                socket.Send(bytes);
+                // Преобразуем строку в массив байтов
+                byte[] bytes = Encoding.UTF8.GetBytes(message);
+                // Отправляем массив байтов другой программе
+                using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                {
+                    socket.Connect(ip, port);
+                    socket.Send(bytes);
+                }
+            }
+            catch {
+                MessageBox.Show("Сервер недоступен");
             }
 
         }

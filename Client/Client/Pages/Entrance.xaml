@@ -50,8 +50,8 @@
         <Label Name="pas" Style="{StaticResource ResizeLable}" Content="Пароль" Grid.Row="3" Grid.Column="1"  />
 
 
-        <TextBox Style="{StaticResource Resize}" x:Name="Login" Text="123" Grid.Row="2" Grid.Column="1" />
-        <PasswordBox x:Name="Password" Grid.Row="4" Password="123" Grid.Column="1" />
+        <TextBox Style="{StaticResource Resize}" x:Name="Login" Text="qwer" Grid.Row="2" Grid.Column="1" />
+        <PasswordBox x:Name="Password" Grid.Row="4" Password="1234" Grid.Column="1" />
 
 
         <Button Style="{StaticResource Resize}" x:Name="Enter" Content="Войти" Grid.Row="6" Grid.Column="1" Click="Enter_Click"/>
