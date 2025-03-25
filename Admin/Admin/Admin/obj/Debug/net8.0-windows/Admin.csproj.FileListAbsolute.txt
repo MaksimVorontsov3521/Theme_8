@@ -22,3 +22,4 @@ F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\refint\Admin.dll
 F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Admin.pdb
 F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Admin.genruntimeconfig.cache
 F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\ref\Admin.dll
+F:\Program\Theme_8\Admin\Admin\Admin\bin\Debug\net8.0-windows\Admin.dll.config

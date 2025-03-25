@@ -1,5 +1,5 @@
 CREATE TABLE "Client"(
-    "ClientID" INT NOT NULL IDENTITY(1,1),
+    "ClientID" INT NOT NULL,
     "ClientName" NVARCHAR(255) NOT NULL,
     "INN" VARCHAR(10) NULL,
     "Email" NVARCHAR(255) NULL,
@@ -9,7 +9,7 @@ CREATE TABLE "Client"(
 ALTER TABLE
     "Client" ADD CONSTRAINT "client_clientid_primary" PRIMARY KEY("ClientID");
 CREATE TABLE "UserTable"(
-    "UserID" INT NOT NULL IDENTITY(1,1),
+    "UserID" INT NOT NULL,
     "UserName" NVARCHAR(255) NOT NULL,
     "Surname" NVARCHAR(255) NULL,
     "Patronymic" NVARCHAR(255) NULL,
@@ -17,12 +17,14 @@ CREATE TABLE "UserTable"(
     "RoleID" INT NOT NULL,
     "DepartmentID" INT NOT NULL,
     "UserLogin" NVARCHAR(255) NOT NULL,
-    "UserPassword" NVARCHAR(255) NOT NULL
+    "UserPassword" NVARCHAR(255) NOT NULL,
+    "Blocked" BIT NOT NULL,
+    "Email" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "UserTable" ADD CONSTRAINT "usertable_userid_primary" PRIMARY KEY("UserID");
 CREATE TABLE "RoleTable"(
-    "RoleID" INT NOT NULL IDENTITY(1,1),
+    "RoleID" INT NOT NULL,
     "RoleName" NVARCHAR(255) NOT NULL,
     "Rights" NVARCHAR(255) NULL,
     "Level" INT NOT NULL
@@ -30,7 +32,7 @@ CREATE TABLE "RoleTable"(
 ALTER TABLE
     "RoleTable" ADD CONSTRAINT "roletable_roleid_primary" PRIMARY KEY("RoleID");
 CREATE TABLE "Document"(
-    "DocumentID" INT NOT NULL IDENTITY(1,1),
+    "DocumentID" INT NOT NULL,
     "FolderID" INT NOT NULL,
     "Name" NVARCHAR(255) NOT NULL,
     "IsDone" BIT NOT NULL,
@@ -41,7 +43,7 @@ CREATE TABLE "Document"(
 ALTER TABLE
     "Document" ADD CONSTRAINT "document_documentid_primary" PRIMARY KEY("DocumentID");
 CREATE TABLE "Folder"(
-    "FolderID" INT NOT NULL IDENTITY(1,1),
+    "FolderID" INT NOT NULL,
     "FolderPath" NVARCHAR(255) NOT NULL,
     "PatternID" INT NULL,
     "ClientID" INT NOT NULL
@@ -49,7 +51,7 @@ CREATE TABLE "Folder"(
 ALTER TABLE
     "Folder" ADD CONSTRAINT "folder_folderid_primary" PRIMARY KEY("FolderID");
 CREATE TABLE "Log"(
-    "LogID" INT NOT NULL IDENTITY(1,1),
+    "LogID" INT NOT NULL,
     "UserID" INT NOT NULL,
     "DocumentID" INT NULL,
     "LogAction" INT NOT NULL
@@ -57,33 +59,33 @@ CREATE TABLE "Log"(
 ALTER TABLE
     "Log" ADD CONSTRAINT "log_logid_primary" PRIMARY KEY("LogID");
 CREATE TABLE "LogAction"(
-    "ActionID" INT NOT NULL IDENTITY(1,1),
+    "ActionID" INT NOT NULL,
     "ActionName" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "LogAction" ADD CONSTRAINT "logaction_actionid_primary" PRIMARY KEY("ActionID");
 CREATE TABLE "Department_Folder"(
-    "Department_Folder_ID" INT NOT NULL IDENTITY(1,1),
+    "Department_Folder_ID" INT NOT NULL,
     "DepartmentID" INT NOT NULL,
     "FolderID" INT NOT NULL
 );
 ALTER TABLE
     "Department_Folder" ADD CONSTRAINT "department_folder_department_folder_id_primary" PRIMARY KEY("Department_Folder_ID");
 CREATE TABLE "Department"(
-    "DepartmentID" INT NOT NULL IDENTITY(1,1),
+    "DepartmentID" INT NOT NULL,
     "DepartmentName" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "Department" ADD CONSTRAINT "department_departmentid_primary" PRIMARY KEY("DepartmentID");
 CREATE TABLE "Required_in_the_pattern"(
-    "id" INT NOT NULL IDENTITY(1,1),
+    "id" INT NOT NULL,
     "PatternID" INT NOT NULL,
     "Name" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "Required_in_the_pattern" ADD CONSTRAINT "required_in_the_pattern_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Pattern"(
-    "PatternID" INT NOT NULL IDENTITY(1,1),
+    "PatternID" INT NOT NULL,
     "PatternName" NVARCHAR(255) NOT NULL,
     "Description" NVARCHAR(255) NULL
 );

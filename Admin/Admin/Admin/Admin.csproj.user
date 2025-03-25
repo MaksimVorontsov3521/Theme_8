@@ -7,10 +7,19 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Pages\AddNewUser.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\Entrance.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\LogsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\MainWorkPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\PatternPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -18,10 +27,19 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Pages\AddNewUser.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\Entrance.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Pages\LogsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\MainWorkPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\PatternPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

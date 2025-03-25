@@ -8,7 +8,249 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainWorkPage">
 
-    <Grid>
+    <Grid Background="AliceBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         
+        <TabControl Name="Tabs" Grid.Row="0" Grid.Column="0">
+            <!-- Первый таб -->
+            <TabItem Name="TabUser">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Height="10" Width="10" Fill="Black" />
+                        <TextBlock Margin="3">Пользователи</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <!-- Первый таб контент -->
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Button x:Name="ButtonAdd" Content="Добавить" Grid.Column="1" Grid.Row="1"/>
+                        <Button x:Name="ButtonDel" Content="Улалить" Grid.Column="3" Grid.Row="1"/>
+                        <Button x:Name="ButtonChange" Content="Изменить" Grid.Column="5" Grid.Row="1"/>
+                        <DataGrid x:Name="UsersGrid"  Grid.Row="3" Grid.ColumnSpan="9"/>
+                        <Frame Name="AddNewUserFrame" Grid.Row="3" Grid.ColumnSpan="9"/>
+                    </Grid>
+                </TabItem.Content>
+                
+            </TabItem>
+            
+            <!-- Второй таб -->
+            <TabItem Name="TabDB">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Height="10" Width="10" Fill="Black" />
+                        <TextBlock Margin="3">Данные</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <!-- Второй таб контент -->
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="30"/>
+
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="30"/>
+                            
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="30"/>
+
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Connection String" Grid.Row="1" Grid.Column="0"/>
+                        <TextBox x:Name="ConnectionStringTB" Grid.Row="3" Grid.Column="0"/>
+                        <Button x:Name="ConnectionStringButton" Content="Изменить" Grid.Row="5" Grid.Column="0"/>
+
+
+                        <RadioButton GroupName="GroupPatternAndLogs" x:Name="LogsButtonViewing" Content="Просмотр логов" Grid.Row="1" Grid.Column="2" IsChecked="True"/>
+                        <RadioButton GroupName="GroupPatternAndLogs" x:Name="PatternButtonViewing" Content="Просмотр паттернов" Grid.Row="3" Grid.Column="2"/>
+
+
+                        <Label Content="Base Folder" Grid.Row="7" Grid.Column="0"/>
+                        <TextBox x:Name="BaseFolderTB" Grid.Row="9" Grid.Column="0"/>
+                        <Button x:Name="BaseFolderButton" Content="Изменить" Grid.Row="11" Grid.Column="0"/>
+
+
+                        <Label Content="Backup folder" Grid.Row="13" Grid.Column="0"/>
+                        <TextBox x:Name="BackupFolderTB" Grid.Row="15" Grid.Column="0"/>
+                        <Button x:Name="BackupFolderButton" Content="Изменить" Grid.Row="17" Grid.Column="0"/>
+
+
+                        <Label Content="Часстота Backup в днях" Grid.Row="13" Grid.Column="2"/>
+                        <TextBox x:Name="BackupOftenTb" Grid.Row="15" Grid.Column="2"/>
+                        <Button x:Name="BackupOftenAply" Content="Изменить" Grid.Row="17" Grid.Column="2"/>
+
+                        <Frame Name="PatternAndLogs" Grid.Column="4" Grid.RowSpan="25"/>
+
+                    </Grid>
+                </TabItem.Content>
+
+            </TabItem>
+
+            <!-- Третий  таб -->
+            <TabItem Name="TabServer">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Height="10" Width="10" Fill="Black">
+                            <Rectangle.LayoutTransform>
+                                <RotateTransform Angle="-45"/>
+                            </Rectangle.LayoutTransform>
+                        </Rectangle>
+                        <TextBlock Margin="3">Сервер</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <!-- Третий таб контент -->
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="30"/>
+
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="30"/>
+
+
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="30"/>
+
+                            <RowDefinition Height="*"/>
+
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="15"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Порт для пользователей" Grid.Row="1" Grid.Column="0"/>
+                        <TextBox x:Name="UsersPortTB" Grid.Row="3" Grid.Column="0"/>
+                       
+                        <Label Content="Порт для админа" Grid.Row="1" Grid.Column="2"/>
+                        <TextBox x:Name="AdminPortTB" Grid.Row="3" Grid.Column="2"/>
+
+                        <Label Content="Уровень создания проектов" Grid.Row="7" Grid.Column="0"/>
+                        <TextBox x:Name="CreateProject" Grid.Row="9" Grid.Column="0"/>
+
+                        <Label Content="Уровень создания отделов" Grid.Row="7" Grid.Column="2"/>
+                        <TextBox x:Name="CreateDepartment" Grid.Row="9" Grid.Column="2"/>
+
+                        <Label Content="Уровень создания клиентов" Grid.Row="15" Grid.Column="0"/>
+                        <TextBox x:Name="CreateClient" Grid.Row="17" Grid.Column="0"/>
+
+                        <Button Grid.Row="20" Grid.ColumnSpan="3" Content="Изменить настройки сервера"/>
+                        
+                        <GroupBox Grid.Column="4" Grid.Row="1" Grid.RowSpan="25">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="15"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="30"/>
+
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="30"/>
+
+
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Content="Название роли" Grid.Row="1" Grid.Column="0"/>
+                                <TextBox x:Name="RoleNameTB" Grid.Row="3" Grid.Column="0"/>
+
+                                <Label Content="Права(описание) роли" Grid.Row="1" Grid.Column="2"/>
+                                <TextBox x:Name="RoleRightsTB" Grid.Row="3" Grid.Column="2"/>
+
+                                <Label Content="Уровень роли" Grid.Row="7" Grid.Column="0"/>
+                                <TextBox x:Name="RoleLevelTB" Grid.Row="9" Grid.Column="0"/>
+                                
+                                <Button x:Name="CreateNewRole" Grid.Row="9" Content="Создать/Изменить Роль" Grid.Column="2"/>
+
+                                <DataGrid Name="RolesDataGird" Grid.Row="13" Grid.ColumnSpan="4"/>
+                            </Grid>
+                        </GroupBox>
+
+                    </Grid>
+                </TabItem.Content>
+
+            </TabItem>
+
+        </TabControl>
+      
     </Grid>
 </Page>
