@@ -18,7 +18,7 @@ namespace Server.DataBaseFolder.DbContexts
             this.dbContext = dbContext;
         }
 
-        public long Login(string login, string enteredPassword)
+        public int Login(string login, string enteredPassword)
         {
             using (var context = new DataBase())
             {
@@ -32,6 +32,23 @@ namespace Server.DataBaseFolder.DbContexts
                     return worker.RoleId;
                 }
                 return -1;
+
+            }
+        }
+
+        public bool LoginAdmin(string login, string enteredPassword)
+        {
+            using (var context = new DataBase())
+            {
+                var X = context.UserTable
+                    .Where(w => w.UserLogin == login && w.UserPassword == enteredPassword && w.RoleId == 1) // три условия
+                    .ToList();
+
+                foreach (var worker in X)
+                {
+                    return true;
+                }
+                return false;
 
             }
         }

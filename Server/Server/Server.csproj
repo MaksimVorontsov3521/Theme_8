@@ -5,6 +5,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AppDesignerFolder>Resources</AppDesignerFolder>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Admin\Settings1.Designer.cs">
+    <Compile Update="Settings\Settings1.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings1.settings</DependentUpon>
@@ -28,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Admin\Settings1.settings">
+    <None Update="Settings\Settings1.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
     </None>

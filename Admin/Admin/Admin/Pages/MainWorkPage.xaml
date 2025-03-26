@@ -193,8 +193,11 @@
                         <Label Content="Уровень создания проектов" Grid.Row="7" Grid.Column="0"/>
                         <TextBox x:Name="CreateProject" Grid.Row="9" Grid.Column="0"/>
 
-                        <Label Content="Уровень создания отделов" Grid.Row="7" Grid.Column="2"/>
-                        <TextBox x:Name="CreateDepartment" Grid.Row="9" Grid.Column="2"/>
+                        <Label Content="Адрес сервера" Grid.Row="7" Grid.Column="2"/>
+                        <TextBox x:Name="ServerIP" Grid.Row="9" Grid.Column="2"/>
+
+                        <Label Content="Уровень создания отделов" Grid.Row="15" Grid.Column="2"/>
+                        <TextBox x:Name="CreateDepartment" Grid.Row="17" Grid.Column="2"/>
 
                         <Label Content="Уровень создания клиентов" Grid.Row="15" Grid.Column="0"/>
                         <TextBox x:Name="CreateClient" Grid.Row="17" Grid.Column="0"/>

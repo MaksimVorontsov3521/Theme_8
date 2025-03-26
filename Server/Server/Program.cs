@@ -1,21 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Server;
-using Server.Admin;
+using Server.AdminFolder;
 using Server.DataBaseFolder;
 using Server.DataBaseFolder.DbContexts;
 using Server.DataBaseFolder.Entitys;
+using Server.DataBaseFolder.Querys;
+using Server.Settings;
 using System.Net.Sockets;
+using System.Resources;
 using System.Text;
-
 
 public class Program
 {
-    int port = 8080;
+    int port = Server.Settings.Settings1.Default.UserPort;
     TcpListener server;
     static void Main(string[] args)
     {
+        Console.WriteLine("qwe");
         Program program = new Program();
-        program.Setup(); 
+        program.Setup();
     }
     private void Setup()
     {
@@ -64,7 +68,7 @@ public class Program
             // Проверка пароля
             DataBase dataBase = new DataBase();
             LoginPassword loginPassword = new LoginPassword(dataBase);
-            long a = -1;
+            int a = -1;
             try
             {
                 string[] clientLoginPassword = message.Split('\a');

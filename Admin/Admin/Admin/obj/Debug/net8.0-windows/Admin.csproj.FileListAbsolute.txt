@@ -23,3 +23,10 @@ F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Admin.pdb
 F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Admin.genruntimeconfig.cache
 F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\ref\Admin.dll
 F:\Program\Theme_8\Admin\Admin\Admin\bin\Debug\net8.0-windows\Admin.dll.config
+F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Pages\AddNewUser.g.cs
+F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Pages\LogsPage.g.cs
+F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Pages\PatternPage.g.cs
+F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Pages\AddNewUser.baml
+F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Pages\LogsPage.baml
+F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Pages\PatternPage.baml
+F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Admin.sourcelink.json
