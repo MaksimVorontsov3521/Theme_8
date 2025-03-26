@@ -20,6 +20,13 @@ namespace Admin.Classes
 
         string ip = Resources.Settings1.Default.ServerUrl;
         int port = Resources.Settings1.Default.AdminPort;
+
+        internal List<User> receivedUser;
+        internal List<Role> receivedRole;
+        internal List<Log> receivedLog;
+        internal List<LogAction> receivedLogAction;
+
+
         public Server(MainWindow mainWindow)
         {
             // Связка окна и сервера
@@ -44,13 +51,29 @@ namespace Admin.Classes
             using (NetworkStream stream = tcpClient.GetStream())
             {
                 SendBytes(stream,login + "\a" + password + "\a");
-                tcpClient = new TcpClient(ip, port);
+
+                // ..!
+                //правильный неправильный пароль?
+                // ..!
 
                 byte[] jsonBytes = ReedBytes(stream);
                 string json = Encoding.UTF8.GetString(jsonBytes);
-                List <User> receivedData = JsonSerializer.Deserialize <List<User>>(json);
+                receivedUser = JsonSerializer.Deserialize <List<User>>(json);
 
-                Console.WriteLine(receivedData);
+                jsonBytes = ReedBytes(stream);
+                json = Encoding.UTF8.GetString(jsonBytes);
+                receivedRole = JsonSerializer.Deserialize<List<Role>>(json);
+
+                //jsonBytes = ReedBytes(stream);
+                //json = Encoding.UTF8.GetString(jsonBytes);
+                //receivedLog = JsonSerializer.Deserialize<List<Log>>(json);
+
+                jsonBytes = ReedBytes(stream);
+                json = Encoding.UTF8.GetString(jsonBytes);
+                receivedLogAction = JsonSerializer.Deserialize<List<LogAction>>(json);
+
+                MainWorkPage mainWorkPage = new MainWorkPage(this);
+                mainWindow.WorkPlace.Navigate(mainWorkPage);
             }
         }
         private byte[] ReedBytes(NetworkStream stream)

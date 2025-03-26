@@ -1,7 +1,12 @@
 /Admin/Admin/Admin/bin
-/Client/.vs
 /Admin/Admin/Admin/obj
-/Client/.vs
 /Admin/Admin/.vs
-/Server/.vs
+
+/Client/.vs
 /Client/Client/obj
+/Client/Client/bin
+
+/Server/.vs
+/Server/Server/bin
+/Server/Server/obj
+

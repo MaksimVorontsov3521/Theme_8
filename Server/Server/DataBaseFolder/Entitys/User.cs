@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Server.DataBaseFolder.Entitys
 {
-    internal class User
+    internal class UserTable
     {
         [Key]
         public int UserId { get; set; }
@@ -19,12 +19,12 @@ namespace Server.DataBaseFolder.Entitys
         public string UserLogin { get; set; }
         public string UserPassword { get; set; }
 
-        public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public int RoleID { get; set; }
+        public RoleTable Role { get; set; }
 
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
 
-        public List<Log> Logs { get; set; } = new();
+        public List<LogTable> Logs { get; set; } = new();
     }
 }

@@ -9,6 +9,6 @@
       Title="LogsPage">
 
     <Grid>
-        
+        <DataGrid Name="LogsGrid"/>
     </Grid>
 </Page>

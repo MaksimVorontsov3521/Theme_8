@@ -23,13 +23,13 @@ namespace Server.DataBaseFolder.DbContexts
             using (var context = new DataBase())
             {
                 var X = context.UserTable
-                    .Include(w => w.RoleId) 
                     .Where(w => w.UserLogin == login && w.UserPassword == enteredPassword) // два условия
                     .ToList();
 
                 foreach (var worker in X)
                 {
-                    return worker.RoleId;
+                    Console.WriteLine(worker.RoleID);
+                    return worker.RoleID;                    
                 }
                 return -1;
 
@@ -41,7 +41,7 @@ namespace Server.DataBaseFolder.DbContexts
             using (var context = new DataBase())
             {
                 var X = context.UserTable
-                    .Where(w => w.UserLogin == login && w.UserPassword == enteredPassword && w.RoleId == 1) // три условия
+                    .Where(w => w.UserLogin == login && w.UserPassword == enteredPassword && w.RoleID == 1) // три условия
                     .ToList();
 
                 foreach (var worker in X)

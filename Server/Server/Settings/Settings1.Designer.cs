@@ -40,5 +40,17 @@ namespace Server.Settings {
                 return ((int)(this["UserPort"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Desktop\\Root")]
+        public string BaseFolder {
+            get {
+                return ((string)(this["BaseFolder"]));
+            }
+            set {
+                this["BaseFolder"] = value;
+            }
+        }
     }
 }

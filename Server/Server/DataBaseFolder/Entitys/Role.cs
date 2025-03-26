@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Server.DataBaseFolder.Entitys
 {
-    internal class Role
+    internal class RoleTable
     {
         [Key]
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public string? Rights { get; set; }
-        public int Level { get; set; }
+        public int RoleLevel { get; set; }
 
-        public List<User> Users { get; set; } = new();
+        public List<UserTable> Users { get; set; } = new();
     }
 }

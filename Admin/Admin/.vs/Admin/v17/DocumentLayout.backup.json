@@ -9,6 +9,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|f:\\program\\theme_8\\admin\\admin\\admin\\resources\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|solutionrelative:admin\\resources\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|f:\\program\\theme_8\\admin\\admin\\admin\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|solutionrelative:admin\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|f:\\program\\theme_8\\admin\\admin\\admin\\pages\\mainworkpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|solutionrelative:admin\\pages\\mainworkpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
@@ -28,10 +36,32 @@
               "RelativeDocumentMoniker": "Admin\\Resources\\User.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Resources\\User.cs",
               "RelativeToolTip": "Admin\\Resources\\User.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAQwB0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T05:48:17.922Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T12:22:39.838Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWorkPage.xaml.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml.cs",
+              "RelativeDocumentMoniker": "Admin\\Pages\\MainWorkPage.xaml.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml.cs",
+              "RelativeToolTip": "Admin\\Pages\\MainWorkPage.xaml.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAAB0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T06:44:10.925Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWorkPage.xaml",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml",
+              "RelativeDocumentMoniker": "Admin\\Pages\\MainWorkPage.xaml",
+              "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml",
+              "RelativeToolTip": "Admin\\Pages\\MainWorkPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-26T06:43:55.193Z"
             },
             {
               "$type": "Document",
@@ -39,9 +69,9 @@
               "Title": "Server.cs",
               "DocumentMoniker": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\Server.cs",
               "RelativeDocumentMoniker": "Admin\\Classes\\Server.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\Server.cs*",
-              "RelativeToolTip": "Admin\\Classes\\Server.cs*",
-              "ViewState": "AgIAACQAAAAAAAAAAAAqwDcAAAA2AAAAAAAAAA==",
+              "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\Server.cs",
+              "RelativeToolTip": "Admin\\Classes\\Server.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAkwEAAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-25T18:58:43.273Z",
               "EditorCaption": ""

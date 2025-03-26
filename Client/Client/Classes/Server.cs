@@ -1,4 +1,5 @@
 ﻿using Client.Pages;
+using Client.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,18 @@ using System.Net.Sockets;
 using System.IO;
 using System.Reflection.PortableExecutable;
 using System.Windows;
+using System.Text.Json;
 
 namespace Client
 {
     public class Server
     {
         MainWindow mainWindow;
-        Socket soket; 
-        string ip = "127.0.0.1";
-        int port = 8080;
+        TcpClient tcpClient;
+
+        string ip = Settings1.Default.ServerURL;
+        int port = Settings1.Default.ServerPort;
+
         public Server(MainWindow mainWindow)
         {
             // Связка окна и сервера
@@ -29,26 +33,53 @@ namespace Client
 
         public void Connection(string login, string password)
         {
-            SendBytes(login+"\a"+password+"\a");
-        }
 
-        public void SendBytes(string message)
-        {
             try
             {
-                // Преобразуем строку в массив байтов
-                byte[] bytes = Encoding.UTF8.GetBytes(message);
-                // Отправляем массив байтов другой программе
-                using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
-                {
-                    socket.Connect(ip, port);
-                    socket.Send(bytes);
-                }
+                tcpClient = new TcpClient(ip, port);
             }
-            catch {
+            catch
+            {
                 MessageBox.Show("Сервер недоступен");
+                return;
             }
 
+            using (NetworkStream stream = tcpClient.GetStream())
+            {
+                SendBytes(stream,login + "\a" + password + "\a");
+                byte[] buffer = ReedBytes(stream);
+
+            }
+        }
+
+        public void SendBytes(NetworkStream stream,string message)
+        {
+            //
+            byte[] bytes = Encoding.UTF8.GetBytes(message);
+            //
+            byte[] length = BitConverter.GetBytes(bytes.Length);
+            //
+            stream.Write(length, 0, 4);
+            //
+            stream.Write(bytes, 0, bytes.Length);
+        }
+
+        private byte[] ReedBytes(NetworkStream stream)
+        {
+            // Читаем длину сообщения (первые 4 байта)
+            byte[] lengthBuffer = new byte[4];
+            stream.Read(lengthBuffer, 0, 4);
+            int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
+
+            // Читаем само сообщение
+            byte[] messageBuffer = new byte[messageLength];
+            int bytesRead = 0;
+            while (bytesRead < messageLength)
+            {
+                bytesRead += stream.Read(messageBuffer, bytesRead, messageLength - bytesRead);
+            }
+
+            return messageBuffer;
         }
     }
 }

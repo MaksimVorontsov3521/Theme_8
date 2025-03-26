@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Server.DataBaseFolder.Entitys
 {
-    internal class Log
+    internal class LogTable
     {
         [Key]
         public int LogId { get; set; }
         public int LogActionId { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; }
+        public UserTable User { get; set; }
 
         public int? DocumentId { get; set; }
         public Document? Document { get; set; }

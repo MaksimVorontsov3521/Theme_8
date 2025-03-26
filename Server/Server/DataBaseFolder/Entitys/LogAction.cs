@@ -13,6 +13,6 @@ namespace Server.DataBaseFolder.Entitys
         public int ActionId { get; set; }
         public string ActionName { get; set; }
 
-        public List<Log> Logs { get; set; } = new();
+        public List<LogTable> Logs { get; set; } = new();
     }
 }

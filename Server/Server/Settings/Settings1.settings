@@ -8,5 +8,8 @@
     <Setting Name="UserPort" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">8080</Value>
     </Setting>
+    <Setting Name="BaseFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Desktop\Root</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

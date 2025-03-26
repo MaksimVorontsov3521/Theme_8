@@ -12,7 +12,7 @@ namespace Server.DataBaseFolder.Entitys
         [Key]
         public int DepartmentID { get; set; }
         public string DepartmentName { get; set; }
-        public List<User> Users { get; set; } = new();
+        public List<UserTable> Users { get; set; } = new();
         public List<Folder> Folders { get; set; } = new();
     }
 }

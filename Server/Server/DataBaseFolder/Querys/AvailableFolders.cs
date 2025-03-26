@@ -20,13 +20,13 @@ namespace Server.DataBaseFolder.Querys
             using (var context = new DataBase())
             {
                 var X = context.UserTable
-                    .Include(w => w.RoleId)
+                    .Include(w => w.RoleID)
                     .Where(w => w.UserLogin == login && w.UserPassword == enteredPassword) // два условия
                     .ToList();
 
                 foreach (var worker in X)
                 {
-                    return worker.RoleId;
+                    return worker.RoleID;
                 }
                 return -1;
 

@@ -48,7 +48,7 @@
                         <Button x:Name="ButtonAdd" Content="Добавить" Grid.Column="1" Grid.Row="1"/>
                         <Button x:Name="ButtonDel" Content="Улалить" Grid.Column="3" Grid.Row="1"/>
                         <Button x:Name="ButtonChange" Content="Изменить" Grid.Column="5" Grid.Row="1"/>
-                        <DataGrid x:Name="UsersGrid"  Grid.Row="3" Grid.ColumnSpan="9"/>
+                        <DataGrid x:Name="UsersGrid"  Grid.Row="3" Grid.ColumnSpan="9" AutoGenerateColumns="True"/>
                         <Frame Name="AddNewUserFrame" Grid.Row="3" Grid.ColumnSpan="9"/>
                     </Grid>
                 </TabItem.Content>

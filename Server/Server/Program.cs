@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Server;
 using Server.AdminFolder;
@@ -6,6 +7,7 @@ using Server.DataBaseFolder;
 using Server.DataBaseFolder.DbContexts;
 using Server.DataBaseFolder.Entitys;
 using Server.DataBaseFolder.Querys;
+using Server.Security;
 using Server.Settings;
 using System.Net.Sockets;
 using System.Resources;
@@ -17,7 +19,34 @@ public class Program
     TcpListener server;
     static void Main(string[] args)
     {
-        Console.WriteLine("qwe");
+        AdminUpdateSetting adminUpdateSetting = new AdminUpdateSetting();
+        //adminUpdateSetting.UpdateBaseFolder("D:\\Desktop\\Root");
+
+        using (var context = new DataBase())
+        {
+
+            try
+            {
+                // Простая проверка подключения
+                bool canConnect = context.Database.CanConnect();
+                Console.WriteLine(canConnect ? "Подключение успешно!" : "Не удалось подключиться");
+
+                // Альтернативный вариант - выполнить простой запрос
+                var test = context.UserTable.FirstOrDefault();
+                Console.WriteLine("Подключение работает, запрос выполнен");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка подключения: {ex.Message}");
+                // Для более детальной информации можно проверить InnerException
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+            }
+        }
+
+
         Program program = new Program();
         program.Setup();
     }
@@ -42,28 +71,14 @@ public class Program
         thread.Start();
     }
 
-    private List<byte> ReedBytes(TcpClient client)
-    {
-        List<byte> allBytes = new List<byte>();
-        // Создаем поток для чтения
-        using (var stream = client.GetStream())
-        {
-            // Читаем массив байтов из сокета
-            byte[] bytes = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = stream.Read(bytes, 0, bytes.Length)) > 0)
-            {
-                allBytes.AddRange(bytes);
-            }
-            return allBytes;
-        }
-    }
     private void HandelClient()
     {     
         using (var client = server.AcceptTcpClient())
-        {
+        using (NetworkStream stream = client.GetStream())
+        {            
             Connection();
-            string message = Encoding.UTF8.GetString(ReedBytes(client).ToArray());
+            ReadAndWrite Messenger = new ReadAndWrite();
+            string message = Encoding.UTF8.GetString(Messenger.ReedBytes(stream));
 
             // Проверка пароля
             DataBase dataBase = new DataBase();
@@ -74,15 +89,17 @@ public class Program
                 string[] clientLoginPassword = message.Split('\a');
                 a = loginPassword.Login(clientLoginPassword[0], clientLoginPassword[1]);
             }
-            catch { Console.WriteLine("Неправильный ввод от компьютера ");}
+            catch { Console.WriteLine("Неправильный ввод от компьютера"); }
 
-            if (a > 0)
-            { 
-                Console.WriteLine("Entered");
+        if (a > 0)
+            {
+                Messenger.SendBytes(stream,"byte");
             }
-            else { }
+            else
+            {
+                Messenger.SendBytes(stream,"no");
+            }
         }
-
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Admin.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,10 @@ namespace Admin.Pages
     /// </summary>
     public partial class MainWorkPage : Page
     {
-        public MainWorkPage()
+        public MainWorkPage(Server server)
         {
             InitializeComponent();
+            UsersGrid.ItemsSource = server.receivedUser;
         }
     }
 }
