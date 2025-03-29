@@ -7,12 +7,8 @@
       "RelativeMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|solutionrelative:admin\\classes\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|f:\\program\\theme_8\\admin\\admin\\admin\\pages\\mainworkpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|solutionrelative:admin\\pages\\mainworkpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|f:\\program\\theme_8\\admin\\admin\\admin\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|solutionrelative:admin\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|f:\\program\\theme_8\\admin\\admin\\admin\\classes\\readandwrite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|solutionrelative:admin\\classes\\readandwrite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +18,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ReadAndWrite.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\ReadAndWrite.cs",
+              "RelativeDocumentMoniker": "Admin\\Classes\\ReadAndWrite.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\ReadAndWrite.cs",
+              "RelativeToolTip": "Admin\\Classes\\ReadAndWrite.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAmwBQAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T14:43:10.983Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -32,34 +40,9 @@
               "RelativeDocumentMoniker": "Admin\\Classes\\Server.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\Server.cs",
               "RelativeToolTip": "Admin\\Classes\\Server.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAAASwGsAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAAAqwD0AAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-29T09:30:56.541Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainWorkPage.xaml.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml.cs",
-              "RelativeDocumentMoniker": "Admin\\Pages\\MainWorkPage.xaml.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml.cs",
-              "RelativeToolTip": "Admin\\Pages\\MainWorkPage.xaml.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAIA9wCcAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T06:44:10.925Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainWorkPage.xaml",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml",
-              "RelativeDocumentMoniker": "Admin\\Pages\\MainWorkPage.xaml",
-              "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml",
-              "RelativeToolTip": "Admin\\Pages\\MainWorkPage.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-26T06:43:55.193Z",
               "EditorCaption": ""
             }
           ]

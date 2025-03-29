@@ -9,12 +9,14 @@ using Server.DataBaseFolder.Entitys;
 using Server.DataBaseFolder.Querys;
 using Server.Security;
 using Server.Settings;
+using System.Net;
 using System.Net.Sockets;
 using System.Resources;
 using System.Text;
 
 public class Program
 {
+    string ipAddress = "127.0.0.1";
     int port = Server.Settings.Settings1.Default.UserPort;
     TcpListener server;
     static void Main(string[] args)
@@ -23,7 +25,6 @@ public class Program
 
         using (var context = new DataBase())
         {
-
             try
             {
                 // Простая проверка подключения
@@ -44,18 +45,28 @@ public class Program
                 }
             }
         }
-
-
         Program program = new Program();
         program.Setup();
     }
     private void Setup()
     {
         AdminConnection();
-        server = new TcpListener(port);
-        server.Start();
+
+        // Настройки сервера для клиента
+        Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+        // Прослушка
+        serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
+        serverSocket.Listen(10);
+
         Console.WriteLine("Порт для пользователей запущен");
-        Connection();
+        while (true)
+        {
+            Socket clientSocket = serverSocket.Accept();
+            Thread clientThread = new Thread(() => HandelClient(clientSocket));
+            clientThread.Start();
+        }
+
     }
     private void AdminConnection()
     {
@@ -64,42 +75,35 @@ public class Program
         adminThread.Start();
     }
 
-    private void Connection()
+    private void HandelClient(Socket clientSocket)
     {
-        Thread thread = new Thread(() => HandelClient());      
-        thread.Start();
-    }
 
-    private void HandelClient()
-    {     
-        using (var client = server.AcceptTcpClient())
-        using (NetworkStream stream = client.GetStream())
-        {            
-            Connection();
-            ReadAndWrite Messenger = new ReadAndWrite();
-            string message = Encoding.UTF8.GetString(Messenger.ReedBytes(stream));
+        ReadAndWrite Messenger = new ReadAndWrite();
+        string message = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
 
-            // Проверка пароля
-            DataBase dataBase = new DataBase();
-            LoginPassword loginPassword = new LoginPassword(dataBase);
-            int a = -1;
-            try
-            {
-                string[] clientLoginPassword = message.Split('\a');
-                a = loginPassword.Login(clientLoginPassword[0], clientLoginPassword[1]);
-            }
-            catch { Console.WriteLine("Неправильный ввод от компьютера"); }
+        // Проверка пароля
+        DataBase dataBase = new DataBase();
+        LoginPassword loginPassword = new LoginPassword(dataBase);
+        int a = -1;
+        try
+        {
+            string[] clientLoginPassword = message.Split('\a');
+            a = loginPassword.Login(clientLoginPassword[0], clientLoginPassword[1]);
+        }
+        catch { Console.WriteLine("Неправильный ввод от компьютера"); }
 
         if (a > 0)
-            {
-                Messenger.SendBytes(stream,"byte");
-            }
-            else
-            {
-                Messenger.SendBytes(stream,"no");
-            }
+        {
+            Messenger.SendStrings(clientSocket, "byte");
+            Console.WriteLine("Да");
+        }
+        else
+        {
+            Messenger.SendStrings(clientSocket, "no");
+            Console.WriteLine("нет");
         }
     }
+    
 }
 
 

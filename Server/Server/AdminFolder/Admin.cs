@@ -17,94 +17,94 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using Server.Security;
 
 namespace Server.AdminFolder
-{ 
+{
     public class Admin
     {
+
+        string ipAddress = "127.0.0.1";
         private int port = Settings.Settings1.Default.AdminPort;
-        private TcpListener adminServer;
+
         async public void Connection()
-        {       
-            adminServer = new TcpListener(port);
-            adminServer.Start();
+        {
+            
+            Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
+            serverSocket.Listen(10); // Backlog
             Console.WriteLine("Порт для админа запущен");
-            HandelAdmin();
+            while (true)
+            {               
+                Socket adminSocket = serverSocket.Accept();
+                HandelAdmin(adminSocket);
+            }
 
         }
 
-        private void HandelAdmin()
+        private void HandelAdmin(Socket adminSocket)
         {
             ReadAndWrite Messenger = new ReadAndWrite();
 
-            using (TcpClient client = adminServer.AcceptTcpClient())
+            string message = Encoding.UTF8.GetString(Messenger.ReedBytes(adminSocket));
+            // Проверка пароля
+            DataBase dataBase = new DataBase();
+            LoginPassword loginPassword = new LoginPassword(dataBase);
+            bool a = false;
+            //try
+            //{
+            string[] clientLoginPassword = message.Split('\a');
+            a = loginPassword.LoginAdmin(clientLoginPassword[0], clientLoginPassword[1]);
+            //}
+            //catch
+            //{
+            //    HandelAdmin();
+            //    Console.WriteLine("Неправильный ввод от компьютера ");
+            //}
+
+
+            if (a == true)
             {
-                using (NetworkStream stream = client.GetStream())
+                Console.WriteLine("Entered");
+                TablesForAdmin tablesForAdmin = new TablesForAdmin(dataBase);
+
+                List<UserTable> users = tablesForAdmin.UserTable();
+                Messenger.SendJSON(adminSocket, users);
+
+                List<RoleTable> role = tablesForAdmin.RoleTable();
+                Messenger.SendJSON(adminSocket, role);
+
+                //List<Log> log = tablesForAdmin.LogTable();
+                //Messenger.SendJSON(stream, log);
+
+                List<LogAction> logActions = tablesForAdmin.LogActionTable();
+                Messenger.SendJSON(adminSocket, logActions);
+            }
+            else
+            {
+                Console.WriteLine("Неверный пароль");
+                return;
+            }
+
+
+            //
+            //
+            //
+
+
+            AdminUpdateSetting adminUpdateSetting = new AdminUpdateSetting();
+            bool whileBoll = true;
+            while (whileBoll)
+            {
+                string[] AdminCommand = Encoding.UTF8.GetString(Messenger.ReedBytes(adminSocket)).Split('\a');
+                switch (AdminCommand[0])
                 {
-                    string message = Encoding.UTF8.GetString(Messenger.ReedBytes(stream));
-                    // Проверка пароля
-                    DataBase dataBase = new DataBase();
-                    LoginPassword loginPassword = new LoginPassword(dataBase);
-                    bool a = false;
-                    //try
-                    //{
-                        string[] clientLoginPassword = message.Split('\a');
-                        a = loginPassword.LoginAdmin(clientLoginPassword[0], clientLoginPassword[1]);
-                    //}
-                    //catch
-                    //{
-                    //    HandelAdmin();
-                    //    Console.WriteLine("Неправильный ввод от компьютера ");
-                    //}
-
-
-                    if (a == true)
-                    {                       
-                        Console.WriteLine("Entered");
-                        TablesForAdmin tablesForAdmin = new TablesForAdmin(dataBase);
-
-                        List<UserTable> users = tablesForAdmin.UserTable();
-                        Messenger.SendBytes(stream, users);
-
-                        List<RoleTable> role = tablesForAdmin.RoleTable();
-                        Messenger.SendBytes(stream, role);
-
-                        //List<Log> log = tablesForAdmin.LogTable();
-                        //SendBytes(stream, log);
-
-                        List<LogAction> logActions = tablesForAdmin.LogActionTable();
-                        Messenger.SendBytes(stream, logActions);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Неверный пароль");
-                        HandelAdmin();
-                        return;
-                    }
-
-
-                    //
-                    //
-                    //
-
-
-                    AdminUpdateSetting adminUpdateSetting = new AdminUpdateSetting();
-                    bool whileBoll = true;
-                    while (whileBoll)
-                    {
-                        string[] AdminCommand = message.Split('\a');
-                        switch (AdminCommand[0])
-                        {
-                            case "UpdateBaseFolder":
-                                adminUpdateSetting.UpdateBaseFolder(AdminCommand[1]);
-                                break;
-                             default:
-                                Console.WriteLine("Неизвестная команда");
-                                whileBoll = false;
-                                break;
-                        }
-                    }                   
+                    case "UpdateBaseFolder":
+                        adminUpdateSetting.UpdateBaseFolder(AdminCommand[1]);
+                        break;
+                    default:
+                        Console.WriteLine("Неизвестная команда");
+                        whileBoll = false;
+                        break;
                 }
             }
-            return;
         }
     }
 }

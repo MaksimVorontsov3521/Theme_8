@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -16,10 +17,10 @@ namespace Admin.Classes
     public class Server
     {
         MainWindow mainWindow;
-        TcpClient tcpClient;
-        NetworkStream Stream;
+        ReadAndWrite Messenger = new ReadAndWrite();
 
-        string ip = Resources.Settings1.Default.ServerUrl;
+        Socket clientSocket;
+        string serverIP = Resources.Settings1.Default.ServerUrl;
         int port = Resources.Settings1.Default.AdminPort;
 
         internal List<User> receivedUser;
@@ -40,74 +41,47 @@ namespace Admin.Classes
 
         public void Connection(string login, string password)
         {
+            
             try
             {
-                tcpClient = new TcpClient(ip, port);            
+                clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(IPAddress.Parse(serverIP), port);
             }
             catch
             { 
                 MessageBox.Show("Сервер недоступен");
                 return;
             }
-            using (NetworkStream stream = tcpClient.GetStream())
-            {
-                SendBytes(stream,login + "\a" + password + "\a");
 
-                // ..!
-                //правильный неправильный пароль?
-                // ..!
+            Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
 
-                byte[] jsonBytes = ReedBytes(stream);
-                string json = Encoding.UTF8.GetString(jsonBytes);
-                receivedUser = JsonSerializer.Deserialize <List<User>>(json);
+            // ..!
+            //правильный неправильный пароль?
+            // ..!
 
-                jsonBytes = ReedBytes(stream);
-                json = Encoding.UTF8.GetString(jsonBytes);
-                receivedRole = JsonSerializer.Deserialize<List<Role>>(json);
+            byte[] jsonBytes = Messenger.ReedBytes(clientSocket);
+            string json = Encoding.UTF8.GetString(jsonBytes);
+            receivedUser = JsonSerializer.Deserialize<List<User>>(json);
 
-                //jsonBytes = ReedBytes(stream);
-                //json = Encoding.UTF8.GetString(jsonBytes);
-                //receivedLog = JsonSerializer.Deserialize<List<Log>>(json);
+            jsonBytes = Messenger.ReedBytes(clientSocket);
+            json = Encoding.UTF8.GetString(jsonBytes);
+            receivedRole = JsonSerializer.Deserialize<List<Role>>(json);
 
-                jsonBytes = ReedBytes(stream);
-                json = Encoding.UTF8.GetString(jsonBytes);
-                receivedLogAction = JsonSerializer.Deserialize<List<LogAction>>(json);
+            //jsonBytes = ReedBytes(clientSocket);
+            //json = Encoding.UTF8.GetString(jsonBytes);
+            //receivedLog = JsonSerializer.Deserialize<List<Log>>(json);
 
-                MainWorkPage mainWorkPage = new MainWorkPage(this);
-                mainWindow.WorkPlace.Navigate(mainWorkPage);
-                Stream = stream;
-            }
+            jsonBytes = Messenger.ReedBytes(clientSocket);
+            json = Encoding.UTF8.GetString(jsonBytes);
+            receivedLogAction = JsonSerializer.Deserialize<List<LogAction>>(json);
+
+            MainWorkPage mainWorkPage = new MainWorkPage(this);
+            mainWindow.WorkPlace.Navigate(mainWorkPage);
         }
 
         public void UpdateBaseFolder(string NewPath)
         {
-           SendBytes(Stream, "UpdateBaseFolder\a"+ NewPath);
-        }
-
-
-        private byte[] ReedBytes(NetworkStream stream)
-        {
-            //
-            byte[] lengthBytes = new byte[4];
-            stream.Read(lengthBytes, 0, 4);
-            int length = BitConverter.ToInt32(lengthBytes, 0);
-            //
-            byte[] bytes = new byte[length];
-            stream.Read(bytes, 0, length);
-            //
-            return bytes;
-        }
-
-        private void SendBytes(NetworkStream stream,string message)
-        {
-            //
-            byte[] bytes = Encoding.UTF8.GetBytes(message);
-            //
-            byte[] length = BitConverter.GetBytes(bytes.Length);
-            //
-            stream.Write(length, 0, 4);
-            //
-            stream.Write(bytes, 0, bytes.Length);
+            Messenger.SendStrings(clientSocket, "UpdateBaseFolder\a"+ NewPath);
         }
     }
 }

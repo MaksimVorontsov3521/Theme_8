@@ -6,10 +6,11 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Server.Security
+namespace Admin.Classes
 {
     internal class ReadAndWrite
     {
+
         internal void SendJSON(Socket socket, object data)
         {
             string json = JsonSerializer.Serialize(data);

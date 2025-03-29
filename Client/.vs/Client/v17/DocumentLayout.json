@@ -7,20 +7,8 @@
       "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\classes\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\pages\\entrance.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\pages\\entrance.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|F:\\Program\\Theme_8\\Client\\client\\resources\\settings1.settings||{6D2695F9-5365-4A78-89ED-F205C045BFE6}",
-      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\resources\\settings1.settings||{6D2695F9-5365-4A78-89ED-F205C045BFE6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,41 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Entrance.xaml",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\Entrance.xaml",
-              "RelativeDocumentMoniker": "Client\\Pages\\Entrance.xaml",
-              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\Entrance.xaml",
-              "RelativeToolTip": "Client\\Pages\\Entrance.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-26T07:58:07.163Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "Client\\MainWindow.xaml",
-              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\MainWindow.xaml",
-              "RelativeToolTip": "Client\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-26T07:58:04.375Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Settings1.settings",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Resources\\Settings1.settings",
-              "RelativeDocumentMoniker": "Client\\Resources\\Settings1.settings",
-              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Resources\\Settings1.settings",
-              "RelativeToolTip": "Client\\Resources\\Settings1.settings",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002767|",
-              "WhenOpened": "2025-03-26T07:12:09.32Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -73,14 +28,14 @@
               "RelativeDocumentMoniker": "Client\\Classes\\Server.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\Server.cs",
               "RelativeToolTip": "Client\\Classes\\Server.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAAwC4AAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAgwDcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-26T07:11:21.459Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "MainWorkPage.xaml",
               "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml",
               "RelativeDocumentMoniker": "Client\\Pages\\MainWorkPage.xaml",

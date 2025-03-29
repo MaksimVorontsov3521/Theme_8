@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Server.Security
+namespace Client.Classes
 {
     internal class ReadAndWrite
     {
@@ -65,6 +65,5 @@ namespace Server.Security
 
             return messageBuffer;
         }
-
     }
 }
