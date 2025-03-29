@@ -77,10 +77,34 @@ namespace Server.AdminFolder
                     {
                         Console.WriteLine("Неверный пароль");
                         HandelAdmin();
+                        return;
                     }
+
+
+                    //
+                    //
+                    //
+
+
+                    AdminUpdateSetting adminUpdateSetting = new AdminUpdateSetting();
+                    bool whileBoll = true;
+                    while (whileBoll)
+                    {
+                        string[] AdminCommand = message.Split('\a');
+                        switch (AdminCommand[0])
+                        {
+                            case "UpdateBaseFolder":
+                                adminUpdateSetting.UpdateBaseFolder(AdminCommand[1]);
+                                break;
+                             default:
+                                Console.WriteLine("Неизвестная команда");
+                                whileBoll = false;
+                                break;
+                        }
+                    }                   
                 }
             }
-           
+            return;
         }
     }
 }

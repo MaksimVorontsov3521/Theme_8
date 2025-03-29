@@ -16,7 +16,7 @@ namespace Server.DataBaseFolder.Entitys
         public int? PatternID { get; set; }
         public Pattern Pattern { get; set; }
 
-        public int ClientID { get; set; }
+        public int? ClientID { get; set; }
         public Client Client { get; set; }
 
         public List<Document> Documents { get; set; } = new();

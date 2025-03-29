@@ -102,7 +102,7 @@
 
                         <Label Content="Connection String" Grid.Row="1" Grid.Column="0"/>
                         <TextBox x:Name="ConnectionStringTB" Grid.Row="3" Grid.Column="0"/>
-                        <Button x:Name="ConnectionStringButton" Content="Изменить" Grid.Row="5" Grid.Column="0"/>
+                        <Button x:Name="ConnectionStringButton" Content="Изменить" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Height="20" Margin="0,0,15,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="ConnectionStringButton_Click"/>
 
 
                         <RadioButton GroupName="GroupPatternAndLogs" x:Name="LogsButtonViewing" Content="Просмотр логов" Grid.Row="1" Grid.Column="2" IsChecked="True"/>
@@ -111,7 +111,7 @@
 
                         <Label Content="Base Folder" Grid.Row="7" Grid.Column="0"/>
                         <TextBox x:Name="BaseFolderTB" Grid.Row="9" Grid.Column="0"/>
-                        <Button x:Name="BaseFolderButton" Content="Изменить" Grid.Row="11" Grid.Column="0"/>
+                        <Button x:Name="BaseFolderButton" Content="Изменить" Grid.Row="11" Grid.Column="0" Click="BaseFolderButton_Click"/>
 
 
                         <Label Content="Backup folder" Grid.Row="13" Grid.Column="0"/>

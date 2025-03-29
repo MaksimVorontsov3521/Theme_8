@@ -21,10 +21,21 @@ namespace Admin.Pages
     /// </summary>
     public partial class MainWorkPage : Page
     {
+        Server server;
         public MainWorkPage(Server server)
         {
             InitializeComponent();
             UsersGrid.ItemsSource = server.receivedUser;
+            this.server = server;
+        }
+
+        private void ConnectionStringButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void BaseFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            server.UpdateBaseFolder(BaseFolderTB.Text);
         }
     }
 }

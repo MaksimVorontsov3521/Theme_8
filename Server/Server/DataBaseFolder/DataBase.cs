@@ -15,16 +15,16 @@ namespace Server.DataBaseFolder
 {
     internal class DataBase : DbContext
     {
-        public DbSet<Client> Clients { get; set; }
+        public DbSet<Client> Client { get; set; }
         public DbSet<UserTable> UserTable { get; set; }
         public DbSet<RoleTable> RoleTable { get; set; }
-        public DbSet<Document> Documents { get; set; }
-        public DbSet<Folder> Folders { get; set; }
-        public DbSet<LogTable> Logs { get; set; }
+        public DbSet<Document> Document { get; set; }
+        public DbSet<Folder> Folder { get; set; }
+        public DbSet<LogTable> LogTable { get; set; }
         public DbSet<LogAction> LogAction { get; set; }
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Pattern> Patterns { get; set; }
-        public DbSet<RequiredInPattern> RequiredInPatterns { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Pattern> Pattern { get; set; }
+        public DbSet<RequiredInPattern> RequiredInPattern { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

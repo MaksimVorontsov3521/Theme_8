@@ -17,6 +17,7 @@ namespace Admin.Classes
     {
         MainWindow mainWindow;
         TcpClient tcpClient;
+        NetworkStream Stream;
 
         string ip = Resources.Settings1.Default.ServerUrl;
         int port = Resources.Settings1.Default.AdminPort;
@@ -74,8 +75,16 @@ namespace Admin.Classes
 
                 MainWorkPage mainWorkPage = new MainWorkPage(this);
                 mainWindow.WorkPlace.Navigate(mainWorkPage);
+                Stream = stream;
             }
         }
+
+        public void UpdateBaseFolder(string NewPath)
+        {
+           SendBytes(Stream, "UpdateBaseFolder\a"+ NewPath);
+        }
+
+
         private byte[] ReedBytes(NetworkStream stream)
         {
             //

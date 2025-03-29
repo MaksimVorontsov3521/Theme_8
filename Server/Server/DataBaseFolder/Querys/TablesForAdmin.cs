@@ -54,7 +54,7 @@ namespace Server.DataBaseFolder.Querys
             List<LogTable> users = new List<LogTable>();
             using (var context = new DataBase())
             {
-                var X = context.Logs;
+                var X = context.LogTable;
 
                 foreach (var worker in X)
                 {

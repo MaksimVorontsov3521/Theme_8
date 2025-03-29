@@ -20,7 +20,6 @@ public class Program
     static void Main(string[] args)
     {
         AdminUpdateSetting adminUpdateSetting = new AdminUpdateSetting();
-        //adminUpdateSetting.UpdateBaseFolder("D:\\Desktop\\Root");
 
         using (var context = new DataBase())
         {

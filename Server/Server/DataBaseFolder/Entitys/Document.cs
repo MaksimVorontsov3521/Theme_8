@@ -11,10 +11,10 @@ namespace Server.DataBaseFolder.Entitys
     {
         [Key]
         public int DocumentId { get; set; }
-        public string Name { get; set; }
+        public string DocumentName { get; set; }
         public bool IsDone { get; set; }
         public DateTime DeadLine { get; set; }
-        public bool ReadOnly { get; set; }
+        public bool DocumentReadOnly { get; set; }
         public string? NameInPattern { get; set; }
 
         public int FolderId { get; set; }

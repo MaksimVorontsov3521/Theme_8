@@ -58,7 +58,7 @@ CREATE TABLE Document(
     IsDone BIT NOT NULL DEFAULT 'false',
     DeadLine DATE,
     DocumentReadOnly BIT NOT NULL DEFAULT 'false',
-    NameInPattertn NVARCHAR(255)
+    NameInPattern NVARCHAR(255)
 );
 
 CREATE TABLE LogTable(
