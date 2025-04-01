@@ -12,7 +12,7 @@ namespace Server.DataBaseFolder.Entitys
         [Key]
         public int PatternId { get; set; }
         public string PatternName { get; set; }
-        public string? Description { get; set; }
+        public string? PatternDescription { get; set; }
 
         public List<RequiredInPattern> RequiredInPatterns { get; set; } = new();
         public List<Folder> Folders { get; set; } = new();

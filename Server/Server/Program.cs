@@ -9,6 +9,7 @@ using Server.DataBaseFolder.Entitys;
 using Server.DataBaseFolder.Querys;
 using Server.Security;
 using Server.Settings;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Resources;
@@ -102,6 +103,23 @@ public class Program
             Messenger.SendStrings(clientSocket, "no");
             Console.WriteLine("нет");
         }
+
+
+        ClientTables clientTables = new ClientTables(dataBase);
+
+
+        List<Document> documents = clientTables.DocumentsForClient();
+        Messenger.SendJSON(clientSocket, documents);
+
+        List<Folder> folder = clientTables.FoldersForClient();
+        Messenger.SendJSON(clientSocket, folder);
+
+        List<Pattern> pattern = clientTables.PatternsForClient();
+        Messenger.SendJSON(clientSocket, pattern);
+
+        List<RequiredInPattern> requiredInPattern = clientTables.RequiredInPatternsForClient();
+        Messenger.SendJSON(clientSocket, requiredInPattern);
+
     }
     
 }

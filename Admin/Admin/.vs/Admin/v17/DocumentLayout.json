@@ -28,9 +28,10 @@
               "RelativeDocumentMoniker": "Admin\\Classes\\ReadAndWrite.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\ReadAndWrite.cs",
               "RelativeToolTip": "Admin\\Classes\\ReadAndWrite.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAmwBQAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAmwAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T14:43:10.983Z"
+              "WhenOpened": "2025-03-29T14:43:10.983Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -40,7 +41,7 @@
               "RelativeDocumentMoniker": "Admin\\Classes\\Server.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\Server.cs",
               "RelativeToolTip": "Admin\\Classes\\Server.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAqwD0AAABBAAAAAAAAAA==",
+              "ViewState": "AgIAACUAAAAAAAAAAAAiwBkAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-29T09:30:56.541Z",
               "EditorCaption": ""

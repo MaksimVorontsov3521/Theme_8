@@ -38,9 +38,23 @@
 
                         <Label Content="Сортировка" Grid.Column="0" Grid.Row="1"/>
                         <ComboBox Name="SortBox"  Grid.Column="0" Grid.Row="3"/>
-                        <ListBox x:Name="ProjectsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="0" Grid.Row="5"/>
+                        <ListBox x:Name="ProjectsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="0" Grid.Row="5" SelectionChanged="ProjectsListBox_SelectionChanged"/>
                         <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="1" Grid.Row="5"/>
+
+                        <Grid Grid.Column="2" Grid.Row="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Button x:Name="changeDocument" Grid.Row="1" Content="Скачать" HorizontalAlignment="Center" Click="changeDocument_Click"/>
+                        </Grid>
                     </Grid>
+
+
                 </TabItem.Content>
             </TabItem>
 
@@ -88,6 +102,10 @@
                         <Label Content="Порт сервера" Grid.Row="1" Grid.Column="0"/>
                         <TextBox x:Name="ServerPort" Grid.Row="3" Grid.Column="0"/>
                         <Button x:Name="ServerPortButton" Content="Изменить" Grid.Row="5" Grid.Column="0"/>
+
+                        <Label Content="Порт сервера" Grid.Row="7" Grid.Column="0"/>
+                        <TextBox x:Name="ServerURL" Grid.Row="9" Grid.Column="0"/>
+                        <Button x:Name="ServerURLButton" Content="Изменить" Grid.Row="11" Grid.Column="0"/>
 
                     </Grid>
                 </TabItem.Content>

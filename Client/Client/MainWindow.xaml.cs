@@ -30,7 +30,7 @@ namespace Client
             int y = (int)e.NewSize.Height;
             OOO.FontSize = (x / 100) + (y / 100) + 2;
         }
-        public void MainWorkPage(MainWorkPage mainWorkPage)
+        public void MainWorkPageNavigate(MainWorkPage mainWorkPage)
         {
             WorkPlace.Navigate(mainWorkPage);
         }

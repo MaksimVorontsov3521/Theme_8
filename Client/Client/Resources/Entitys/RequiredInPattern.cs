@@ -11,7 +11,7 @@ namespace Server.DataBaseFolder.Entitys
     {
         [Key]
         public int Id { get; set; }
-        public string DocumentName { get; set; }
+        public string Name { get; set; }
 
         public int PatternId { get; set; }
         public Pattern Pattern { get; set; }

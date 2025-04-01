@@ -60,28 +60,31 @@ namespace Server.AdminFolder
             //}
 
 
+
             if (a == true)
             {
-                Console.WriteLine("Entered");
-                TablesForAdmin tablesForAdmin = new TablesForAdmin(dataBase);
-
-                List<UserTable> users = tablesForAdmin.UserTable();
-                Messenger.SendJSON(adminSocket, users);
-
-                List<RoleTable> role = tablesForAdmin.RoleTable();
-                Messenger.SendJSON(adminSocket, role);
-
-                //List<Log> log = tablesForAdmin.LogTable();
-                //Messenger.SendJSON(stream, log);
-
-                List<LogAction> logActions = tablesForAdmin.LogActionTable();
-                Messenger.SendJSON(adminSocket, logActions);
+                Console.WriteLine("Верный пароль");
             }
             else
             {
                 Console.WriteLine("Неверный пароль");
                 return;
             }
+
+            Console.WriteLine("Entered");
+            TablesForAdmin tablesForAdmin = new TablesForAdmin(dataBase);
+
+            List<UserTable> users = tablesForAdmin.UserTable();
+            Messenger.SendJSON(adminSocket, users);
+
+            List<RoleTable> role = tablesForAdmin.RoleTable();
+            Messenger.SendJSON(adminSocket, role);
+
+            //List<Log> log = tablesForAdmin.LogTable();
+            //Messenger.SendJSON(stream, log);
+
+            List<LogAction> logActions = tablesForAdmin.LogActionTable();
+            Messenger.SendJSON(adminSocket, logActions);
 
 
             //

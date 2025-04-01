@@ -20,9 +20,21 @@ namespace Client.Pages
     /// </summary>
     public partial class MainWorkPage : Page
     {
-        public MainWorkPage()
+        Server Server;
+        public MainWorkPage(Server server)
         {
             InitializeComponent();
+            Server = server;
+        }
+
+        private void ProjectsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Server.UpdateDocuments(this,ProjectsListBox.SelectedIndex);
+        }
+
+        private void changeDocument_Click(object sender, RoutedEventArgs e)
+        {
+            // Скоро будет
         }
     }
 }

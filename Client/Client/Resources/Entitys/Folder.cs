@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace Server.DataBaseFolder.Entitys
 {
-    internal class RequiredInPattern
+    internal class Folder
     {
         [Key]
-        public int Id { get; set; }
-        public string DocumentName { get; set; }
+        public int FolderID { get; set; }
+        public string FolderPath { get; set; }
 
-        public int PatternId { get; set; }
+        public int? PatternID { get; set; }
         public Pattern Pattern { get; set; }
+
+        public List<ServerDocument> Documents { get; set; } = new();
     }
 }
