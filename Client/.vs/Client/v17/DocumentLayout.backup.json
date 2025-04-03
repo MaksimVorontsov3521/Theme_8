@@ -9,6 +9,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\pages\\mainworkpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\pages\\mainworkpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\classes\\readandwrite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\classes\\readandwrite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,8 +26,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ReadAndWrite.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\ReadAndWrite.cs",
+              "RelativeDocumentMoniker": "Client\\Classes\\ReadAndWrite.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\ReadAndWrite.cs",
+              "RelativeToolTip": "Client\\Classes\\ReadAndWrite.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAwwDQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T16:29:00.127Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -28,9 +49,21 @@
               "RelativeDocumentMoniker": "Client\\Pages\\MainWorkPage.xaml.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml.cs",
               "RelativeToolTip": "Client\\Pages\\MainWorkPage.xaml.cs",
-              "ViewState": "AgIAAFEAAAAAAAAAAAAqwGQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAewGMAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T08:59:44.564Z",
+              "WhenOpened": "2025-04-03T14:45:35.67Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWorkPage.xaml",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml",
+              "RelativeDocumentMoniker": "Client\\Pages\\MainWorkPage.xaml",
+              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml",
+              "RelativeToolTip": "Client\\Pages\\MainWorkPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-03T09:55:51.849Z",
               "EditorCaption": ""
             },
             {
@@ -41,7 +74,7 @@
               "RelativeDocumentMoniker": "Client\\Classes\\Server.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\Server.cs*",
               "RelativeToolTip": "Client\\Classes\\Server.cs*",
-              "ViewState": "AgIAAGsAAAAAAAAAAAApwIIAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAowIsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-26T07:11:21.459Z",
               "EditorCaption": ""

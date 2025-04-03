@@ -23,5 +23,12 @@ namespace Server.LocalinfoControl
             }
         }
 
+        public void GetDocument(string Path, byte[] document)
+        {    
+            using (FileStream writer = new FileStream(Path, FileMode.Create))
+            {
+                writer.Write(document, 0, document.Length);
+            }
+        }
     }
 }

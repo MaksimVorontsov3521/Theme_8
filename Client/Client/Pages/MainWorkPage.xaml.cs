@@ -78,6 +78,27 @@ namespace Client.Pages
         private void SendFilesToFolder_Click(object sender, RoutedEventArgs e)
         {
 
+            string[] DropBox = new string[DropBoxLB.Items.Count];
+            for (int i = 0; i < DropBoxLB.Items.Count; i++)
+            {
+                DropBox[i] = DropBoxLB.Items[i].ToString();
+                int a = DropBox[i].Length;
+                DropBox[i]=DropBox[i].Remove(DropBox[i].Length - 2,2);
+            }
+            if (ProjectsListBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Выберите проект");
+                return;
+            }
+            if (DropBox.Length == 0)
+            {
+                MessageBox.Show("Выберите файлы");
+                return;
+            }
+            for (int i = 0; i < DropBox.Length; i++)
+            {
+                Server.SendDocument(ProjectsListBox.SelectedItem.ToString(), DropBox[i]);
+            }
         }
 
         private void DocumentAdd_Click(object sender, RoutedEventArgs e)
@@ -95,6 +116,11 @@ namespace Client.Pages
             { return; }
 
             Server.DownloadDocument(ProjectsListBox.SelectedItem.ToString(),DocumentsListBox.SelectedItem.ToString()+ ".docx");
+        }
+
+        private void ProjectChange_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

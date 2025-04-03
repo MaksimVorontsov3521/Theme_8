@@ -15,6 +15,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Resources;
 using System.Text;
+using System.Xml.XPath;
 
 public class Program
 {
@@ -124,6 +125,11 @@ public class Program
                     message = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
                     byte[] byffer = DAF.ToSendPath(message);
                     userSession.Messenger.SendBytes(userSession.clientSocket, byffer);
+                    break;
+                case "GetDocument":
+                    string Path = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
+                    byte[] document = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                    DAF.GetDocument(Path, document);
                     break;
                     default:
                     break;

@@ -130,5 +130,14 @@ namespace Client
             }
         }
 
+        public void SendDocument(string ProjectName, string FileName)
+        {
+            Messenger.SendStrings(clientSocket, "GetDocument");
+            string[] FileParts = FileName.Split('\\');
+            Messenger.SendStrings(clientSocket, ProjectName + "\\" + FileParts[FileParts.Length-1]);
+            byte[] bytes = File.ReadAllBytes(FileName);
+            Messenger.SendBytes(clientSocket, bytes);
+        }
+
     }
 }

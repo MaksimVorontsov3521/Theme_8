@@ -35,17 +35,15 @@ namespace Client.Classes
             socket.Send(Bytes);
         }
 
-        //internal void SendBytes(NetworkStream stream, string stringData)
-        //{
-        //    byte[] Bytes = Encoding.UTF8.GetBytes(stringData);
+        internal void SendBytes(Socket socket, byte[] Bytes)
+        {
+            // Сначала отправляем длину данных
+            byte[] lengthBytes = BitConverter.GetBytes(Bytes.Length);
+            socket.Send(lengthBytes);
 
-        //    // Сначала отправляем длину данных
-        //    byte[] lengthBytes = BitConverter.GetBytes(Bytes.Length);
-        //    stream.Write(lengthBytes, 0, 4);
-
-        //    // Затем отправляем сами данные
-        //    stream.Write(Bytes, 0, Bytes.Length);
-        //}
+            // Затем отправляем сами данные
+            socket.Send(Bytes);
+        }
 
 
         internal byte[] ReedBytes(Socket socket)

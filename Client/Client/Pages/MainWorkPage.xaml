@@ -68,7 +68,7 @@
                             </Grid.RowDefinitions>
                             <Label Content="Проект" Grid.Row="1" HorizontalAlignment="Center"/>
                             <Button x:Name="ProjectDownload" Grid.Row="3" Content="↓ Скачать ↓" HorizontalAlignment="Center"/>
-                            <Button x:Name="ProjectChange" Grid.Row="5" Content="⚙ Изменить ⚙" HorizontalAlignment="Center"/>
+                            <Button x:Name="ProjectChange" Grid.Row="5" Content="⚙ Изменить ⚙" HorizontalAlignment="Center" Click="ProjectChange_Click"/>
                             <Button x:Name="ProjectIsDone" Grid.Row="7" Content=" ✓ Завершить ✓ " HorizontalAlignment="Center"/>
                             
                             
@@ -94,15 +94,19 @@
                     </StackPanel>
                 </TabItem.Header>
 
+                <!-- Разметка -->
                 <TabItem.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
 
-                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="5"/>
                             <RowDefinition Height="auto"/>
@@ -122,11 +126,68 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="5"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="30"/>
+
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="*"/>
 
                         </Grid.RowDefinitions>
 
+                        <!-- Заголовки -->
 
-                    </Grid>
+                        
+                        
+                        <Rectangle Fill="LightCyan"  Grid.Column="0" Grid.RowSpan="25"/>
+                        <Rectangle Fill="Gray" Width="1" Grid.Column="1" HorizontalAlignment="Left" Grid.RowSpan="25"/>
+                        <Rectangle Fill="Gray" Width="1" Grid.Column="3" HorizontalAlignment="Right" Grid.RowSpan="25"/>
+                        <Rectangle Fill="Wheat"  Grid.Column="4" Grid.RowSpan="25"/>
+
+                        <Rectangle Fill="Gray" Grid.ColumnSpan="5" Grid.Row="1" Height="1" VerticalAlignment="Top"/>
+                        
+                        <Label Content="Изменить проект" Grid.Row="0" HorizontalAlignment="Center"/>
+                        <Label Content="Новый проект" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"/>
+                        <Label Content="Клиенты" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center"/>
+
+                        <!-- Тело -->
+                        
+                        <!-- Изменить провект -->
+                        <Label Content="Найти проект" Grid.Row="1" HorizontalAlignment="Center"/>
+                        <Button x:Name="FindProjectButton" Grid.Row="3" Content="Найти" Margin="10" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="FindProjectTextBox" Grid.Row="3" HorizontalAlignment="Right" MinWidth="200" Height="25"/>
+                        <ComboBox Name="FindProjectComboBox" Grid.Row="5"/>
+
+                        <Label Content="Все департаменты" Grid.Row="7"/>
+                        <Label Content="Департаменты проекта" HorizontalAlignment="Right" Grid.Row="7"/>
+                        <ComboBox Name="AllDepartments" Grid.Row="9" HorizontalAlignment="Left" MinWidth="120"/>
+                        <ComboBox Name="ProjectDepartments" Grid.Row="9" HorizontalAlignment="Right" MinWidth="120"/>
+                        <Button Content="Добавить" x:Name="ProjectDepartmentsAdd" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120"/>
+                        <Button Content="Убрать" x:Name="ProjectDepartmentsRemove" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120"/>
+
+                        <Label Content="Шаблоны" Grid.Row="13"/>
+                        <ComboBox Name="AplyedProjectPattern" Grid.Row="15"/>
+                        <Button x:Name="NewPattern" Content="Создать новый шаблон" Grid.Row="17" HorizontalAlignment="Left"/>
+
+                        <Button x:Name="ApplyNewProjectProperties" Grid.Row="19" Content="Применить"/>
+
+                        <!-- Новый Проект -->
+
+                        <Label Grid.Column="2" Content="Все департаменты" Grid.Row="7"/>
+                        <Label Grid.Column="2" Content="Департаменты проекта" HorizontalAlignment="Right" Grid.Row="7"/>
+                        <ComboBox Grid.Column="2" Name="AllDepartmentsNew" Grid.Row="9" HorizontalAlignment="Left" MinWidth="120"/>
+                        <ComboBox Grid.Column="2"  Name="ProjectDepartmentsNew" Grid.Row="9" HorizontalAlignment="Right" MinWidth="120"/>
+                        <Button Grid.Column="2"  Content="Добавить" x:Name="ProjectDepartmentsAddNew" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120"/>
+                        <Button Grid.Column="2"  Content="Убрать" x:Name="ProjectDepartmentsRemoveNew" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120"/>
+
+                        <Label Grid.Column="2"  Content="Шаблоны" Grid.Row="13"/>
+                        <ComboBox Grid.Column="2"  Name="AplyedNewProjectPattern" Grid.Row="15"/>
+                        <Button Grid.Column="2"  x:Name="NewPatternNew" Content="Создать новый шаблон" Grid.Row="17" HorizontalAlignment="Left"/>
+
+                        <Button Grid.Column="2"  x:Name="CreateyNewProject" Grid.Row="19" Content="Создать"/>
+
+                    </Grid> 
                 </TabItem.Content>
             </TabItem>
 
