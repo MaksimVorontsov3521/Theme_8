@@ -55,9 +55,10 @@ namespace Admin.Classes
 
             Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
 
-            // ..!
-            //правильный неправильный пароль?
-            // ..!
+            if (Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)).Contains("Right"))
+            { }
+            else { MessageBox.Show("Неверный логин или пароль"); return; }
+
 
             byte[] jsonBytes = Messenger.ReedBytes(clientSocket);
             string json = Encoding.UTF8.GetString(jsonBytes);

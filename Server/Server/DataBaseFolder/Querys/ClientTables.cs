@@ -15,7 +15,7 @@ namespace Server.DataBaseFolder.Querys
             this.dbContext = dbContext;
         }
 
-        public List<Folder> FoldersForClient()
+        public List<Folder> FoldersForClient(string UserLogin)
         {
             List<Folder> Folders = new List<Folder>();
             using (var context = new DataBase())

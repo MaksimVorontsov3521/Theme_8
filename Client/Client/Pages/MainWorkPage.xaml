@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Client.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainWorkPage">
+      Title="MainWorkPage"  AllowDrop="True" Drop="Page_Drop" DragEnter="Page_DragEnter">
 
     <Grid Background="White">
         <TabControl>
@@ -39,6 +39,9 @@
                         <Label Content="Сортировка" Grid.Column="0" Grid.Row="1"/>
                         <ComboBox Name="SortBox"  Grid.Column="0" Grid.Row="3"/>
                         <ListBox x:Name="ProjectsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="0" Grid.Row="5" SelectionChanged="ProjectsListBox_SelectionChanged"/>
+                        
+                        <Label Content="Документ в шаблоне" Grid.Column="1" Grid.Row="1"/>
+                        <ComboBox Name="InPatternBox"  Grid.Column="1" Grid.Row="3"/>
                         <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="1" Grid.Row="5"/>
 
                         <Grid Grid.Column="2" Grid.Row="5">
@@ -48,9 +51,33 @@
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="5"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="5"/>
                             </Grid.RowDefinitions>
-                            <Button x:Name="changeDocument" Grid.Row="1" Content="Скачать" HorizontalAlignment="Center" Click="changeDocument_Click"/>
+                            <Label Content="Проект" Grid.Row="1" HorizontalAlignment="Center"/>
+                            <Button x:Name="ProjectDownload" Grid.Row="3" Content="↓ Скачать ↓" HorizontalAlignment="Center"/>
+                            <Button x:Name="ProjectChange" Grid.Row="5" Content="⚙ Изменить ⚙" HorizontalAlignment="Center"/>
+                            <Button x:Name="ProjectIsDone" Grid.Row="7" Content=" ✓ Завершить ✓ " HorizontalAlignment="Center"/>
+                            
+                            
+                            
+                            <Label Content="Документ" Grid.Row="9" HorizontalAlignment="Center"/>
+                            <Button x:Name="DocumentDownload" Grid.Row="11" Content="↓ Скачать ↓" HorizontalAlignment="Center" Click="DocumentDownload_Click"/>
+                            <Button x:Name="DocumentAdd" Grid.Row="13" Content="+ Добавить +" HorizontalAlignment="Center" Click="DocumentAdd_Click"/>
+                            <Button x:Name="SendFiles" Grid.Row="15" Content="↑ Отправить ↑" HorizontalAlignment="Center" Click="SendFilesToFolder_Click"/>
+                            <ListBox x:Name="DropBoxLB" Grid.Row="17" SelectionChanged="DropBoxLB_SelectionChanged"/>
                         </Grid>
                     </Grid>
 
@@ -59,11 +86,55 @@
             </TabItem>
 
             <!-- Второй таб -->
-            <TabItem Name="TabSettings">
+            <TabItem Name="Pattern">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Height="10" Width="10" Fill="Black" />
-                        <TextBlock Margin="3">Настройки</TextBlock>
+                        <TextBlock Margin="3">Шаблоны и клиетны</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+
+                        </Grid.RowDefinitions>
+
+
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+
+            <!-- Третий таб -->
+                <TabItem Name="TabSettings">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3"> ⚙ Настройки</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
                 
@@ -71,7 +142,9 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -106,6 +179,10 @@
                         <Label Content="Порт сервера" Grid.Row="7" Grid.Column="0"/>
                         <TextBox x:Name="ServerURL" Grid.Row="9" Grid.Column="0"/>
                         <Button x:Name="ServerURLButton" Content="Изменить" Grid.Row="11" Grid.Column="0"/>
+
+                        <Label Content="Порт сервера" Grid.Row="1" Grid.Column="2"/>
+                        <TextBox x:Name="RootFolder" Grid.Row="3" Grid.Column="2"/>
+                        <Button x:Name="RootFolderButton" Content="Изменить" Grid.Row="5" Grid.Column="2"/>
 
                     </Grid>
                 </TabItem.Content>

@@ -105,10 +105,6 @@
                         <Button x:Name="ConnectionStringButton" Content="Изменить" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Height="20" Margin="0,0,15,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="ConnectionStringButton_Click"/>
 
 
-                        <RadioButton GroupName="GroupPatternAndLogs" x:Name="LogsButtonViewing" Content="Просмотр логов" Grid.Row="1" Grid.Column="2" IsChecked="True"/>
-                        <RadioButton GroupName="GroupPatternAndLogs" x:Name="PatternButtonViewing" Content="Просмотр паттернов" Grid.Row="3" Grid.Column="2"/>
-
-
                         <Label Content="Base Folder" Grid.Row="7" Grid.Column="0"/>
                         <TextBox x:Name="BaseFolderTB" Grid.Row="9" Grid.Column="0"/>
                         <Button x:Name="BaseFolderButton" Content="Изменить" Grid.Row="11" Grid.Column="0" Click="BaseFolderButton_Click"/>
@@ -122,8 +118,8 @@
                         <Label Content="Часстота Backup в днях" Grid.Row="13" Grid.Column="2"/>
                         <TextBox x:Name="BackupOftenTb" Grid.Row="15" Grid.Column="2"/>
                         <Button x:Name="BackupOftenAply" Content="Изменить" Grid.Row="17" Grid.Column="2"/>
-
-                        <Frame Name="PatternAndLogs" Grid.Column="4" Grid.RowSpan="25"/>
+                        <Label Content="Логи" Grid.Row="0" Grid.Column="4"/>
+                        <Frame Name="PatternAndLogs" Grid.Column="4" Grid.Row="1" Grid.RowSpan="25" Navigated="PatternAndLogs_Navigated"/>
 
                     </Grid>
                 </TabItem.Content>

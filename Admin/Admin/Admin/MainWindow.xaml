@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Admin"
         mc:Ignorable="d"
-                Title="ООО Индустрия ПБ" MinHeight="400" MinWidth="800" Height="400" Width="800" SizeChanged="Window_SizeChanged">
+                Title="ООО Индустрия ПБ Админское приложение" MinHeight="400" MinWidth="800" Height="400" Width="800" SizeChanged="Window_SizeChanged">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
         <Rectangle x:Name="Title" Fill="Orange" Grid.ColumnSpan="3" Grid.Row="0" MinHeight="50"/>
         <Rectangle Fill="Orange" Grid.ColumnSpan="3" Grid.Row="3"/>
-        <Label x:Name="OOO" Content="ООО Индустрия ПБ" Grid.Row="0" Grid.Column="1" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label x:Name="OOO" Content="ООО Индустрия ПБ Админское приложение" Grid.Row="0" Grid.Column="1" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Frame x:Name="WorkPlace" Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

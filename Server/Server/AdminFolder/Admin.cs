@@ -48,28 +48,29 @@ namespace Server.AdminFolder
             DataBase dataBase = new DataBase();
             LoginPassword loginPassword = new LoginPassword(dataBase);
             bool a = false;
-            //try
-            //{
-            string[] clientLoginPassword = message.Split('\a');
-            a = loginPassword.LoginAdmin(clientLoginPassword[0], clientLoginPassword[1]);
-            //}
-            //catch
-            //{
-            //    HandelAdmin();
-            //    Console.WriteLine("Неправильный ввод от компьютера ");
-            //}
-
-
+            try
+            {
+                string[] clientLoginPassword = message.Split('\a');
+                a = loginPassword.LoginAdmin(clientLoginPassword[0], clientLoginPassword[1]);
+            }
+            catch
+            {
+                Console.WriteLine("Неправильный ввод от компьютера ");
+                return;
+            }
 
             if (a == true)
             {
-                Console.WriteLine("Верный пароль");
+                Messenger.SendStrings(adminSocket, "Right");
             }
             else
             {
-                Console.WriteLine("Неверный пароль");
+                Messenger.SendStrings(adminSocket, "Wrong");
                 return;
             }
+
+
+
 
             Console.WriteLine("Entered");
             TablesForAdmin tablesForAdmin = new TablesForAdmin(dataBase);

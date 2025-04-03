@@ -35,35 +35,40 @@ namespace Server.Security
             socket.Send(Bytes);
         }
 
-        //internal void SendBytes(NetworkStream stream, string stringData)
-        //{
-        //    byte[] Bytes = Encoding.UTF8.GetBytes(stringData);
+        internal void SendBytes(Socket socket, byte[] Bytes)
+        {
+            // Сначала отправляем длину данных
+            byte[] lengthBytes = BitConverter.GetBytes(Bytes.Length);
+            socket.Send(lengthBytes);
 
-        //    // Сначала отправляем длину данных
-        //    byte[] lengthBytes = BitConverter.GetBytes(Bytes.Length);
-        //    stream.Write(lengthBytes, 0, 4);
-
-        //    // Затем отправляем сами данные
-        //    stream.Write(Bytes, 0, Bytes.Length);
-        //}
-
+            // Затем отправляем сами данные
+            socket.Send(Bytes);
+        }
 
         internal byte[] ReedBytes(Socket socket)
         {
-            // Читаем длину сообщения (первые 4 байта)
-            byte[] lengthBuffer = new byte[4];
-            socket.Receive(lengthBuffer);
-            int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
-
-            // Читаем само сообщение
-            byte[] messageBuffer = new byte[messageLength];
-            int bytesRead = 0;
-            while (bytesRead < messageLength)
+            try
             {
-                bytesRead += socket.Receive(messageBuffer);
-            }
+                // Читаем длину сообщения (первые 4 байта)
+                byte[] lengthBuffer = new byte[4];
+                socket.Receive(lengthBuffer);
+                int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
 
-            return messageBuffer;
+                // Читаем само сообщение
+                byte[] messageBuffer = new byte[messageLength];
+                int bytesRead = 0;
+                while (bytesRead < messageLength)
+                {
+                    bytesRead += socket.Receive(messageBuffer);
+                }
+
+                return messageBuffer;
+            }
+            catch
+            {
+                byte[] Error = new byte[4];
+                return Error;
+            }
         }
 
     }

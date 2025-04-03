@@ -22,7 +22,7 @@ namespace Server.DataBaseFolder.Entitys
         public int RoleID { get; set; }
         public RoleTable Role { get; set; }
 
-        public int DepartmentId { get; set; }
+        public int DepartmentID { get; set; }
         public Department Department { get; set; }
 
         public List<LogTable> Logs { get; set; } = new();

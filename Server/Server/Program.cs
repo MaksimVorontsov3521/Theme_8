@@ -8,6 +8,7 @@ using Server.DataBaseFolder.DbContexts;
 using Server.DataBaseFolder.Entitys;
 using Server.DataBaseFolder.Querys;
 using Server.Security;
+using Server.Session;
 using Server.Settings;
 using System.Diagnostics;
 using System.Net;
@@ -21,9 +22,8 @@ public class Program
     int port = Server.Settings.Settings1.Default.UserPort;
     TcpListener server;
     static void Main(string[] args)
-    {
-        AdminUpdateSetting adminUpdateSetting = new AdminUpdateSetting();
-
+    {       
+        Console.WriteLine();
         using (var context = new DataBase())
         {
             try
@@ -86,40 +86,66 @@ public class Program
         DataBase dataBase = new DataBase();
         LoginPassword loginPassword = new LoginPassword(dataBase);
         int a = -1;
+        string[] clientLoginPassword = message.Split('\a');
         try
-        {
-            string[] clientLoginPassword = message.Split('\a');
+        {            
             a = loginPassword.Login(clientLoginPassword[0], clientLoginPassword[1]);
         }
-        catch { Console.WriteLine("Неправильный ввод от компьютера"); }
+        catch { Console.WriteLine("Неправильный ввод от компьютера");return; }
 
-        if (a > 0)
+        UserSession userSession = new UserSession();
+        if (a > 1)
         {
-            Messenger.SendStrings(clientSocket, "byte");
-            Console.WriteLine("Да");
+            Messenger.SendStrings(clientSocket, "Right");
+            //      
+            userSession.userLogin = clientLoginPassword[0];
+            userSession.clientSocket = clientSocket;
+            userSession.Messenger = Messenger;
         }
         else
         {
-            Messenger.SendStrings(clientSocket, "no");
-            Console.WriteLine("нет");
+            Messenger.SendStrings(clientSocket, "Wrong");
+            return;
         }
+        SendTables(userSession);
+        ClientServerWork(userSession);
+    }
 
+    private void ClientServerWork(UserSession userSession)
+    {
+        string message;
+        Server.LocalinfoControl.DocumentsAndFolders DAF = new Server.LocalinfoControl.DocumentsAndFolders();
+        while (true)
+        {
+            message = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
+            switch (message)
+            { 
+                case "SendPath":
+                    message = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
+                    byte[] byffer = DAF.ToSendPath(message);
+                    userSession.Messenger.SendBytes(userSession.clientSocket, byffer);
+                    break;
+                    default:
+                    break;
+            }
+        }
+    }
 
-        ClientTables clientTables = new ClientTables(dataBase);
+    internal void SendTables(UserSession userSession)
+    {
 
-
+        ClientTables clientTables = new ClientTables(userSession.dataBase);
         List<Document> documents = clientTables.DocumentsForClient();
-        Messenger.SendJSON(clientSocket, documents);
+        userSession.Messenger.SendJSON( userSession.clientSocket, documents);
 
-        List<Folder> folder = clientTables.FoldersForClient();
-        Messenger.SendJSON(clientSocket, folder);
+        List<Folder> folder = clientTables.FoldersForClient(userSession.userLogin);
+        userSession.Messenger.SendJSON(userSession.clientSocket, folder);
 
         List<Pattern> pattern = clientTables.PatternsForClient();
-        Messenger.SendJSON(clientSocket, pattern);
+        userSession.Messenger.SendJSON(userSession.clientSocket, pattern);
 
         List<RequiredInPattern> requiredInPattern = clientTables.RequiredInPatternsForClient();
-        Messenger.SendJSON(clientSocket, requiredInPattern);
-
+        userSession.Messenger.SendJSON(userSession.clientSocket, requiredInPattern);
     }
     
 }

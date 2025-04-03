@@ -15,6 +15,9 @@ using Client.Classes;
 using System.Reflection.Metadata;
 using Server.DataBaseFolder.Entitys;
 using System.Windows.Controls;
+using Microsoft.Win32;
+using System.Windows.Shapes;
+using System.IO.Pipes;
 
 namespace Client
 {
@@ -31,6 +34,8 @@ namespace Client
         internal List<Folder> receivedFolders = new List<Folder>();
         internal List<Pattern> receivedPatterns = new List<Pattern>();
         internal List<RequiredInPattern> receivedRequiredInPatterns = new List<RequiredInPattern>();
+
+        private string[] LoginPassword = new string[2];
 
         public Server(MainWindow mainWindow)
         {
@@ -56,9 +61,15 @@ namespace Client
             }
 
 
-           Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
-           MessageBox.Show(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
-            
+            Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
+
+            if (Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)).Contains("Right"))
+            { }
+            else { MessageBox.Show("Неверный логин или пароль");return; }
+
+            LoginPassword[0]=login;
+            LoginPassword[1]=password;
+
             GetTables();
             CreateWorkPlace();
         }
@@ -106,5 +117,18 @@ namespace Client
             json = Encoding.UTF8.GetString(jsonBytes);
             receivedRequiredInPatterns = JsonSerializer.Deserialize<List<RequiredInPattern>>(json);
         }
+
+        public void DownloadDocument(string ServerFileRoot, string FileName)
+        {
+            Messenger.SendStrings(clientSocket,"SendPath");
+            Messenger.SendStrings(clientSocket, ServerFileRoot+"\\"+ FileName);
+            byte[] document = Messenger.ReedBytes(clientSocket);
+            string PathToSave = Settings1.Default.RootFolder+"\\"+ FileName;
+            using (FileStream writer = new FileStream(PathToSave, FileMode.Create))
+            {
+                writer.Write(document, 0, document.Length);
+            }
+        }
+
     }
 }

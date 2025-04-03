@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "F:\\Program\\Theme_8\\Server\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\databasefolder\\querys\\clienttables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\databasefolder\\querys\\clienttables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\localinfocontrol\\documentsandfolders.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\localinfocontrol\\documentsandfolders.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\session\\usersession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\session\\usersession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\security\\readandwrite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\security\\readandwrite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\adminfolder\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\adminfolder\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,39 +27,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "UserSession.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\Session\\UserSession.cs",
-              "RelativeDocumentMoniker": "Server\\Session\\UserSession.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\Session\\UserSession.cs",
-              "RelativeToolTip": "Server\\Session\\UserSession.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "ReadAndWrite.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\Security\\ReadAndWrite.cs",
+              "RelativeDocumentMoniker": "Server\\Security\\ReadAndWrite.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\Security\\ReadAndWrite.cs",
+              "RelativeToolTip": "Server\\Security\\ReadAndWrite.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T08:06:29.967Z"
+              "WhenOpened": "2025-04-02T18:27:08.525Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ClientTables.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\DataBaseFolder\\Querys\\ClientTables.cs",
-              "RelativeDocumentMoniker": "Server\\DataBaseFolder\\Querys\\ClientTables.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\DataBaseFolder\\Querys\\ClientTables.cs",
-              "RelativeToolTip": "Server\\DataBaseFolder\\Querys\\ClientTables.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAhwD4AAAAAAAAAAAAAAA==",
+              "Title": "DocumentsAndFolders.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\LocalinfoControl\\DocumentsAndFolders.cs",
+              "RelativeDocumentMoniker": "Server\\LocalinfoControl\\DocumentsAndFolders.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\LocalinfoControl\\DocumentsAndFolders.cs",
+              "RelativeToolTip": "Server\\LocalinfoControl\\DocumentsAndFolders.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T16:59:23.644Z",
+              "WhenOpened": "2025-04-02T18:19:09.217Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Admin.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\Admin.cs",
-              "RelativeDocumentMoniker": "Server\\AdminFolder\\Admin.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\Admin.cs",
-              "RelativeToolTip": "Server\\AdminFolder\\Admin.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAYwEsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T16:58:15.12Z"
             },
             {
               "$type": "Document",
@@ -73,9 +57,9 @@
               "RelativeDocumentMoniker": "Server\\Program.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\Program.cs",
               "RelativeToolTip": "Server\\Program.cs",
-              "ViewState": "AgIAAF4AAAAAAAAAAAAUwG0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAADgvxgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T14:57:16.933Z"
+              "WhenOpened": "2025-04-02T11:30:53.959Z"
             }
           ]
         }

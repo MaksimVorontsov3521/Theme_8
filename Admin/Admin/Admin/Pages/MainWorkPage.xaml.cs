@@ -37,5 +37,12 @@ namespace Admin.Pages
         {
             server.UpdateBaseFolder(BaseFolderTB.Text);
         }
+
+        private void PatternAndLogs_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
+
+
     }
 }
