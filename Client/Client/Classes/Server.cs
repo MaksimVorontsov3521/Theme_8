@@ -92,7 +92,7 @@ namespace Client
             page.DocumentsListBox.Items.Clear();
             for (int i = 0; i < receivedDocuments.Count; i++)
             {
-                if (receivedDocuments[i].FolderId == folderID)
+                if (receivedDocuments[i].FolderID == folderID)
                 {
                     page.DocumentsListBox.Items.Add(receivedDocuments[i].DocumentName);
                 }
@@ -103,11 +103,11 @@ namespace Client
         {
             byte[] jsonBytes = Messenger.ReedBytes(clientSocket);
             string json = Encoding.UTF8.GetString(jsonBytes);
-            receivedDocuments = JsonSerializer.Deserialize<List<ServerDocument>>(json);
+            receivedFolders = JsonSerializer.Deserialize<List<Folder>>(json);
 
             jsonBytes = Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
-            receivedFolders = JsonSerializer.Deserialize<List<Folder>>(json);
+            receivedDocuments = JsonSerializer.Deserialize<List<ServerDocument>>(json);
 
             jsonBytes = Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);

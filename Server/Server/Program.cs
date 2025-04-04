@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Server;
+using Server.LocalinfoControl;
 using Server.AdminFolder;
 using Server.DataBaseFolder;
 using Server.DataBaseFolder.DbContexts;
@@ -23,8 +24,9 @@ public class Program
     int port = Server.Settings.Settings1.Default.UserPort;
     TcpListener server;
     static void Main(string[] args)
-    {       
-        Console.WriteLine();
+    {
+        AdminUpdateSetting setting = new AdminUpdateSetting();
+        setting.UpdateBaseFolder("D:\\Desktop\\Root");
         using (var context = new DataBase())
         {
             try
@@ -115,7 +117,8 @@ public class Program
     private void ClientServerWork(UserSession userSession)
     {
         string message;
-        Server.LocalinfoControl.DocumentsAndFolders DAF = new Server.LocalinfoControl.DocumentsAndFolders();
+        DocumentsAndFolders DAF = new DocumentsAndFolders();
+        DBDocumentWork DBD = new DBDocumentWork();
         while (true)
         {
             message = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
@@ -129,7 +132,20 @@ public class Program
                 case "GetDocument":
                     string Path = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
                     byte[] document = userSession.Messenger.ReedBytes(userSession.clientSocket);
-                    DAF.GetDocument(Path, document);
+                    int or = DBD.CanAddNewDocument(Path);
+                    switch (or)
+                    {
+                        case 0:
+                            DAF.GetDocument(Path, document);
+                            DBD.RewriteDocument(Path,userSession.userLogin);
+                            break;
+                        case 1:
+                            DAF.GetDocument(Path, document);
+                            DBD.AddNewDocument(Path,userSession.userLogin);
+                            break;
+                        case 2:
+                            break;
+                    }    
                     break;
                     default:
                     break;
@@ -141,11 +157,12 @@ public class Program
     {
 
         ClientTables clientTables = new ClientTables(userSession.dataBase);
-        List<Document> documents = clientTables.DocumentsForClient();
-        userSession.Messenger.SendJSON( userSession.clientSocket, documents);
 
         List<Folder> folder = clientTables.FoldersForClient(userSession.userLogin);
         userSession.Messenger.SendJSON(userSession.clientSocket, folder);
+
+        List<Document> documents = clientTables.DocumentsForClient();
+        userSession.Messenger.SendJSON( userSession.clientSocket, documents);
 
         List<Pattern> pattern = clientTables.PatternsForClient();
         userSession.Messenger.SendJSON(userSession.clientSocket, pattern);

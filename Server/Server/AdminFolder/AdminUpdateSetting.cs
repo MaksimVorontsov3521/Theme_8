@@ -23,13 +23,9 @@ namespace Server.AdminFolder
 
             using (DataBase context = new DataBase())
             {
-                Console.WriteLine("Обновление корневой папки");
                 foreach (string dir in allDirectories)
                 {
-                    Console.WriteLine("\nПапка:");
-                    Console.WriteLine(NewPath + "\\" + Path.GetFileName(dir)); // Имя папки без пути
-
-                    string FolderPath = NewPath + "\\" + Path.GetFileName(dir);
+                    string FolderPath = NewPath + "\\" + Path.GetFileName(dir)+"\\";
 
                     // Находим первый товар с таким именем (или null, если не найден)
                     Folder IsFolder = context.Folder
@@ -37,28 +33,27 @@ namespace Server.AdminFolder
 
                     if (IsFolder != null)
                     {
-                        Console.WriteLine($"Папка с таким путём уже существует");
                         continue;
                     }
 
-                    Folder folder = new Folder {FolderPath= $"{NewPath + "\\" + Path.GetFileName(dir)}"};
+                    Folder folder = new Folder {FolderPath= $"{NewPath + "\\" + Path.GetFileName(dir)+"\\"}"};
                     context.Folder.Add(folder);
                     context.SaveChanges();
+                    int lastFolderID = context.Folder.Max(p => p.FolderID);
 
                     // Получаем все файлы (с указанием пути)
                     string[] allFiles = Directory.GetFiles(NewPath + $"\\{Path.GetFileName(dir)}");
-
-                    int FolderId = folder.FolderID;
+                    string[] docName = new string[allFiles.Length];
+                    for (int i = 0; i < allFiles.Length; i++)
+                    {
+                        docName[i]=allFiles[i].Split("\\").Last();
+                    }                   
 
                     List<Document> documents = new List<Document>();
-                    // Выводим список файлов
-                    Console.WriteLine("Файлы:");
-                    foreach (string file in allFiles)
-                    {
-                        Console.WriteLine(Path.GetFileNameWithoutExtension(file));
-                        string StringDocumentName = Path.GetFileNameWithoutExtension(file);
-                        // Имя файла без пути
-                        documents.Add(new Document { FolderId = FolderId, DocumentName = StringDocumentName, IsDone = true,DocumentReadOnly=false });
+                    
+                    for (int i=0;i<docName.Length;i++)
+                    {                        
+                        documents.Add(new Document { FolderID = lastFolderID, DocumentName = docName[i], IsDone = true,DocumentReadOnly=false });
                     }
                     context.AddRange(documents);
                     context.SaveChanges();

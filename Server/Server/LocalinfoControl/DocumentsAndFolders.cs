@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Server.DataBaseFolder.Querys;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace Server.LocalinfoControl
 {
     internal class DocumentsAndFolders
-    {
+    {        
         public byte[] ToSendPath(string Path)       
         {
             try
@@ -28,7 +29,7 @@ namespace Server.LocalinfoControl
             using (FileStream writer = new FileStream(Path, FileMode.Create))
             {
                 writer.Write(document, 0, document.Length);
-            }
+            }            
         }
     }
 }

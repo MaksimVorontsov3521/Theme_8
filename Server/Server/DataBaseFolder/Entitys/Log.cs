@@ -10,15 +10,13 @@ namespace Server.DataBaseFolder.Entitys
     internal class LogTable
     {
         [Key]
-        public int LogId { get; set; }
-        public int LogActionId { get; set; }
-
-        public int UserId { get; set; }
+        public int LogID { get; set; }
+        public int UserID { get; set; }
         public UserTable User { get; set; }
 
-        public int? DocumentId { get; set; }
+        public int? DocumentID { get; set; }
         public Document? Document { get; set; }
-
-        public LogAction LogAction { get; set; }
+        public int LogAction { get; set; }
+        //public LogAction LogActionId { get; set; }
     }
 }

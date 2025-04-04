@@ -10,9 +10,9 @@ namespace Server.DataBaseFolder.Entitys
     internal class LogAction
     {
         [Key]
-        public int ActionId { get; set; }
+        public int ActionID { get; set; }
         public string ActionName { get; set; }
 
-        public List<LogTable> Logs { get; set; } = new();
+        //public List<LogTable> Logs { get; set; } = new();
     }
 }

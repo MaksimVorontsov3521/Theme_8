@@ -17,7 +17,7 @@ namespace Server.DataBaseFolder.Entitys
         public bool DocumentReadOnly { get; set; }
         public string? NameInPattern { get; set; }
 
-        public int FolderId { get; set; }
+        public int FolderID { get; set; }
         public Folder Folder { get; set; }
 
     }
