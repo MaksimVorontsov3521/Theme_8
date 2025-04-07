@@ -11,7 +11,7 @@ namespace Server.DataBaseFolder.Entitys
     internal class UserTable
     {
         [Key]
-        public int UserId { get; set; }
+        public int UserID { get; set; }
         public string UserName { get; set; }
         public string? Surname { get; set; }
         public string? Patronymic { get; set; }

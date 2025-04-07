@@ -8,13 +8,13 @@ F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\
 Admin
 none
 false
-TRACE;DEBUG;NET;NET8_0;NETCOREAPP
+TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 F:\Program\Theme_8\Admin\Admin\Admin\App.xaml
 5-875168605
 
 17197734147
-198-1431420039
+198-344842731
 MainWindow.xaml;Pages\AddNewUser.xaml;Pages\Entrance.xaml;Pages\LogsPage.xaml;Pages\MainWorkPage.xaml;
 
-True
+False
 

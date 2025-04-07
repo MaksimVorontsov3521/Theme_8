@@ -49,17 +49,17 @@ namespace Server.DataBaseFolder.Querys
             }
             using (var db = new DataBase())
             {
-                var user = db.UserTable.First(c => c.UserName == UserLogin);
+                UserTable user = db.UserTable.FirstOrDefault(c => c.UserLogin == UserLogin);
                 var folder = db.Folder.FirstOrDefault(c => c.FolderPath == PathToFolder );
                 var document = db.Document.FirstOrDefault(d => d.DocumentName == st.Last() && d.FolderID == folder.FolderID);
 
                 if (folder != null && document!=null)
                 {
-                    var Log = new Entitys.LogTable
+                    var Log = new LogTable
                     {
                         LogAction = 3,
                         DocumentID = document.DocumentId,
-                        UserID = user.UserId
+                        UserID = user.UserID
                     };
                     db.LogTable.Add(Log);
                     db.SaveChanges();
@@ -98,7 +98,7 @@ namespace Server.DataBaseFolder.Querys
                     {
                         LogAction = 1,
                         DocumentID = lastId,
-                        UserID = user.UserId,
+                        UserID = user.UserID,
                     };
                     db.LogTable.Add(Log);
                     db.SaveChanges();

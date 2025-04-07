@@ -7,20 +7,16 @@
       "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\classes\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\resources\\entitys\\folder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\resources\\entitys\\folder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\resources\\entitys\\serverdocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\resources\\entitys\\serverdocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\pages\\mainworkpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\pages\\mainworkpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\pages\\entrance.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\pages\\entrance.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,58 +26,42 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ServerDocument.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Resources\\Entitys\\ServerDocument.cs",
-              "RelativeDocumentMoniker": "Client\\Resources\\Entitys\\ServerDocument.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Resources\\Entitys\\ServerDocument.cs",
-              "RelativeToolTip": "Client\\Resources\\Entitys\\ServerDocument.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAANAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "Entrance.xaml.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\Entrance.xaml.cs",
+              "RelativeDocumentMoniker": "Client\\Pages\\Entrance.xaml.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\Entrance.xaml.cs",
+              "RelativeToolTip": "Client\\Pages\\Entrance.xaml.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAUwCEAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T10:15:47.56Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T13:06:52.965Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Folder.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Resources\\Entitys\\Folder.cs",
-              "RelativeDocumentMoniker": "Client\\Resources\\Entitys\\Folder.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Resources\\Entitys\\Folder.cs",
-              "RelativeToolTip": "Client\\Resources\\Entitys\\Folder.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T10:14:46.84Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MainWorkPage.xaml.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml.cs",
-              "RelativeDocumentMoniker": "Client\\Pages\\MainWorkPage.xaml.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml.cs",
-              "RelativeToolTip": "Client\\Pages\\MainWorkPage.xaml.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAAwCQAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-04T09:53:31.773Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "MainWorkPage.xaml",
               "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml",
               "RelativeDocumentMoniker": "Client\\Pages\\MainWorkPage.xaml",
               "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml",
               "RelativeToolTip": "Client\\Pages\\MainWorkPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-04T09:53:21.676Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T12:24:50.74Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWorkPage.xaml.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml.cs",
+              "RelativeDocumentMoniker": "Client\\Pages\\MainWorkPage.xaml.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml.cs",
+              "RelativeToolTip": "Client\\Pages\\MainWorkPage.xaml.cs",
+              "ViewState": "AgIAAJIAAAAAAAAAAAAuwKQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T12:21:19.192Z"
             },
             {
               "$type": "Document",
@@ -91,7 +71,7 @@
               "RelativeDocumentMoniker": "Client\\Classes\\Server.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\Server.cs",
               "RelativeToolTip": "Client\\Classes\\Server.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAuwGgAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAMEAAAAAAAAAAAAYwLMAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-26T07:11:21.459Z",
               "EditorCaption": ""

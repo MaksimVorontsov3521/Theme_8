@@ -119,6 +119,7 @@ public class Program
         string message;
         DocumentsAndFolders DAF = new DocumentsAndFolders();
         DBDocumentWork DBD = new DBDocumentWork();
+        string success;
         while (true)
         {
             message = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
@@ -128,6 +129,7 @@ public class Program
                     message = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
                     byte[] byffer = DAF.ToSendPath(message);
                     userSession.Messenger.SendBytes(userSession.clientSocket, byffer);
+                    userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\n Файлы загружены");
                     break;
                 case "GetDocument":
                     string Path = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
@@ -137,13 +139,16 @@ public class Program
                     {
                         case 0:
                             DAF.GetDocument(Path, document);
-                            DBD.RewriteDocument(Path,userSession.userLogin);
+                            DBD.AddNewDocument(Path, userSession.userLogin);
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\nНовый файл добавлен");
                             break;
                         case 1:
                             DAF.GetDocument(Path, document);
-                            DBD.AddNewDocument(Path,userSession.userLogin);
+                            DBD.RewriteDocument(Path, userSession.userLogin);
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\nФайл заменён");
                             break;
                         case 2:
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "Этот файл нельзя заменить");
                             break;
                     }    
                     break;

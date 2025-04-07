@@ -18,6 +18,10 @@ using System.Windows.Controls;
 using Microsoft.Win32;
 using System.Windows.Shapes;
 using System.IO.Pipes;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using System.Windows.Threading;
+using System.Windows.Media.Animation;
 
 namespace Client
 {
@@ -25,6 +29,7 @@ namespace Client
     {
         MainWindow mainWindow;
         ReadAndWrite Messenger = new ReadAndWrite();
+        MainWorkPage page;
 
         Socket clientSocket;
         string serverIP = Settings1.Default.ServerURL;
@@ -44,6 +49,7 @@ namespace Client
             Server server = this;
             Entrance entrance = new Entrance(server);
             mainWindow.WorkPlace.Navigate(entrance);
+            page = new MainWorkPage(this);
         }
 
         public void Connection(string login, string password)
@@ -75,19 +81,18 @@ namespace Client
         }
 
         public void CreateWorkPlace()
-        {
-            MainWorkPage page = new MainWorkPage(this);
+        {           
             for (int i = 0; i < receivedFolders.Count; i++)
             {
                 page.ProjectsListBox.Items.Add(receivedFolders[i].FolderPath);
-            }
+                page.FindProjectComboBox.Items.Add(receivedFolders[i].FolderPath);
+            }            
             mainWindow.MainWorkPageNavigate(page);
         }
 
-        public void UpdateDocuments(MainWorkPage page,int FolderCount)
+        public void UpdateDocuments(int FolderCount)
         {
             int folderID = receivedFolders[FolderCount].FolderID;
-
 
             page.DocumentsListBox.Items.Clear();
             for (int i = 0; i < receivedDocuments.Count; i++)
@@ -121,13 +126,18 @@ namespace Client
         public void DownloadDocument(string ServerFileRoot, string FileName)
         {
             Messenger.SendStrings(clientSocket,"SendPath");
-            Messenger.SendStrings(clientSocket, ServerFileRoot+"\\"+ FileName);
+            Messenger.SendStrings(clientSocket, ServerFileRoot+ FileName);
             byte[] document = Messenger.ReedBytes(clientSocket);
-            string PathToSave = Settings1.Default.RootFolder+"\\"+ FileName;
+
+            string[] projectName = page.ProjectsListBox.SelectedItem.ToString().Split("\\");
+            Directory.CreateDirectory(Settings1.Default.RootFolder + "\\" + projectName[projectName.Length - 2]);
+            string PathToSave = Settings1.Default.RootFolder+"\\"+ projectName[projectName.Length-2] +"\\"+ FileName;
+
             using (FileStream writer = new FileStream(PathToSave, FileMode.Create))
             {
                 writer.Write(document, 0, document.Length);
             }
+            TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
         }
 
         public void SendDocument(string ProjectName, string FileName)
@@ -137,7 +147,61 @@ namespace Client
             Messenger.SendStrings(clientSocket, ProjectName + "\\" + FileParts[FileParts.Length-1]);
             byte[] bytes = File.ReadAllBytes(FileName);
             Messenger.SendBytes(clientSocket, bytes);
+
+            TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
+            if (page.DocumentsListBox.Items.IndexOf(FileParts[FileParts.Length - 1])!=-1)
+            { 
+            return;
+            }
+            
+            ServerDocument serverDocument = new ServerDocument();
+            serverDocument.DocumentName = FileParts[FileParts.Length - 1];
+            serverDocument.IsDone = true;
+            serverDocument.FolderID = receivedFolders[page.ProjectsListBox.SelectedIndex].FolderID;
+ 
+            receivedDocuments.Add(serverDocument);
+            UpdateDocuments(page.ProjectsListBox.SelectedIndex);
         }
 
+        internal string[] FindFolder(string Name)
+        {
+            var matching = receivedFolders.Where(f => f.FolderPath.Contains(Name)).ToList();
+            string[] folders = new string[matching.Count];
+            for (int i = 0; i < folders.Length; i++)
+            {
+                folders[i] = matching[i].FolderPath;
+            }
+            return folders;
+        }
+
+        internal void TransactionResult(string Result)
+        {
+            
+            if (Result.Contains("Успешно"))
+            {
+                page.Popup1Text.Text = Result;
+                page.Popup1.IsOpen = true;
+                page.Popup1Text.Background = new SolidColorBrush(Colors.LightGreen);           
+            }
+            else
+            {
+                page.Popup1Text.Text = Result;
+                page.Popup1.IsOpen = true;
+                page.Popup1Text.Background = new SolidColorBrush(Colors.LightPink);
+            }
+
+            // Таймер для запуска анимации через 2 секунды
+            DispatcherTimer timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(2)
+            };
+            timer.Tick += (sender, e) =>
+            {
+                page.Popup1.IsOpen = false;
+                timer.Stop();
+            };
+            timer.Start();
+
+        }
     }
 }

@@ -14,6 +14,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
+using System.Security.Cryptography.X509Certificates;
+using System.Collections.ObjectModel;
+using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
 
 namespace Client.Pages
 {
@@ -31,7 +35,7 @@ namespace Client.Pages
 
         private void ProjectsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Server.UpdateDocuments(this,ProjectsListBox.SelectedIndex);
+            Server.UpdateDocuments(ProjectsListBox.SelectedIndex);
         }
 
         private void Page_Drop(object sender, DragEventArgs e)
@@ -42,6 +46,15 @@ namespace Client.Pages
             {
                 MessageBox.Show("Выберите проект");
                 return;
+            }
+
+            string[] items = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (items.Length != files.Length)
+            {
+                MessageBox.Show("Извините, папки не поддерживаются.",
+                              "Ошибка",
+                              MessageBoxButton.OK,
+                              MessageBoxImage.Warning);
             }
 
             foreach (string file in files)
@@ -59,11 +72,29 @@ namespace Client.Pages
 
         private void Page_DragEnter(object sender, DragEventArgs e)
         {
-            // Проверяем, что перетаскиваются файлы
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                e.Effects = DragDropEffects.Copy;
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                // Проверка на наличие папок
+                bool hasFolders = files.Any(item =>
+                {
+                    try
+                    {
+                        return Directory.Exists(item);
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                });
+
+                e.Effects = hasFolders ? DragDropEffects.None : DragDropEffects.Copy;
+            }
             else
+            {
                 e.Effects = DragDropEffects.None;
+            }
 
             e.Handled = true;
         }
@@ -99,13 +130,22 @@ namespace Client.Pages
             {
                 Server.SendDocument(ProjectsListBox.SelectedItem.ToString(), DropBox[i]);
             }
+            DropBoxLB.Items.Clear();
         }
 
         private void DocumentAdd_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+
             if (openFileDialog.ShowDialog() == true)
             {
+                string selectedPath = openFileDialog.FileName;
+                if (System.IO.Directory.Exists(selectedPath))
+                {
+                    MessageBox.Show("Пожалуйста, выберите файл, а не папку!", "Ошибка",
+                                   MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 DropBoxLB.Items.Add(openFileDialog.FileName);
             }
         }
@@ -115,12 +155,22 @@ namespace Client.Pages
             if (DocumentsListBox.SelectedIndex == -1 && ProjectsListBox.SelectedIndex==-1)
             { return; }
 
-            Server.DownloadDocument(ProjectsListBox.SelectedItem.ToString(),DocumentsListBox.SelectedItem.ToString()+ ".docx");
+            Server.DownloadDocument(ProjectsListBox.SelectedItem.ToString(),DocumentsListBox.SelectedItem.ToString());
         }
-
-        private void ProjectChange_Click(object sender, RoutedEventArgs e)
+        
+        private void FindProjectButton_Click(object sender, RoutedEventArgs e)
         {
-
+            
+            if (FindProjectTextBox.Text == "")
+            {
+                return;
+            }
+            FindProjectComboBox.Items.Clear();
+            string [] folder = Server.FindFolder(FindProjectTextBox.Text);
+            for (int i = 0; i < folder.Length; i++)
+            {
+                FindProjectComboBox.Items.Add(folder[i]);
+            }
         }
     }
 }

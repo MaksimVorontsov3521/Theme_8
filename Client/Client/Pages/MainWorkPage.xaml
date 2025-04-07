@@ -9,8 +9,7 @@
       Title="MainWorkPage"  AllowDrop="True" Drop="Page_Drop" DragEnter="Page_DragEnter">
 
     <Grid Background="White">
-        <TabControl>
-            
+        <TabControl x:Name="MainTab">
             <!-- Первый таб -->
             <TabItem Name="TabProject">
                 <TabItem.Header>
@@ -19,7 +18,7 @@
                         <TextBlock Margin="3">Проекты</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
-           
+
                 <TabItem.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -39,7 +38,7 @@
                         <Label Content="Сортировка" Grid.Column="0" Grid.Row="1"/>
                         <ComboBox Name="SortBox"  Grid.Column="0" Grid.Row="3"/>
                         <ListBox x:Name="ProjectsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="0" Grid.Row="5" SelectionChanged="ProjectsListBox_SelectionChanged"/>
-                        
+
                         <Label Content="Документ в шаблоне" Grid.Column="1" Grid.Row="1"/>
                         <ComboBox Name="InPatternBox"  Grid.Column="1" Grid.Row="3"/>
                         <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="1" Grid.Row="5"/>
@@ -68,11 +67,10 @@
                             </Grid.RowDefinitions>
                             <Label Content="Проект" Grid.Row="1" HorizontalAlignment="Center"/>
                             <Button x:Name="ProjectDownload" Grid.Row="3" Content="↓ Скачать ↓" HorizontalAlignment="Center"/>
-                            <Button x:Name="ProjectChange" Grid.Row="5" Content="⚙ Изменить ⚙" HorizontalAlignment="Center" Click="ProjectChange_Click"/>
                             <Button x:Name="ProjectIsDone" Grid.Row="7" Content=" ✓ Завершить ✓ " HorizontalAlignment="Center"/>
-                            
-                            
-                            
+
+
+
                             <Label Content="Документ" Grid.Row="9" HorizontalAlignment="Center"/>
                             <Button x:Name="DocumentDownload" Grid.Row="11" Content="↓ Скачать ↓" HorizontalAlignment="Center" Click="DocumentDownload_Click"/>
                             <Button x:Name="DocumentAdd" Grid.Row="13" Content="+ Добавить +" HorizontalAlignment="Center" Click="DocumentAdd_Click"/>
@@ -138,24 +136,24 @@
 
                         <!-- Заголовки -->
 
-                        
-                        
+
+
                         <Rectangle Fill="LightCyan"  Grid.Column="0" Grid.RowSpan="25"/>
                         <Rectangle Fill="Gray" Width="1" Grid.Column="1" HorizontalAlignment="Left" Grid.RowSpan="25"/>
                         <Rectangle Fill="Gray" Width="1" Grid.Column="3" HorizontalAlignment="Right" Grid.RowSpan="25"/>
                         <Rectangle Fill="Wheat"  Grid.Column="4" Grid.RowSpan="25"/>
 
                         <Rectangle Fill="Gray" Grid.ColumnSpan="5" Grid.Row="1" Height="1" VerticalAlignment="Top"/>
-                        
+
                         <Label Content="Изменить проект" Grid.Row="0" HorizontalAlignment="Center"/>
                         <Label Content="Новый проект" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"/>
                         <Label Content="Клиенты" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center"/>
 
                         <!-- Тело -->
-                        
+
                         <!-- Изменить провект -->
                         <Label Content="Найти проект" Grid.Row="1" HorizontalAlignment="Center"/>
-                        <Button x:Name="FindProjectButton" Grid.Row="3" Content="Найти" Margin="10" HorizontalAlignment="Left"/>
+                        <Button x:Name="FindProjectButton" Grid.Row="3" Content="Найти" Margin="10" HorizontalAlignment="Left" Click="FindProjectButton_Click"/>
                         <TextBox x:Name="FindProjectTextBox" Grid.Row="3" HorizontalAlignment="Right" MinWidth="200" Height="25"/>
                         <ComboBox Name="FindProjectComboBox" Grid.Row="5"/>
 
@@ -187,18 +185,18 @@
 
                         <Button Grid.Column="2"  x:Name="CreateyNewProject" Grid.Row="19" Content="Создать"/>
 
-                    </Grid> 
+                    </Grid>
                 </TabItem.Content>
             </TabItem>
 
             <!-- Третий таб -->
-                <TabItem Name="TabSettings">
+            <TabItem Name="TabSettings">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="3"> ⚙ Настройки</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
-                
+
                 <TabItem.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -209,7 +207,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            
+
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="5"/>
@@ -248,7 +246,12 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-
         </TabControl>
+        
+        <Popup x:Name="Popup1" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+            <TextBlock x:Name="Popup1Text" TextWrapping="Wrap" Width="180" Background="LightGreen" Opacity="0.9" >
+            </TextBlock>
+        </Popup>
+        
     </Grid>
 </Page>
