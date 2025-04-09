@@ -8,18 +8,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Entrance">
 
-    <Page.Resources>
-        <Style x:Key="ResizeLable">
-            <Setter Property="Label.FontSize" Value="15"/>
-            <Setter Property="Label.HorizontalAlignment" Value="Center"/>
-            <Setter Property="Label.VerticalAlignment" Value="Center"/>
-        </Style>
-        <Style x:Key="Resize">
-            <Setter Property="TextBox.FontSize" Value="15"/>
-            <Setter Property="Button.FontSize" Value="15"/>
-        </Style>
-    </Page.Resources>
-
 
     <Grid SizeChanged="Grid_SizeChanged">
 
@@ -45,16 +33,15 @@
         <Rectangle Fill="White" Grid.Column="1" Grid.RowSpan="10"/>
 
 
-        <Label Name="LableAvtorizacia" Style="{StaticResource ResizeLable}" Content="Авторизация"  Grid.Row="0" Grid.Column="1" />
-        <Label Name="log" Style="{StaticResource ResizeLable}" Content="Логин" Grid.Row="1" Grid.Column="1" />
-        <Label Name="pas" Style="{StaticResource ResizeLable}" Content="Пароль" Grid.Row="3" Grid.Column="1"  />
+        <Label Name="LableAvtorizacia" Style="{StaticResource LabelCenter}" Content="Авторизация"  Grid.Row="0" Grid.Column="1" />
+        <Label Name="log" Style="{StaticResource LabelCenter}" Content="Логин" Grid.Row="1" Grid.Column="1" />
+        <Label Name="pas" Style="{StaticResource LabelCenter}" Content="Пароль" Grid.Row="3" Grid.Column="1"  />
 
 
-        <TextBox Style="{StaticResource Resize}" x:Name="Login" Text="AAaAA" Grid.Row="2" Grid.Column="1" />
+        <TextBox x:Name="Login" Text="AAaAA" Grid.Row="2" Grid.Column="1" />
         <PasswordBox x:Name="Password" Grid.Row="4" Password="aaAaa" Grid.Column="1" />
 
 
-        <Button Style="{StaticResource Resize}" x:Name="Enter" Content="Войти" Grid.Row="6" Grid.Column="1" Click="Enter_Click"/>
-
+        <Button  Style="{StaticResource RoundedButtonStyle}" x:Name="Enter" Content="Войти" Grid.Row="6" Grid.Column="1" Click="Enter_Click"/>
     </Grid>
 </Page>

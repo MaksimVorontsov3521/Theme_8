@@ -25,8 +25,8 @@ public class Program
     TcpListener server;
     static void Main(string[] args)
     {
-        AdminUpdateSetting setting = new AdminUpdateSetting();
-        setting.UpdateBaseFolder("D:\\Desktop\\Root");
+        //AdminUpdateSetting setting = new AdminUpdateSetting();
+        //setting.UpdateBaseFolder("D:\\Desktop\\Root");
         using (var context = new DataBase())
         {
             try

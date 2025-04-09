@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Client.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainWorkPage"  AllowDrop="True" Drop="Page_Drop" DragEnter="Page_DragEnter">
+      Title="MainWorkPage"  AllowDrop="True" Drop="Page_Drop" DragEnter="Page_DragEnter" SizeChanged="Page_SizeChanged">
 
     <Grid Background="White">
         <TabControl x:Name="MainTab">
@@ -14,8 +14,8 @@
             <TabItem Name="TabProject">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Ellipse Height="10" Width="10" Fill="Black" />
-                        <TextBlock Margin="3">Проекты</TextBlock>
+                        <Ellipse x:Name="SimbolHead2" Height="10" Width="10" Fill="Black" />
+                        <TextBlock x:Name="TBHeader1" Margin="3">Проекты</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
 
@@ -35,11 +35,11 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Label Content="Сортировка" Grid.Column="0" Grid.Row="1"/>
+                        <Label x:Name="Label1Project" Content="Сортировка" Grid.Column="0" Grid.Row="1"/>
                         <ComboBox Name="SortBox"  Grid.Column="0" Grid.Row="3"/>
                         <ListBox x:Name="ProjectsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="0" Grid.Row="5" SelectionChanged="ProjectsListBox_SelectionChanged"/>
 
-                        <Label Content="Документ в шаблоне" Grid.Column="1" Grid.Row="1"/>
+                        <Label x:Name="Label2Project" Content="Документ в шаблоне" Grid.Column="1" Grid.Row="1"/>
                         <ComboBox Name="InPatternBox"  Grid.Column="1" Grid.Row="3"/>
                         <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="1" Grid.Row="5"/>
 
@@ -65,13 +65,13 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="5"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Проект" Grid.Row="1" HorizontalAlignment="Center"/>
-                            <Button x:Name="ProjectDownload" Grid.Row="3" Content="↓ Скачать ↓" HorizontalAlignment="Center"/>
+                            <Label x:Name="Label3Project" Content="Проект" Grid.Row="1" HorizontalAlignment="Center"/>
+                            <Button x:Name="ProjectDownload"  Grid.Row="3" Content="↓ Скачать ↓" HorizontalAlignment="Center"/>
                             <Button x:Name="ProjectIsDone" Grid.Row="7" Content=" ✓ Завершить ✓ " HorizontalAlignment="Center"/>
 
 
 
-                            <Label Content="Документ" Grid.Row="9" HorizontalAlignment="Center"/>
+                            <Label x:Name="Label4Project" Content="Документ" Grid.Row="9" HorizontalAlignment="Center"/>
                             <Button x:Name="DocumentDownload" Grid.Row="11" Content="↓ Скачать ↓" HorizontalAlignment="Center" Click="DocumentDownload_Click"/>
                             <Button x:Name="DocumentAdd" Grid.Row="13" Content="+ Добавить +" HorizontalAlignment="Center" Click="DocumentAdd_Click"/>
                             <Button x:Name="SendFiles" Grid.Row="15" Content="↑ Отправить ↑" HorizontalAlignment="Center" Click="SendFilesToFolder_Click"/>
@@ -87,8 +87,8 @@
             <TabItem Name="Pattern">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Rectangle Height="10" Width="10" Fill="Black" />
-                        <TextBlock Margin="3">Шаблоны и клиетны</TextBlock>
+                        <Rectangle x:Name="SimbolHead1" Height="10" Width="10" Fill="Black" />
+                        <TextBlock x:Name="TBHeader2" Margin="3">Шаблоны и клиетны</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
 
@@ -145,26 +145,26 @@
 
                         <Rectangle Fill="Gray" Grid.ColumnSpan="5" Grid.Row="1" Height="1" VerticalAlignment="Top"/>
 
-                        <Label Content="Изменить проект" Grid.Row="0" HorizontalAlignment="Center"/>
-                        <Label Content="Новый проект" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"/>
-                        <Label Content="Клиенты" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center"/>
+                        <Label Name="Label1Pattern" Content="Изменить проект" Grid.Row="0" HorizontalAlignment="Center"/>
+                        <Label Name="Label2Pattern" Content="Новый проект" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"/>
+                        <Label Name="Label3Pattern" Content="Клиенты" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center"/>
 
                         <!-- Тело -->
 
                         <!-- Изменить провект -->
-                        <Label Content="Найти проект" Grid.Row="1" HorizontalAlignment="Center"/>
+                        <Label Name="Label4Pattern"  Content="Найти проект" Grid.Row="1" HorizontalAlignment="Center"/>
                         <Button x:Name="FindProjectButton" Grid.Row="3" Content="Найти" Margin="10" HorizontalAlignment="Left" Click="FindProjectButton_Click"/>
                         <TextBox x:Name="FindProjectTextBox" Grid.Row="3" HorizontalAlignment="Right" MinWidth="200" Height="25"/>
                         <ComboBox Name="FindProjectComboBox" Grid.Row="5"/>
 
-                        <Label Content="Все департаменты" Grid.Row="7"/>
-                        <Label Content="Департаменты проекта" HorizontalAlignment="Right" Grid.Row="7"/>
+                        <Label Name="Label5Pattern"  Content="Все департаменты" Grid.Row="7"/>
+                        <Label Name="Label6Pattern" Content="Департаменты проекта" HorizontalAlignment="Right" Grid.Row="7"/>
                         <ComboBox Name="AllDepartments" Grid.Row="9" HorizontalAlignment="Left" MinWidth="120"/>
                         <ComboBox Name="ProjectDepartments" Grid.Row="9" HorizontalAlignment="Right" MinWidth="120"/>
                         <Button Content="Добавить" x:Name="ProjectDepartmentsAdd" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120"/>
                         <Button Content="Убрать" x:Name="ProjectDepartmentsRemove" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120"/>
 
-                        <Label Content="Шаблоны" Grid.Row="13"/>
+                        <Label Name="Label7Pattern"  Content="Шаблоны" Grid.Row="13"/>
                         <ComboBox Name="AplyedProjectPattern" Grid.Row="15"/>
                         <Button x:Name="NewPattern" Content="Создать новый шаблон" Grid.Row="17" HorizontalAlignment="Left"/>
 
@@ -172,14 +172,14 @@
 
                         <!-- Новый Проект -->
 
-                        <Label Grid.Column="2" Content="Все департаменты" Grid.Row="7"/>
-                        <Label Grid.Column="2" Content="Департаменты проекта" HorizontalAlignment="Right" Grid.Row="7"/>
+                        <Label Name="Label8Pattern"  Grid.Column="2" Content="Все департаменты" Grid.Row="7"/>
+                        <Label  Name="Label9Pattern" Grid.Column="2" Content="Департаменты проекта" HorizontalAlignment="Right" Grid.Row="7"/>
                         <ComboBox Grid.Column="2" Name="AllDepartmentsNew" Grid.Row="9" HorizontalAlignment="Left" MinWidth="120"/>
                         <ComboBox Grid.Column="2"  Name="ProjectDepartmentsNew" Grid.Row="9" HorizontalAlignment="Right" MinWidth="120"/>
                         <Button Grid.Column="2"  Content="Добавить" x:Name="ProjectDepartmentsAddNew" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120"/>
                         <Button Grid.Column="2"  Content="Убрать" x:Name="ProjectDepartmentsRemoveNew" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120"/>
 
-                        <Label Grid.Column="2"  Content="Шаблоны" Grid.Row="13"/>
+                        <Label Name="Label10Pattern"  Grid.Column="2"  Content="Шаблоны" Grid.Row="13"/>
                         <ComboBox Grid.Column="2"  Name="AplyedNewProjectPattern" Grid.Row="15"/>
                         <Button Grid.Column="2"  x:Name="NewPatternNew" Content="Создать новый шаблон" Grid.Row="17" HorizontalAlignment="Left"/>
 
@@ -193,7 +193,7 @@
             <TabItem Name="TabSettings">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="3"> ⚙ Настройки</TextBlock>
+                        <TextBlock x:Name="TBHeader3" Margin="3"> ⚙ Настройки</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
 

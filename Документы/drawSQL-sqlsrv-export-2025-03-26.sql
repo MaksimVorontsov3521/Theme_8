@@ -56,7 +56,7 @@ CREATE TABLE Document(
     FolderID INT NOT NULL REFERENCES Folder(FolderID),
     DocumentName NVARCHAR(255) NOT NULL,
     IsDone BIT NOT NULL DEFAULT 'false',
-    DeadLine DATE,
+    DeadLine DATETIME2,
     DocumentReadOnly BIT NOT NULL DEFAULT 'false',
     NameInPattern NVARCHAR(255)
 );
@@ -65,10 +65,11 @@ CREATE TABLE LogTable(
     LogID INT PRIMARY KEY IDENTITY (1,1),
     UserID INT NOT NULL REFERENCES UserTable(UserID),
     DocumentID INT REFERENCES Document(DocumentID),
-    LogAction INT NOT NULL REFERENCES LogAction(ActionID)
+    LogAction INT NOT NULL REFERENCES LogAction(ActionID),
+	LogDate DATETIME2
 );
 
-CREATE TABLE Department_Folder(
+CREATE TABLE DepartmentFolder(
     Department_Folder_ID INT PRIMARY KEY IDENTITY (1,1),
     DepartmentID INT NOT NULL REFERENCES Department(DepartmentID),
     FolderID INT NOT NULL REFERENCES Folder(FolderID)

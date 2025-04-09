@@ -172,5 +172,82 @@ namespace Client.Pages
                 FindProjectComboBox.Items.Add(folder[i]);
             }
         }
+
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            int x = (int)e.NewSize.Width;
+            int y = (int)e.NewSize.Height;
+
+            int StandardSize = (x / 100) + (y / 100) + 2;
+
+            SimbolHead1.Width = StandardSize;
+            SimbolHead1.Height = StandardSize;
+
+            SimbolHead2.Width = StandardSize;
+            SimbolHead2.Height = StandardSize;
+
+            TBHeader1.FontSize = StandardSize;
+            TBHeader2.FontSize = StandardSize;
+            TBHeader3.FontSize = StandardSize;
+
+            Label1Project.FontSize = StandardSize;
+            Label2Project.FontSize = StandardSize;
+            Label3Project.FontSize = StandardSize;
+            Label4Project.FontSize = StandardSize;
+
+            SortBox.FontSize = StandardSize;
+            ProjectsListBox.FontSize = StandardSize;
+
+            InPatternBox.FontSize = StandardSize;
+            DocumentsListBox.FontSize = StandardSize;
+
+            ProjectDownload.FontSize = StandardSize;
+            ProjectIsDone.FontSize = StandardSize;
+
+            DocumentDownload.FontSize = StandardSize;
+            DocumentAdd.FontSize = StandardSize;
+            SendFiles.FontSize = StandardSize;
+            DropBoxLB.FontSize = StandardSize;
+
+            FindProjectButton.FontSize = StandardSize;
+
+            //
+
+            Label1Pattern.FontSize = StandardSize;
+            Label2Pattern.FontSize = StandardSize;
+            Label3Pattern.FontSize = StandardSize;
+            Label4Pattern.FontSize = StandardSize;
+            Label5Pattern.FontSize = StandardSize;
+            Label6Pattern.FontSize = StandardSize;
+            Label7Pattern.FontSize = StandardSize;
+            Label8Pattern.FontSize = StandardSize;
+            Label9Pattern.FontSize = StandardSize;
+            Label10Pattern.FontSize = StandardSize;
+
+            FindProjectButton.FontSize = StandardSize;
+            FindProjectTextBox.FontSize = StandardSize;
+            FindProjectComboBox.FontSize = StandardSize;
+
+            AllDepartments.FontSize = StandardSize;
+            ProjectDepartments.FontSize = StandardSize;
+            ProjectDepartmentsAdd.FontSize = StandardSize;
+            ProjectDepartmentsRemove.FontSize = StandardSize;
+
+            AplyedProjectPattern.FontSize = StandardSize;
+            NewPattern.FontSize = StandardSize;
+
+            AplyedNewProjectPattern.FontSize = StandardSize;
+
+            AllDepartmentsNew.FontSize = StandardSize;
+            ProjectDepartmentsNew.FontSize = StandardSize;
+            ProjectDepartmentsAddNew.FontSize = StandardSize;
+            ProjectDepartmentsRemoveNew.FontSize = StandardSize;
+
+            AplyedNewProjectPattern.FontSize = StandardSize;
+            NewPatternNew.FontSize = StandardSize;
+
+            CreateyNewProject.FontSize = StandardSize;
+        }
     }
 }
