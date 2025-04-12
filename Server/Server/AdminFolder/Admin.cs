@@ -92,7 +92,7 @@ namespace Server.AdminFolder
             //
             //
 
-
+            AdminAdd adminAdd = new AdminAdd();
             AdminUpdateSetting adminUpdateSetting = new AdminUpdateSetting();
             bool whileBoll = true;
             while (whileBoll)
@@ -102,6 +102,9 @@ namespace Server.AdminFolder
                 {
                     case "UpdateBaseFolder":
                         adminUpdateSetting.UpdateBaseFolder(AdminCommand[1]);
+                        break;
+                    case "AddDepartment":
+                        adminAdd.AddDepartment(AdminCommand[1]);
                         break;
                     default:
                         Console.WriteLine("Неизвестная команда");

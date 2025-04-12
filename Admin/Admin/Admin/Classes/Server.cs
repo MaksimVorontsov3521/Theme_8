@@ -84,5 +84,10 @@ namespace Admin.Classes
         {
             Messenger.SendStrings(clientSocket, "UpdateBaseFolder\a"+ NewPath);
         }
+
+        public void AddDepartment(string DepartmentName)
+        {
+            Messenger.SendStrings(clientSocket, "AddDepartment\a" + DepartmentName);
+        }
     }
 }

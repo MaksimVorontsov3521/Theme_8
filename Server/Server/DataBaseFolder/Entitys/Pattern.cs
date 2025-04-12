@@ -10,7 +10,7 @@ namespace Server.DataBaseFolder.Entitys
     internal class Pattern
     {
         [Key]
-        public int PatternId { get; set; }
+        public int PatternID { get; set; }
         public string PatternName { get; set; }
         public string? PatternDescription { get; set; }
 

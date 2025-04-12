@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Server.DataBaseFolder.Entitys
 {
-    internal class Department_Folder
+    internal class DepartmentFolder
     {
         [Key]
-        public int DepartmentFolderId { get; set; }
+        public int DepartmentFolderID { get; set; }
 
-        public int DepartmentId { get; set; }
+        public int DepartmentID { get; set; }
         public Department Department { get; set; }
 
-        public int FolderId { get; set; }
+        public int FolderID { get; set; }
         public Folder Folder { get; set; }
 
     }

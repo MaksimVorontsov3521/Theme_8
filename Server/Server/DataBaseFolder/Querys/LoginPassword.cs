@@ -18,7 +18,7 @@ namespace Server.DataBaseFolder.DbContexts
             this.dbContext = dbContext;
         }
 
-        public int Login(string login, string enteredPassword)
+        public UserTable Login(string login, string enteredPassword)
         {
             using (var context = new DataBase())
             {
@@ -27,9 +27,24 @@ namespace Server.DataBaseFolder.DbContexts
 
                 foreach (var worker in X)
                 {
-                    return worker.RoleID;                    
+                    return worker;                 
                 }
-                return -1;
+                return null;
+            }
+        }
+
+        public int GetLevel(int UserRoleID)
+        {
+            using (var context = new DataBase())
+            {
+                var X = context.RoleTable
+                    .Where(w => w.RoleId == UserRoleID);
+
+                foreach (var role in X)
+                {
+                    return role.RoleLevel;
+                }
+                return 100;
             }
         }
 

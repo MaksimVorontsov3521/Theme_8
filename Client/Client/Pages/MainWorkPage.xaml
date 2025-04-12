@@ -23,7 +23,9 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -37,13 +39,33 @@
 
                         <Label x:Name="Label1Project" Content="Сортировка" Grid.Column="0" Grid.Row="1"/>
                         <ComboBox Name="SortBox"  Grid.Column="0" Grid.Row="3"/>
-                        <ListBox x:Name="ProjectsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="0" Grid.Row="5" SelectionChanged="ProjectsListBox_SelectionChanged"/>
 
-                        <Label x:Name="Label2Project" Content="Документ в шаблоне" Grid.Column="1" Grid.Row="1"/>
-                        <ComboBox Name="InPatternBox"  Grid.Column="1" Grid.Row="3"/>
-                        <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="1" Grid.Row="5"/>
+                        <ListBox x:Name="ProjectsListBox" d:ItemsSource="{d:SampleData ItemCount=1}"
+                                 Grid.Column="0" Grid.Row="5" SelectionChanged="ProjectsListBox_SelectionChanged">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="ContextMenu">
+                                        <Setter.Value>
+                                            <ContextMenu>
+                                                <MenuItem Header="Скачать"/>
+                                                <MenuItem Header="Завершить"/>
+                                            </ContextMenu>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="ContextMenu.IsOpen" Value="True"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+                           
+                        <Label x:Name="Label2Project" Content="Документ в шаблоне" Grid.Column="2" Grid.Row="1"/>
+                        <ComboBox Name="InPatternBox"  Grid.Column="2" Grid.Row="3"/>
+                        <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="2" Grid.Row="5"/>
 
-                        <Grid Grid.Column="2" Grid.Row="5">
+                        <Grid Grid.Column="4" Grid.Row="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="auto"/>
@@ -54,28 +76,14 @@
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="5"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="5"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="5"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="5"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="5"/>
                                 <RowDefinition Height="*"/>
-                                <RowDefinition Height="5"/>
                             </Grid.RowDefinitions>
-                            <Label x:Name="Label3Project" Content="Проект" Grid.Row="1" HorizontalAlignment="Center"/>
-                            <Button x:Name="ProjectDownload"  Grid.Row="3" Content="↓ Скачать ↓" HorizontalAlignment="Center"/>
-                            <Button x:Name="ProjectIsDone" Grid.Row="7" Content=" ✓ Завершить ✓ " HorizontalAlignment="Center"/>
 
-
-
-                            <Label x:Name="Label4Project" Content="Документ" Grid.Row="9" HorizontalAlignment="Center"/>
-                            <Button x:Name="DocumentDownload" Grid.Row="11" Content="↓ Скачать ↓" HorizontalAlignment="Center" Click="DocumentDownload_Click"/>
-                            <Button x:Name="DocumentAdd" Grid.Row="13" Content="+ Добавить +" HorizontalAlignment="Center" Click="DocumentAdd_Click"/>
-                            <Button x:Name="SendFiles" Grid.Row="15" Content="↑ Отправить ↑" HorizontalAlignment="Center" Click="SendFilesToFolder_Click"/>
-                            <ListBox x:Name="DropBoxLB" Grid.Row="17" SelectionChanged="DropBoxLB_SelectionChanged"/>
+                            <Label x:Name="Label4Project" Content="Документ" Grid.Row="1" HorizontalAlignment="Center"/>
+                            <Button x:Name="DocumentDownload" Grid.Row="3" Content="↓ Скачать ↓" HorizontalAlignment="Center" Click="DocumentDownload_Click"/>
+                            <Button x:Name="DocumentAdd" Grid.Row="5" Content="+ Добавить +" HorizontalAlignment="Center" Click="DocumentAdd_Click"/>
+                            <Button x:Name="SendFiles" Grid.Row="7" Content="↑ Отправить ↑" HorizontalAlignment="Center" Click="SendFilesToFolder_Click"/>
+                            <ListBox x:Name="DropBoxLB" Grid.Row="11" SelectionChanged="DropBoxLB_SelectionChanged"/>
                         </Grid>
                     </Grid>
 
@@ -161,7 +169,7 @@
                         <Label Name="Label6Pattern" Content="Департаменты проекта" HorizontalAlignment="Right" Grid.Row="7"/>
                         <ComboBox Name="AllDepartments" Grid.Row="9" HorizontalAlignment="Left" MinWidth="120"/>
                         <ComboBox Name="ProjectDepartments" Grid.Row="9" HorizontalAlignment="Right" MinWidth="120"/>
-                        <Button Content="Добавить" x:Name="ProjectDepartmentsAdd" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120"/>
+                        <Button Content="Добавить" x:Name="ProjectDepartmentsAdd" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120" Height="20" Grid.RowSpan="2" VerticalAlignment="Top" Click="ProjectDepartmentsAdd_Click"/>
                         <Button Content="Убрать" x:Name="ProjectDepartmentsRemove" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120"/>
 
                         <Label Name="Label7Pattern"  Content="Шаблоны" Grid.Row="13"/>
@@ -172,18 +180,22 @@
 
                         <!-- Новый Проект -->
 
+
+                        <Label Name="Label11Pattern" Grid.Column="2" Content="Название проекта" Grid.Row="1" HorizontalAlignment="Center"/>
+                        <TextBox x:Name="NewProjectName" Grid.Column="2" Grid.Row="3"  MinWidth="200" Height="25"/>
+
                         <Label Name="Label8Pattern"  Grid.Column="2" Content="Все департаменты" Grid.Row="7"/>
                         <Label  Name="Label9Pattern" Grid.Column="2" Content="Департаменты проекта" HorizontalAlignment="Right" Grid.Row="7"/>
                         <ComboBox Grid.Column="2" Name="AllDepartmentsNew" Grid.Row="9" HorizontalAlignment="Left" MinWidth="120"/>
                         <ComboBox Grid.Column="2"  Name="ProjectDepartmentsNew" Grid.Row="9" HorizontalAlignment="Right" MinWidth="120"/>
-                        <Button Grid.Column="2"  Content="Добавить" x:Name="ProjectDepartmentsAddNew" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120"/>
-                        <Button Grid.Column="2"  Content="Убрать" x:Name="ProjectDepartmentsRemoveNew" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120"/>
+                        <Button Grid.Column="2"  Content="Добавить" x:Name="ProjectDepartmentsAddNew" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120" Click="ProjectDepartmentsAddNew_Click"/>
+                        <Button Grid.Column="2"  Content="Убрать" x:Name="ProjectDepartmentsRemoveNew" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120" Click="ProjectDepartmentsRemoveNew_Click"/>
 
                         <Label Name="Label10Pattern"  Grid.Column="2"  Content="Шаблоны" Grid.Row="13"/>
                         <ComboBox Grid.Column="2"  Name="AplyedNewProjectPattern" Grid.Row="15"/>
                         <Button Grid.Column="2"  x:Name="NewPatternNew" Content="Создать новый шаблон" Grid.Row="17" HorizontalAlignment="Left"/>
 
-                        <Button Grid.Column="2"  x:Name="CreateyNewProject" Grid.Row="19" Content="Создать"/>
+                        <Button Grid.Column="2"  x:Name="CreateNewProject" Grid.Row="19" Content="Создать" Click="CreateNewProject_Click"/>
 
                     </Grid>
                 </TabItem.Content>

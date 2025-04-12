@@ -25,9 +25,21 @@ namespace Server.DataBaseFolder
         public DbSet<Department> Department { get; set; }
         public DbSet<Pattern> Pattern { get; set; }
         public DbSet<RequiredInPattern> RequiredInPattern { get; set; }
+        public DbSet<DepartmentFolder> DepartmentFolder { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DepartmentFolder>()
+    .HasKey(df => df.DepartmentFolderID);
 
+            modelBuilder.Entity<DepartmentFolder>()
+                .HasOne(df => df.Department)
+                .WithMany(d => d.DepartmentFolders)
+                .HasForeignKey(df => df.DepartmentID);
+
+            modelBuilder.Entity<DepartmentFolder>()
+                .HasOne(df => df.Folder)
+                .WithMany(f => f.DepartmentFolders)
+                .HasForeignKey(df => df.FolderID);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

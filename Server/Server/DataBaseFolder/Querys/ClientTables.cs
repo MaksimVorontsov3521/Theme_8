@@ -77,5 +77,19 @@ namespace Server.DataBaseFolder.Querys
         }
 
 
+        public List<Department> DepartmentsForClient()
+        {
+            List<Department> Documents = new List<Department>();
+            using (var context = new DataBase())
+            {
+                var X = context.Department;
+
+                foreach (var document in X)
+                {
+                    Documents.Add(document);
+                }
+                return Documents;
+            }
+        }
     }
 }

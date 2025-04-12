@@ -6,11 +6,50 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using Server.Settings;
+using System.IO;
 
 namespace Server.DataBaseFolder.Querys
 {
     internal class DBDocumentWork
     {
+
+        public bool CheckIsProjectNameUnique(string ProjectName)
+        {
+            ProjectName = Settings1.Default.BaseFolder +"\\"+ ProjectName+"\\";
+            using (var db = new DataBase())
+            {
+                Folder folder = db.Folder.FirstOrDefault(f => f.FolderPath == ProjectName);
+                if (folder == null)
+                { return true;}
+                else { return false; }
+            }      
+        }
+
+        public void NewProject(string ProjectName, int[] departmentsIDs, int patternId)
+        {
+            Folder folder = new Folder();
+            folder.FolderPath = Settings1.Default.BaseFolder + "\\" + ProjectName+"\\";
+            folder.PatternID = ++patternId;
+            using (var db = new DataBase())
+            {
+                db.Folder.Add(folder);
+                db.SaveChanges();
+
+                Folder LastId = db.Folder.FirstOrDefault(f=>f.FolderPath== folder.FolderPath);
+                for (int i = 0; i < departmentsIDs.Length; i++)
+                {
+                    var DF = new DepartmentFolder
+                    {
+                        DepartmentID = departmentsIDs[i],
+                        FolderID = LastId.FolderID,
+                    }
+                    ;
+                    db.DepartmentFolder.Add(DF);
+                }
+                db.SaveChanges();
+            }
+        }
 
         public int CanAddNewDocument(string path)
         {
@@ -64,8 +103,6 @@ namespace Server.DataBaseFolder.Querys
                     db.LogTable.Add(Log);
                     db.SaveChanges();
                 }
-
-
             }
         }
         public void AddNewDocument(string path,string UserLogin)

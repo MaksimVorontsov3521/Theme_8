@@ -22,6 +22,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
+using Client.Resources.Entitys;
 
 namespace Client
 {
@@ -31,14 +32,12 @@ namespace Client
         ReadAndWrite Messenger = new ReadAndWrite();
         MainWorkPage page;
 
+        Session session;
         Socket clientSocket;
         string serverIP = Settings1.Default.ServerURL;
         int port = Settings1.Default.ServerPort;
 
-        internal List<ServerDocument> receivedDocuments = new List<ServerDocument>();
-        internal List<Folder> receivedFolders = new List<Folder>();
-        internal List<Pattern> receivedPatterns = new List<Pattern>();
-        internal List<RequiredInPattern> receivedRequiredInPatterns = new List<RequiredInPattern>();
+
 
         private string[] LoginPassword = new string[2];
 
@@ -68,38 +67,50 @@ namespace Client
 
 
             Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
+            string response = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            if (response.Contains("Right"))
+            {
+                session = new Session();
+                session.level = Convert.ToInt32(response.Split("\a").Last());
+                LoginPassword[0] = login;
+                LoginPassword[1] = password;
 
-            if (Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)).Contains("Right"))
-            { }
+            }
             else { MessageBox.Show("Неверный логин или пароль");return; }
-
-            LoginPassword[0]=login;
-            LoginPassword[1]=password;
-
             GetTables();
             CreateWorkPlace();
         }
 
         public void CreateWorkPlace()
         {           
-            for (int i = 0; i < receivedFolders.Count; i++)
+            for (int i = 0; i < session.receivedFolders.Count; i++)
             {
-                page.ProjectsListBox.Items.Add(receivedFolders[i].FolderPath);
-                page.FindProjectComboBox.Items.Add(receivedFolders[i].FolderPath);
-            }            
+                page.ProjectsListBox.Items.Add(session.receivedFolders[i].FolderPath);
+                page.FindProjectComboBox.Items.Add(session.receivedFolders[i].FolderPath);
+            }
+            for (int i = 0; i < session.department.Count; i++)
+            {
+                page.AllDepartments.Items.Add(session.department[i].DepartmentID +"\a "+session.department[i].DepartmentName);
+                page.AllDepartmentsNew.Items.Add(session.department[i].DepartmentID + "\a " + session.department[i].DepartmentName);
+            }
+            for (int i = 0; i < session.receivedPatterns.Count; i++)
+            {
+                page.AplyedNewProjectPattern.Items.Add(session.receivedPatterns[i].PatternName);
+                page.AplyedProjectPattern.Items.Add(session.receivedPatterns[i].PatternName);
+            }
             mainWindow.MainWorkPageNavigate(page);
         }
 
         public void UpdateDocuments(int FolderCount)
         {
-            int folderID = receivedFolders[FolderCount].FolderID;
+            int folderID = session.receivedFolders[FolderCount].FolderID;
 
             page.DocumentsListBox.Items.Clear();
-            for (int i = 0; i < receivedDocuments.Count; i++)
+            for (int i = 0; i < session.receivedDocuments.Count; i++)
             {
-                if (receivedDocuments[i].FolderID == folderID)
+                if (session.receivedDocuments[i].FolderID == folderID)
                 {
-                    page.DocumentsListBox.Items.Add(receivedDocuments[i].DocumentName);
+                    page.DocumentsListBox.Items.Add(session.receivedDocuments[i].DocumentName);
                 }
             }
         }
@@ -108,19 +119,27 @@ namespace Client
         {
             byte[] jsonBytes = Messenger.ReedBytes(clientSocket);
             string json = Encoding.UTF8.GetString(jsonBytes);
-            receivedFolders = JsonSerializer.Deserialize<List<Folder>>(json);
+            session.thisUser = JsonSerializer.Deserialize<ThisUser>(json);
 
             jsonBytes = Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
-            receivedDocuments = JsonSerializer.Deserialize<List<ServerDocument>>(json);
+            session.receivedFolders = JsonSerializer.Deserialize<List<Folder>>(json);
 
             jsonBytes = Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
-            receivedPatterns = JsonSerializer.Deserialize<List<Pattern>>(json);
+            session.receivedDocuments = JsonSerializer.Deserialize<List<ServerDocument>>(json);
 
             jsonBytes = Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
-            receivedRequiredInPatterns = JsonSerializer.Deserialize<List<RequiredInPattern>>(json);
+            session.receivedPatterns = JsonSerializer.Deserialize<List<Pattern>>(json);
+
+            jsonBytes = Messenger.ReedBytes(clientSocket);
+            json = Encoding.UTF8.GetString(jsonBytes);
+            session.receivedRequiredInPatterns = JsonSerializer.Deserialize<List<RequiredInPattern>>(json);
+
+            jsonBytes = Messenger.ReedBytes(clientSocket);
+            json = Encoding.UTF8.GetString(jsonBytes);
+            session.department = JsonSerializer.Deserialize<List<Department>>(json);
         }
 
         public void DownloadDocument(string ServerFileRoot, string FileName)
@@ -137,6 +156,25 @@ namespace Client
             {
                 writer.Write(document, 0, document.Length);
             }
+            TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
+        }
+
+        internal void CreateNewProject(string[] departments, int patternID, string ProjectName)
+        {
+            int[] departmentsIDs = new int[departments.Length];
+            for (int i = 0; i < departments.Length; i++)
+            {
+                departmentsIDs[i]=Convert.ToInt32(departments[i].Split("\a").First());
+            }
+            Messenger.SendStrings(clientSocket, "CreateNewProject");
+            Messenger.SendStrings(clientSocket, ProjectName);
+
+            string Unique= Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            if (Unique != "") { TransactionResult(Unique);return; }
+
+
+            Messenger.SendJSON(clientSocket, departmentsIDs);
+            Messenger.SendStrings(clientSocket, patternID.ToString());
             TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
         }
 
@@ -157,15 +195,15 @@ namespace Client
             ServerDocument serverDocument = new ServerDocument();
             serverDocument.DocumentName = FileParts[FileParts.Length - 1];
             serverDocument.IsDone = true;
-            serverDocument.FolderID = receivedFolders[page.ProjectsListBox.SelectedIndex].FolderID;
- 
-            receivedDocuments.Add(serverDocument);
+            serverDocument.FolderID = session.receivedFolders[page.ProjectsListBox.SelectedIndex].FolderID;
+
+            session.receivedDocuments.Add(serverDocument);
             UpdateDocuments(page.ProjectsListBox.SelectedIndex);
         }
 
         internal string[] FindFolder(string Name)
         {
-            var matching = receivedFolders.Where(f => f.FolderPath.Contains(Name)).ToList();
+            var matching = session.receivedFolders.Where(f => f.FolderPath.Contains(Name)).ToList();
             string[] folders = new string[matching.Count];
             for (int i = 0; i < folders.Length; i++)
             {

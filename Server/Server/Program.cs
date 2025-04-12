@@ -17,11 +17,12 @@ using System.Net.Sockets;
 using System.Resources;
 using System.Text;
 using System.Xml.XPath;
+using System.Text.Json;
 
 public class Program
 {
     string ipAddress = "127.0.0.1";
-    int port = Server.Settings.Settings1.Default.UserPort;
+    int port = Settings1.Default.UserPort;
     TcpListener server;
     static void Main(string[] args)
     {
@@ -88,22 +89,24 @@ public class Program
         // Проверка пароля
         DataBase dataBase = new DataBase();
         LoginPassword loginPassword = new LoginPassword(dataBase);
-        int a = -1;
+        UserTable user;
         string[] clientLoginPassword = message.Split('\a');
         try
-        {            
-            a = loginPassword.Login(clientLoginPassword[0], clientLoginPassword[1]);
+        {
+            user = loginPassword.Login(clientLoginPassword[0], clientLoginPassword[1]);
         }
         catch { Console.WriteLine("Неправильный ввод от компьютера");return; }
 
         UserSession userSession = new UserSession();
-        if (a > 1)
+        if (user != null)
         {
-            Messenger.SendStrings(clientSocket, "Right");
-            //      
-            userSession.userLogin = clientLoginPassword[0];
+            userSession.User = user;
             userSession.clientSocket = clientSocket;
             userSession.Messenger = Messenger;
+            userSession.level = loginPassword.GetLevel(userSession.User.RoleID);
+            //
+            Messenger.SendStrings(clientSocket, "Right\a"+ userSession.level);  
+
         }
         else
         {
@@ -139,20 +142,53 @@ public class Program
                     {
                         case 0:
                             DAF.GetDocument(Path, document);
-                            DBD.AddNewDocument(Path, userSession.userLogin);
+                            DBD.AddNewDocument(Path, userSession.User.UserLogin);
                             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\nНовый файл добавлен");
                             break;
                         case 1:
                             DAF.GetDocument(Path, document);
-                            DBD.RewriteDocument(Path, userSession.userLogin);
+                            DBD.RewriteDocument(Path, userSession.User.UserLogin);
                             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\nФайл заменён");
                             break;
                         case 2:
                             userSession.Messenger.SendStrings(userSession.clientSocket, "Этот файл нельзя заменить");
                             break;
-                    }    
+                    }
                     break;
-                    default:
+                case "CreateNewProject":
+                    {
+                        byte[] Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                        string ProjectName = Encoding.UTF8.GetString(Bytes);
+
+                        if (DBD.CheckIsProjectNameUnique(ProjectName) == false)
+                        {
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "Проект с таким названием уже существует.\n Возможно проект уже создан другим сотрудником.");
+                            break;
+                        }
+                        else
+                        {
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "");
+                        }
+
+                        Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                        string json = Encoding.UTF8.GetString(Bytes);
+                        int[] departmentsIDs = JsonSerializer.Deserialize<int[]>(json);
+
+                        Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                        int patternID = Convert.ToInt32(Encoding.UTF8.GetString(Bytes));
+
+                        Directory.CreateDirectory(Settings1.Default.BaseFolder + "\\" + ProjectName);
+                        DBD.NewProject(ProjectName, departmentsIDs, patternID);
+                        userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно");
+
+                    }
+                    break;
+                case "ChangeProjectInfo":
+                    {
+
+                    }
+                    break;
+                default:
                     break;
             }
         }
@@ -161,9 +197,11 @@ public class Program
     internal void SendTables(UserSession userSession)
     {
 
+        userSession.Messenger.SendJSON(userSession.clientSocket, userSession.User);
+
         ClientTables clientTables = new ClientTables(userSession.dataBase);
 
-        List<Folder> folder = clientTables.FoldersForClient(userSession.userLogin);
+        List<Folder> folder = clientTables.FoldersForClient(userSession.User.UserLogin);
         userSession.Messenger.SendJSON(userSession.clientSocket, folder);
 
         List<Document> documents = clientTables.DocumentsForClient();
@@ -174,6 +212,18 @@ public class Program
 
         List<RequiredInPattern> requiredInPattern = clientTables.RequiredInPatternsForClient();
         userSession.Messenger.SendJSON(userSession.clientSocket, requiredInPattern);
+
+        if (userSession.level <= Settings2.Default.CanCreateNewProject)
+        {
+            List<Department> departmentsForClient = clientTables.DepartmentsForClient();
+            userSession.Messenger.SendJSON(userSession.clientSocket, departmentsForClient);
+        }
+        else
+        {
+            List<Department> departmentsForClient = new List<Department> { };
+            userSession.Messenger.SendJSON(userSession.clientSocket, departmentsForClient);
+        }
+
     }
     
 }

@@ -193,7 +193,6 @@ namespace Client.Pages
 
             Label1Project.FontSize = StandardSize;
             Label2Project.FontSize = StandardSize;
-            Label3Project.FontSize = StandardSize;
             Label4Project.FontSize = StandardSize;
 
             SortBox.FontSize = StandardSize;
@@ -201,9 +200,6 @@ namespace Client.Pages
 
             InPatternBox.FontSize = StandardSize;
             DocumentsListBox.FontSize = StandardSize;
-
-            ProjectDownload.FontSize = StandardSize;
-            ProjectIsDone.FontSize = StandardSize;
 
             DocumentDownload.FontSize = StandardSize;
             DocumentAdd.FontSize = StandardSize;
@@ -247,7 +243,35 @@ namespace Client.Pages
             AplyedNewProjectPattern.FontSize = StandardSize;
             NewPatternNew.FontSize = StandardSize;
 
-            CreateyNewProject.FontSize = StandardSize;
+            CreateNewProject.FontSize = StandardSize;
+        }
+
+        private void ProjectDepartmentsAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CreateNewProject_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProjectDepartmentsNew.Items.Count > 0 && AplyedNewProjectPattern.SelectedIndex != -1 && NewProjectName.Text != "")
+            {
+                Server.CreateNewProject(ProjectDepartmentsNew.Items.OfType<string>().ToArray(), AplyedNewProjectPattern.SelectedIndex, NewProjectName.Text);
+            }
+            else { Server.TransactionResult("Все отмеченные поля обязательны для заполнения");}
+        }
+
+        private void ProjectDepartmentsAddNew_Click(object sender, RoutedEventArgs e)
+        {
+            if (AllDepartmentsNew.SelectedIndex!=-1)
+            { ProjectDepartmentsNew.Items.Add(AllDepartmentsNew.SelectedItem); }       
+        }
+
+        private void ProjectDepartmentsRemoveNew_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProjectDepartmentsNew.SelectedIndex != -1)
+            {
+                ProjectDepartmentsNew.Items.RemoveAt(ProjectDepartmentsNew.SelectedIndex);
+            }
         }
     }
 }

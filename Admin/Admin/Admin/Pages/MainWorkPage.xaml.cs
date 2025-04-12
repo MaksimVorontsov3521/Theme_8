@@ -1,4 +1,5 @@
 ﻿using Admin.Classes;
+using Admin.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +39,22 @@ namespace Admin.Pages
             server.UpdateBaseFolder(BaseFolderTB.Text);
         }
 
-        private void PatternAndLogs_Navigated(object sender, NavigationEventArgs e)
+
+        private void ButtonAddDepartment_Click(object sender, RoutedEventArgs e)
+        {
+            server.AddDepartment(FindDepartment.Text);
+        }
+
+        private void ButtonChangeDepartment_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-
+        private void ButtonChange_Click(object sender, RoutedEventArgs e)
+        {
+            User user = UsersGrid.SelectedItem
+            AddNewUser addNewUser = new AddNewUser();
+            AddNewUserFrame.Navigate(addNewUser);
+        }
     }
 }

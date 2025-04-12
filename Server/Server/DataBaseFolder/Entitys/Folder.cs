@@ -20,6 +20,6 @@ namespace Server.DataBaseFolder.Entitys
         public Client Client { get; set; }
 
         public List<Document> Documents { get; set; } = new();
-        public List<Department> Departments { get; set; } = new();
+        public List<DepartmentFolder> DepartmentFolders { get; set; } = new();
     }
 }

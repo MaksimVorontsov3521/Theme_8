@@ -1,4 +1,5 @@
 ﻿using Server.Security;
+using Server.DataBaseFolder.Entitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Server.Session
         internal ReadAndWrite Messenger { get; set; }
         internal DataBase dataBase { get; set; }
         internal Socket clientSocket { get; set; }
-        internal string userLogin { get; set; }
+        internal UserTable User { get; set; }
+        internal int level { get; set; }
     }
 }

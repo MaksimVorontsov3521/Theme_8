@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Admin.Resources
+namespace Client.Resources.Entitys
 {
-    internal class User
+    class ThisUser
     {
+
         [Key]
         public int UserID { get; set; }
         public string UserName { get; set; }
@@ -19,9 +19,7 @@ namespace Admin.Resources
         public string UserLogin { get; set; }
         public string UserPassword { get; set; }
 
-        public int RoleID { get; set; }
-
         public int DepartmentID { get; set; }
-
+        public Department Department { get; set; }
     }
 }

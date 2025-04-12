@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Admin.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +21,9 @@ namespace Admin.Pages
     /// </summary>
     public partial class AddNewUser : Page
     {
-        public AddNewUser()
+        public AddNewUser(object user)
         {
+            user.
             InitializeComponent();
         }
     }
