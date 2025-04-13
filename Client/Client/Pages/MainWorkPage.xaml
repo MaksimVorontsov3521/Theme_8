@@ -170,13 +170,13 @@
                         <ComboBox Name="AllDepartments" Grid.Row="9" HorizontalAlignment="Left" MinWidth="120"/>
                         <ComboBox Name="ProjectDepartments" Grid.Row="9" HorizontalAlignment="Right" MinWidth="120"/>
                         <Button Content="Добавить" x:Name="ProjectDepartmentsAdd" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120" Height="20" Grid.RowSpan="2" VerticalAlignment="Top" Click="ProjectDepartmentsAdd_Click"/>
-                        <Button Content="Убрать" x:Name="ProjectDepartmentsRemove" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120"/>
+                        <Button Content="Убрать" x:Name="ProjectDepartmentsRemove" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120" Click="ProjectDepartmentsRemove_Click"/>
 
                         <Label Name="Label7Pattern"  Content="Шаблоны" Grid.Row="13"/>
                         <ComboBox Name="AplyedProjectPattern" Grid.Row="15"/>
                         <Button x:Name="NewPattern" Content="Создать новый шаблон" Grid.Row="17" HorizontalAlignment="Left"/>
 
-                        <Button x:Name="ApplyNewProjectProperties" Grid.Row="19" Content="Применить"/>
+                        <Button x:Name="ApplyNewProjectProperties" Grid.Row="19" Content="Применить" Click="ApplyNewProjectProperties_Click"/>
 
                         <!-- Новый Проект -->
 

@@ -18,6 +18,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Collections.ObjectModel;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
+using Client.Resources;
 
 namespace Client.Pages
 {
@@ -163,7 +164,8 @@ namespace Client.Pages
             
             if (FindProjectTextBox.Text == "")
             {
-                return;
+                FindProjectComboBox.Items.Clear();
+
             }
             FindProjectComboBox.Items.Clear();
             string [] folder = Server.FindFolder(FindProjectTextBox.Text);
@@ -248,7 +250,69 @@ namespace Client.Pages
 
         private void ProjectDepartmentsAdd_Click(object sender, RoutedEventArgs e)
         {
+            if (AllDepartments.SelectedIndex != -1)
+            {
+                ProjectDepartments.Items.Add(AllDepartments.SelectedItem);
+                ProjectDepartments.SelectedItem = AllDepartments.SelectedItem.ToString();
+                AllDepartments.Items.RemoveAt(AllDepartments.SelectedIndex);
+            }
+        }
 
+        private void ProjectDepartmentsRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProjectDepartments.SelectedIndex != -1)
+            {
+                AllDepartments.Items.Add(ProjectDepartments.SelectedItem);
+                ProjectDepartments.Items.RemoveAt(ProjectDepartments.SelectedIndex);
+                string[] array = new string[AllDepartments.Items.Count];
+                for (int i = 0; i < array.Length; i++)
+                {
+                    array[i] = AllDepartments.Items[i].ToString();
+                }
+                Array.Sort(array, StringComparer.OrdinalIgnoreCase);
+                AllDepartments.Items.Clear();
+                for (int i = 0; i < array.Length; i++)
+                {
+                    AllDepartments.Items.Add(array[i]);
+                }
+            }
+        }
+        private void ApplyNewProjectProperties_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProjectDepartments.Items.Count > 0 && AplyedProjectPattern.SelectedIndex != -1 && FindProjectComboBox.SelectedIndex!=-1)
+            {
+                Server.ChangeProjectProperties(ProjectDepartments.Items.OfType<string>().ToArray(), AplyedProjectPattern.SelectedIndex, FindProjectComboBox.SelectedItem.ToString());
+            }
+            else { Server.TransactionResult("Все отмеченные поля обязательны для заполнения"); }
+        }
+        private void ProjectDepartmentsAddNew_Click(object sender, RoutedEventArgs e)
+        {
+            if (AllDepartmentsNew.SelectedIndex!=-1)
+            { 
+                ProjectDepartmentsNew.Items.Add(AllDepartmentsNew.SelectedItem);
+                ProjectDepartmentsNew.SelectedItem = AllDepartmentsNew.SelectedItem.ToString();
+                AllDepartmentsNew.Items.RemoveAt(AllDepartmentsNew.SelectedIndex);
+            }       
+        }
+
+        private void ProjectDepartmentsRemoveNew_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProjectDepartmentsNew.SelectedIndex != -1)
+            {
+                AllDepartmentsNew.Items.Add(ProjectDepartmentsNew.SelectedItem);
+                ProjectDepartmentsNew.Items.RemoveAt(ProjectDepartmentsNew.SelectedIndex);
+                string[] array = new string[AllDepartmentsNew.Items.Count];
+                for (int i = 0; i < array.Length; i++)
+                {
+                    array[i] = AllDepartmentsNew.Items[i].ToString();
+                }
+                Array.Sort(array, StringComparer.OrdinalIgnoreCase);
+                AllDepartmentsNew.Items.Clear();
+                for (int i = 0; i < array.Length; i++)
+                {
+                    AllDepartmentsNew.Items.Add(array[i]);
+                }
+            }
         }
 
         private void CreateNewProject_Click(object sender, RoutedEventArgs e)
@@ -257,21 +321,8 @@ namespace Client.Pages
             {
                 Server.CreateNewProject(ProjectDepartmentsNew.Items.OfType<string>().ToArray(), AplyedNewProjectPattern.SelectedIndex, NewProjectName.Text);
             }
-            else { Server.TransactionResult("Все отмеченные поля обязательны для заполнения");}
+            else { Server.TransactionResult("Все отмеченные поля обязательны для заполнения"); }
         }
 
-        private void ProjectDepartmentsAddNew_Click(object sender, RoutedEventArgs e)
-        {
-            if (AllDepartmentsNew.SelectedIndex!=-1)
-            { ProjectDepartmentsNew.Items.Add(AllDepartmentsNew.SelectedItem); }       
-        }
-
-        private void ProjectDepartmentsRemoveNew_Click(object sender, RoutedEventArgs e)
-        {
-            if (ProjectDepartmentsNew.SelectedIndex != -1)
-            {
-                ProjectDepartmentsNew.Items.RemoveAt(ProjectDepartmentsNew.SelectedIndex);
-            }
-        }
     }
 }

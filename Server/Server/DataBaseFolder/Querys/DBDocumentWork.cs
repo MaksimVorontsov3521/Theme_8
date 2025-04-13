@@ -14,16 +14,53 @@ namespace Server.DataBaseFolder.Querys
     internal class DBDocumentWork
     {
 
-        public bool CheckIsProjectNameUnique(string ProjectName)
+        public int GetProjectId (string ProjectName)
         {
             ProjectName = Settings1.Default.BaseFolder +"\\"+ ProjectName+"\\";
             using (var db = new DataBase())
             {
                 Folder folder = db.Folder.FirstOrDefault(f => f.FolderPath == ProjectName);
                 if (folder == null)
-                { return true;}
-                else { return false; }
+                { return -1;}
+                else { return folder.FolderID; }
             }      
+        }
+
+        public void ChangeProject(string ProjectName, int[] departmentsIDs, int patternId)
+        {
+            ProjectName = Settings1.Default.BaseFolder + "\\" + ProjectName + "\\";
+            ++patternId;
+            using (var db = new DataBase())
+            {
+
+                Folder folder = db.Folder.FirstOrDefault(x => x.FolderPath == ProjectName);
+
+                if (folder != null)
+                {
+                    // Изменяем значения
+                    folder.PatternID = patternId;
+                }
+                db.SaveChanges();
+
+                var entities = db.DepartmentFolder
+                    .Where(x => x.FolderID == folder.FolderID)
+                    .ToList();
+
+                db.DepartmentFolder.RemoveRange(entities);
+                db.SaveChanges();
+
+                for (int i = 0; i < departmentsIDs.Length; i++)
+                {
+                    var DF = new DepartmentFolder
+                    {
+                        DepartmentID = departmentsIDs[i],
+                        FolderID = folder.FolderID,
+                    }
+                    ;
+                    db.DepartmentFolder.Add(DF);
+                }
+                db.SaveChanges();
+            }
         }
 
         public void NewProject(string ProjectName, int[] departmentsIDs, int patternId)

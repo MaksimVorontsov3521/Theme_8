@@ -160,14 +160,14 @@ public class Program
                         byte[] Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
                         string ProjectName = Encoding.UTF8.GetString(Bytes);
 
-                        if (DBD.CheckIsProjectNameUnique(ProjectName) == false)
+                        if (DBD.GetProjectId(ProjectName) == -1)
                         {
-                            userSession.Messenger.SendStrings(userSession.clientSocket, "Проект с таким названием уже существует.\n Возможно проект уже создан другим сотрудником.");
-                            break;
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "");
                         }
                         else
                         {
-                            userSession.Messenger.SendStrings(userSession.clientSocket, "");
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "Проект с таким названием уже существует.\n Возможно проект уже создан другим сотрудником.");
+                            break;
                         }
 
                         Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
@@ -183,8 +183,32 @@ public class Program
 
                     }
                     break;
-                case "ChangeProjectInfo":
+                case "ChangeProjectProperties":
                     {
+                        byte[] Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                        string ProjectName = Encoding.UTF8.GetString(Bytes);
+                        ProjectName = ProjectName.Remove(ProjectName.Length - 1, 1);
+                        ProjectName = ProjectName.Split("\\").Last();
+
+                        if (DBD.GetProjectId(ProjectName) == -1)
+                        {
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "Что-то не так\nПроекта с таким названием не существует");
+                            break;
+                        }
+                        else
+                        {
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "");                          
+                        }
+
+                        Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                        string json = Encoding.UTF8.GetString(Bytes);
+                        int[] departmentsIDs = JsonSerializer.Deserialize<int[]>(json);
+
+                        Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                        int patternID = Convert.ToInt32(Encoding.UTF8.GetString(Bytes));
+
+                        DBD.ChangeProject(ProjectName, departmentsIDs, patternID);
+                        userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно");
 
                     }
                     break;

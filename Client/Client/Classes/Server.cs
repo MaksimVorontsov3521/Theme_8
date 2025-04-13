@@ -178,6 +178,24 @@ namespace Client
             TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
         }
 
+        internal void ChangeProjectProperties(string[] departments, int patternID, string ProjectName)
+        {
+            int[] departmentsIDs = new int[departments.Length];
+            for (int i = 0; i < departments.Length; i++)
+            {
+                departmentsIDs[i] = Convert.ToInt32(departments[i].Split("\a").First());
+            }
+            Messenger.SendStrings(clientSocket, "ChangeProjectProperties");
+            Messenger.SendStrings(clientSocket, ProjectName);
+
+            string Unique = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            if (Unique != "") { TransactionResult(Unique); return; }
+
+            Messenger.SendJSON(clientSocket, departmentsIDs);
+            Messenger.SendStrings(clientSocket, patternID.ToString());
+            TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
+        }
+
         public void SendDocument(string ProjectName, string FileName)
         {
             Messenger.SendStrings(clientSocket, "GetDocument");
