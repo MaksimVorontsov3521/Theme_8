@@ -18,7 +18,6 @@ namespace Server.DataBaseFolder.Entitys
         public string? NameInPattern { get; set; }
 
         public int FolderID { get; set; }
-        public Folder Folder { get; set; }
 
         public List<LogTable> Logs { get; set; } = new();
     }

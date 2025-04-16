@@ -103,15 +103,12 @@ namespace Client
 
         public void UpdateDocuments(int FolderCount)
         {
-            int folderID = session.receivedFolders[FolderCount].FolderID;
-
+            int howManyDocs = session.receivedFolders[FolderCount].Documents.Count;
             page.DocumentsListBox.Items.Clear();
-            for (int i = 0; i < session.receivedDocuments.Count; i++)
+
+            for (int i = 0; i < howManyDocs; i++)
             {
-                if (session.receivedDocuments[i].FolderID == folderID)
-                {
-                    page.DocumentsListBox.Items.Add(session.receivedDocuments[i].DocumentName);
-                }
+                page.DocumentsListBox.Items.Add(session.receivedFolders[FolderCount].Documents[i].DocumentName);
             }
         }
 
@@ -124,10 +121,6 @@ namespace Client
             jsonBytes = Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
             session.receivedFolders = JsonSerializer.Deserialize<List<Folder>>(json);
-
-            jsonBytes = Messenger.ReedBytes(clientSocket);
-            json = Encoding.UTF8.GetString(jsonBytes);
-            session.receivedDocuments = JsonSerializer.Deserialize<List<ServerDocument>>(json);
 
             jsonBytes = Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
@@ -214,8 +207,8 @@ namespace Client
             serverDocument.DocumentName = FileParts[FileParts.Length - 1];
             serverDocument.IsDone = true;
             serverDocument.FolderID = session.receivedFolders[page.ProjectsListBox.SelectedIndex].FolderID;
+            session.receivedFolders[page.ProjectsListBox.SelectedIndex].Documents.Add(serverDocument);
 
-            session.receivedDocuments.Add(serverDocument);
             UpdateDocuments(page.ProjectsListBox.SelectedIndex);
         }
 
@@ -258,6 +251,20 @@ namespace Client
             };
             timer.Start();
 
+        }
+
+        public bool IsDocumentNew(int FolderCount, string docName)
+        {
+            docName= docName.Split('\\').Last();
+            int howManyDocs = session.receivedFolders[FolderCount].Documents.Count;
+            for (int i = 0; i < howManyDocs; i++)
+            {
+                if (session.receivedFolders[FolderCount].Documents[i].DocumentName == docName)
+                {
+                    return false; ;
+                }
+            }
+            return true;
         }
     }
 }

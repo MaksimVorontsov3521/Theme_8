@@ -225,11 +225,8 @@ public class Program
 
         ClientTables clientTables = new ClientTables(userSession.dataBase);
 
-        List<Folder> folder = clientTables.FoldersForClient(userSession.User.UserLogin);
+        List<Folder> folder = clientTables.FoldersForClient(userSession.User.DepartmentID);
         userSession.Messenger.SendJSON(userSession.clientSocket, folder);
-
-        List<Document> documents = clientTables.DocumentsForClient();
-        userSession.Messenger.SendJSON( userSession.clientSocket, documents);
 
         List<Pattern> pattern = clientTables.PatternsForClient();
         userSession.Messenger.SendJSON(userSession.clientSocket, pattern);

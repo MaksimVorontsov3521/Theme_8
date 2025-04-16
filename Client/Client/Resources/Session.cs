@@ -12,7 +12,6 @@ namespace Client.Resources
     {
         internal ThisUser thisUser { get; set; }
         internal int level { get; set; }
-        internal List<ServerDocument> receivedDocuments = new List<ServerDocument>();
         internal List<Folder> receivedFolders = new List<Folder>();
         internal List<Pattern> receivedPatterns = new List<Pattern>();
         internal List<RequiredInPattern> receivedRequiredInPatterns = new List<RequiredInPattern>();

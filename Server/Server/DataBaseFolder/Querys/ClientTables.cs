@@ -1,4 +1,5 @@
-﻿using Server.DataBaseFolder.Entitys;
+﻿using Microsoft.EntityFrameworkCore;
+using Server.DataBaseFolder.Entitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +16,19 @@ namespace Server.DataBaseFolder.Querys
             this.dbContext = dbContext;
         }
 
-        public List<Folder> FoldersForClient(string UserLogin)
+        public List<Folder> FoldersForClient(int departmentId)
         {
-            List<Folder> Folders = new List<Folder>();
+            
             using (var context = new DataBase())
             {
-                var X = context.Folder;
+                var availableFolders = context.DepartmentFolder
+                    .Where(fd => fd.DepartmentID == departmentId)
+                    .Select(fd => fd.Folder)
+                    .Distinct()
+                    .Include(f => f.Documents) // Загружаем документы сразу
+                    .ToList();
 
-                foreach (var folder in X)
-                {
-                    Folders.Add(folder);
-                }
-                return Folders;
+                return availableFolders;
             }
         }
 

@@ -109,13 +109,12 @@ namespace Client.Pages
 
         private void SendFilesToFolder_Click(object sender, RoutedEventArgs e)
         {
-
             string[] DropBox = new string[DropBoxLB.Items.Count];
             for (int i = 0; i < DropBoxLB.Items.Count; i++)
             {
                 DropBox[i] = DropBoxLB.Items[i].ToString();
                 int a = DropBox[i].Length;
-                DropBox[i]=DropBox[i].Remove(DropBox[i].Length - 2,2);
+                DropBox[i] = DropBox[i].Remove(DropBox[i].Length - 2, 2);
             }
             if (ProjectsListBox.SelectedIndex == -1)
             {
@@ -127,9 +126,31 @@ namespace Client.Pages
                 MessageBox.Show("Выберите файлы");
                 return;
             }
+
+
+
             for (int i = 0; i < DropBox.Length; i++)
             {
-                Server.SendDocument(ProjectsListBox.SelectedItem.ToString(), DropBox[i]);
+                DropBoxLB.SelectedIndex = i;
+                if (Server.IsDocumentNew(ProjectsListBox.SelectedIndex, DropBox[i]) == false)
+                {
+                    string docname = DropBox[i].Split("\\").Last();
+                    MessageBoxResult result = MessageBox.Show(
+                    $"Файл с названием {docname} уже существует.\n Вы хотите его заменить?", // Текст
+                    "Подтверждение",                                  // Заголовок
+                    MessageBoxButton.YesNo,                          // Кнопки Да/Нет
+                    MessageBoxImage.Question                         // Иконка
+                    );
+
+                    // Обработка выбора
+                    if (result == MessageBoxResult.No)
+                    {
+                        //DropBoxLB.Items.RemoveAt(i);
+                        continue;
+                    }                   
+                }
+                //DropBoxLB.Items.RemoveAt(i);
+                Server.SendDocument(ProjectsListBox.SelectedItem.ToString(), DropBox[i]);         
             }
             DropBoxLB.Items.Clear();
         }
