@@ -23,6 +23,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
 using Client.Resources.Entitys;
+using System.Windows.Documents;
 
 namespace Client
 {
@@ -64,8 +65,6 @@ namespace Client
                 MessageBox.Show("Сервер недоступен");
                 return;
             }
-
-
             Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
             string response = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
             if (response.Contains("Right"))
@@ -104,11 +103,49 @@ namespace Client
         public void UpdateDocuments(int FolderCount)
         {
             int howManyDocs = session.receivedFolders[FolderCount].Documents.Count;
-            page.DocumentsListBox.Items.Clear();
+            int patternID = 0;
+            if (session.receivedFolders[FolderCount].PatternID != null)
+            {
+                patternID = Convert.ToInt32(session.receivedFolders[FolderCount].PatternID);
+            }       
+            List<string> INFolder = new List<string>();
 
+            page.DocumentsListBox.Items.Clear();           
             for (int i = 0; i < howManyDocs; i++)
             {
-                page.DocumentsListBox.Items.Add(session.receivedFolders[FolderCount].Documents[i].DocumentName);
+                TextBlock textBlock = new TextBlock();
+                textBlock.Inlines.Add(session.receivedFolders[FolderCount].Documents[i].DocumentName);
+                int IDInPattern = Convert.ToInt32(session.receivedFolders[FolderCount].Documents[i].InPatternID);
+                --IDInPattern;
+                if (IDInPattern >= 0)
+                {
+                    string NameInPattern = session.receivedRequiredInPatterns[IDInPattern].DocumentName;
+                    textBlock.Inlines.Add(new Run("\n" + NameInPattern) { FontWeight = FontWeights.Bold });
+                    INFolder.Add(NameInPattern);
+                }
+                page.DocumentsListBox.Items.Add(textBlock);
+            }
+
+            patternID--;
+            if (patternID >= 0)
+            {              
+                List<RequiredInPattern> NeedInFolderObj = session.receivedPatterns[patternID].RequiredInPatterns;
+                List<string> NeedInFolderStr = new List<string>();
+                for (int i = 0; i < NeedInFolderObj.Count; i++)
+                {
+                    NeedInFolderStr.Add(NeedInFolderObj[i].DocumentName);
+                }
+                for (int i = 0; i < INFolder.Count;i++)
+                {
+                    NeedInFolderStr.Remove(INFolder[i]);
+                }
+                for (int i = 0; i < NeedInFolderStr.Count; i++)
+                {
+                    TextBlock textBlock = new TextBlock();
+                    textBlock.Inlines.Add(new Run(NeedInFolderStr[i]) { FontWeight = FontWeights.Bold });
+                    page.DocumentsListBox.Items.Add(textBlock);
+                }
+            
             }
         }
 
@@ -137,6 +174,11 @@ namespace Client
 
         public void DownloadDocument(string ServerFileRoot, string FileName)
         {
+            if (FileName == "")
+            {
+                TransactionResult("Данный документ ещё не прикреплён");
+                return;
+            }
             Messenger.SendStrings(clientSocket,"SendPath");
             Messenger.SendStrings(clientSocket, ServerFileRoot+ FileName);
             byte[] document = Messenger.ReedBytes(clientSocket);

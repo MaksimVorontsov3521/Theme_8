@@ -46,8 +46,8 @@ CREATE TABLE Folder(
     PatternID INT  REFERENCES Pattern(PatternID),
     ClientID INT REFERENCES Client(ClientID)
 );
-CREATE TABLE Required_in_the_pattern(
-    id INT PRIMARY KEY IDENTITY (1,1),
+CREATE TABLE RequiredInPattern(
+    DocumentPatternID INT PRIMARY KEY IDENTITY (1,1),
     PatternID INT NOT NULL REFERENCES Pattern(PatternID),
     DocumentName NVARCHAR(255) NOT NULL
 );
@@ -58,7 +58,7 @@ CREATE TABLE Document(
     IsDone BIT NOT NULL DEFAULT 'false',
     DeadLine DATETIME2,
     DocumentReadOnly BIT NOT NULL DEFAULT 'false',
-    NameInPattern NVARCHAR(255)
+    InPatternID INT REFERENCES RequiredInPattern(PatternID)
 );
 
 CREATE TABLE LogTable(
@@ -66,11 +66,11 @@ CREATE TABLE LogTable(
     UserID INT NOT NULL REFERENCES UserTable(UserID),
     DocumentID INT REFERENCES Document(DocumentID),
     LogAction INT NOT NULL REFERENCES LogAction(ActionID),
-	LogDate DATETIME2
+	LogDate DATETIME2 
 );
 
 CREATE TABLE DepartmentFolder(
-    Department_Folder_ID INT PRIMARY KEY IDENTITY (1,1),
+    DepartmentFolderID INT PRIMARY KEY IDENTITY (1,1),
     DepartmentID INT NOT NULL REFERENCES Department(DepartmentID),
     FolderID INT NOT NULL REFERENCES Folder(FolderID)
 );

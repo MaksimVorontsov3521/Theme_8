@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 using Client.Resources;
+using System.Windows.Markup;
 
 namespace Client.Pages
 {
@@ -145,11 +146,9 @@ namespace Client.Pages
                     // Обработка выбора
                     if (result == MessageBoxResult.No)
                     {
-                        //DropBoxLB.Items.RemoveAt(i);
                         continue;
                     }                   
                 }
-                //DropBoxLB.Items.RemoveAt(i);
                 Server.SendDocument(ProjectsListBox.SelectedItem.ToString(), DropBox[i]);         
             }
             DropBoxLB.Items.Clear();
@@ -176,8 +175,10 @@ namespace Client.Pages
         {
             if (DocumentsListBox.SelectedIndex == -1 && ProjectsListBox.SelectedIndex==-1)
             { return; }
-
-            Server.DownloadDocument(ProjectsListBox.SelectedItem.ToString(),DocumentsListBox.SelectedItem.ToString());
+           
+            TextBlock block = (TextBlock)DocumentsListBox.SelectedItem;
+            string file = block.Text;
+            Server.DownloadDocument(ProjectsListBox.SelectedItem.ToString(), file);
         }
         
         private void FindProjectButton_Click(object sender, RoutedEventArgs e)
@@ -243,6 +244,9 @@ namespace Client.Pages
             Label8Pattern.FontSize = StandardSize;
             Label9Pattern.FontSize = StandardSize;
             Label10Pattern.FontSize = StandardSize;
+            Label11Pattern.FontSize = StandardSize;
+
+
 
             FindProjectButton.FontSize = StandardSize;
             FindProjectTextBox.FontSize = StandardSize;
@@ -253,6 +257,7 @@ namespace Client.Pages
             ProjectDepartmentsAdd.FontSize = StandardSize;
             ProjectDepartmentsRemove.FontSize = StandardSize;
 
+            ApplyNewProjectProperties.FontSize = StandardSize;
             AplyedProjectPattern.FontSize = StandardSize;
             NewPattern.FontSize = StandardSize;
 

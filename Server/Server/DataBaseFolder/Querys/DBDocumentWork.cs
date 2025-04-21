@@ -134,7 +134,7 @@ namespace Server.DataBaseFolder.Querys
                     var Log = new LogTable
                     {
                         LogAction = 3,
-                        DocumentID = document.DocumentId,
+                        DocumentID = document.DocumentID,
                         UserID = user.UserID
                     };
                     db.LogTable.Add(Log);
@@ -166,7 +166,7 @@ namespace Server.DataBaseFolder.Querys
                     db.Document.Add(NewDoc);
                     db.SaveChanges();
 
-                    int? lastId = db.Document.Max(p => (int?)p.DocumentId);
+                    int? lastId = db.Document.Max(p => (int?)p.DocumentID);
 
                     var Log = new LogTable
                     {

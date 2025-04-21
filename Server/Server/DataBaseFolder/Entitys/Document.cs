@@ -10,12 +10,12 @@ namespace Server.DataBaseFolder.Entitys
     internal class Document
     {
         [Key]
-        public int DocumentId { get; set; }
+        public int DocumentID { get; set; }
         public string DocumentName { get; set; }
         public bool IsDone { get; set; }
         public DateTime DeadLine { get; set; }
         public bool DocumentReadOnly { get; set; }
-        public string? NameInPattern { get; set; }
+        public int? InPatternID { get; set; }
 
         public int FolderID { get; set; }
 

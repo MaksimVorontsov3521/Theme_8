@@ -53,13 +53,11 @@ namespace Server.DataBaseFolder.Querys
             List<Pattern> Documents = new List<Pattern>();
             using (var context = new DataBase())
             {
-                var X = context.Pattern;
+                var patterns = context.Pattern
+                    .Include(p => p.RequiredInPatterns) // Важно: загружаем связанные RequiredInPatterns
+                    .ToList();
 
-                foreach (var document in X)
-                {
-                    Documents.Add(document);
-                }
-                return Documents;
+                return patterns;
             }
         }
 

@@ -10,10 +10,10 @@ namespace Server.DataBaseFolder.Entitys
     internal class RequiredInPattern
     {
         [Key]
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int DocumentPatternID { get; set; }
+        public string DocumentName { get; set; }
 
-        public int PatternId { get; set; }
+        public int PatternID { get; set; }
         public Pattern Pattern { get; set; }
     }
 }
