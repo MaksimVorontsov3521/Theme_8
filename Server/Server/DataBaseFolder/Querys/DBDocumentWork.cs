@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Server.Settings;
 using System.IO;
+using System.Xml.Linq;
 
 namespace Server.DataBaseFolder.Querys
 {
@@ -94,7 +95,8 @@ namespace Server.DataBaseFolder.Querys
             // 1 - Можно перезаписать
             // 2 - Нельзя перезаписывать
             int result = 0;
-            string[] st = path.Split('\\');
+            string pa = path.Split('\a').First();
+            string[] st = pa.Split('\\');
 
             string PathToFolder = null;
             for (int i = 0; i < st.Length - 2; i++)
@@ -117,7 +119,8 @@ namespace Server.DataBaseFolder.Querys
 
         public void RewriteDocument(string path, string UserLogin)
         {
-            string[] st = path.Split('\\');
+            string pa = path.Split('\a').First();
+            string[] st = pa.Split('\\');
             string PathToFolder = null;
             for (int i = 0; i < st.Length - 2; i++)
             {
@@ -131,12 +134,37 @@ namespace Server.DataBaseFolder.Querys
 
                 if (folder != null && document!=null)
                 {
+                    string nameInPattern = path.Split("\a").Last();
+                    int? inPatternID = Convert.ToInt32(nameInPattern);
+                    if (inPatternID != -1)
+                    {
+                        var notUniqueDoc = db.Document.FirstOrDefault(d => d.InPatternID== inPatternID && d.FolderID == folder.FolderID);
+                        if (notUniqueDoc != null)
+                        {
+                            notUniqueDoc.InPatternID = null;
+                            var Log1 = new LogTable
+                            {
+                                LogAction = 1,
+                                DocumentID = notUniqueDoc.DocumentID,
+                                UserID = user.UserID,
+                            };
+                            db.LogTable.Add(Log1);
+                            db.SaveChanges();
+                        }
+                        document.InPatternID = inPatternID;
+                    }
+                    else
+                    {
+                        document.InPatternID=null;
+                    }
+                    
                     var Log = new LogTable
                     {
                         LogAction = 3,
                         DocumentID = document.DocumentID,
                         UserID = user.UserID
                     };
+                    db.Document.Update(document);
                     db.LogTable.Add(Log);
                     db.SaveChanges();
                 }
@@ -144,7 +172,8 @@ namespace Server.DataBaseFolder.Querys
         }
         public void AddNewDocument(string path,string UserLogin)
         {
-            string[] st = path.Split('\\');
+            string pa = path.Split('\a').First();
+            string[] st = pa.Split('\\');
             string PathToFolder=null;
             for (int i = 0; i < st.Length - 2; i++)
             {
@@ -152,6 +181,10 @@ namespace Server.DataBaseFolder.Querys
             }
             using (var db = new DataBase())
             {
+                string nameInPattern = path.Split("\a").Last();
+                int? inPatternID = Convert.ToInt32(nameInPattern);
+                
+
                 UserTable user = db.UserTable.FirstOrDefault(c => c.UserLogin == UserLogin);
                 var folder = db.Folder.FirstOrDefault(c => c.FolderPath == PathToFolder);
 
@@ -160,8 +193,31 @@ namespace Server.DataBaseFolder.Querys
                     var NewDoc = new Entitys.Document
                     {
                         DocumentName = st[st.Length - 1],
-                        FolderID = folder.FolderID,
+                        FolderID = folder.FolderID,                        
                     };
+
+                    if (inPatternID != -1)
+                    {
+                        var notUniqueDoc = db.Document.FirstOrDefault(d => d.InPatternID == inPatternID && d.FolderID == folder.FolderID);
+                        if (notUniqueDoc != null)
+                        {
+                            notUniqueDoc.InPatternID = null;
+                            var Log1 = new LogTable
+                            {
+                                LogAction = 1,
+                                DocumentID = notUniqueDoc.DocumentID,
+                                UserID = user.UserID,
+                            };
+                            db.LogTable.Add(Log1);
+                            db.SaveChanges();
+
+                        }
+                        NewDoc.InPatternID = inPatternID;
+                    }
+                    else
+                    {
+                        NewDoc.InPatternID = null;
+                    }
 
                     db.Document.Add(NewDoc);
                     db.SaveChanges();

@@ -20,13 +20,13 @@
                 </TabItem.Header>
 
                 <TabItem.Content>
-                    <Grid>
+                    <Grid Name="DocumentGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="3"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="3"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3" x:Name="PreLastColumn"/>
+                            <ColumnDefinition Width="*" x:Name="LastColumn"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="5"/>
@@ -42,28 +42,31 @@
 
                         <ListBox x:Name="ProjectsListBox" d:ItemsSource="{d:SampleData ItemCount=1}"
                                  Grid.Column="0" Grid.Row="5" SelectionChanged="ProjectsListBox_SelectionChanged">
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="ContextMenu">
-                                        <Setter.Value>
-                                            <ContextMenu>
-                                                <MenuItem Header="Скачать"/>
-                                                <MenuItem Header="Завершить"/>
-                                            </ContextMenu>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="ContextMenu.IsOpen" Value="True"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ListBox.ItemContainerStyle>
+                            <ListBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Скачать"/>
+                                    <MenuItem Header="Завершить"/>
+                                    <MenuItem Header="Загрузить"/>
+                                </ContextMenu>
+                            </ListBox.ContextMenu>
                         </ListBox>
                            
                         <Label x:Name="Label2Project" Content="Документ в шаблоне" Grid.Column="2" Grid.Row="1"/>
                         <ComboBox Name="InPatternBox"  Grid.Column="2" Grid.Row="3"/>
-                        <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="2" Grid.Row="5"/>
+                        
+                        <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="2" Grid.Row="5">
+                            <ListBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Скачать" Click="DocumentDownload_Click"/>
+                                    <MenuItem Header="Завершить"/>
+                                    <MenuItem Header="Отправить" Click="SendFilesToFolder_Click"/>
+                                    <MenuItem Header="Прикрепить" Click="DocumentAdd_Click"/>
+                                </ContextMenu>
+                            </ListBox.ContextMenu>
+                        </ListBox>
+
+                        <Button x:Name="HideFileMenu" Content="←" Grid.Column="4" Grid.Row="3" HorizontalAlignment="Right" Width="50" Click="HideFileMenu_Click"/>
+                        <Button x:Name="ShowFileMenu" Visibility="Hidden" Content="≡" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Right" Width="50" Click="ShowFileMenu_Click"/>
 
                         <Grid Grid.Column="4" Grid.Row="5">
                             <Grid.RowDefinitions>

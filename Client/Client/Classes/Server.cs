@@ -24,6 +24,7 @@ using System.Windows.Threading;
 using System.Windows.Media.Animation;
 using Client.Resources.Entitys;
 using System.Windows.Documents;
+using System.Collections;
 
 namespace Client
 {
@@ -120,7 +121,7 @@ namespace Client
                 if (IDInPattern >= 0)
                 {
                     string NameInPattern = session.receivedRequiredInPatterns[IDInPattern].DocumentName;
-                    textBlock.Inlines.Add(new Run("\n" + NameInPattern) { FontWeight = FontWeights.Bold });
+                    textBlock.Inlines.Add(new Run("\n" + NameInPattern) { FontWeight = FontWeights.Bold, Tag = NameInPattern });
                     INFolder.Add(NameInPattern);
                 }
                 page.DocumentsListBox.Items.Add(textBlock);
@@ -142,10 +143,9 @@ namespace Client
                 for (int i = 0; i < NeedInFolderStr.Count; i++)
                 {
                     TextBlock textBlock = new TextBlock();
-                    textBlock.Inlines.Add(new Run(NeedInFolderStr[i]) { FontWeight = FontWeights.Bold });
+                    textBlock.Inlines.Add( new Run("\b"+NeedInFolderStr[i]) { FontWeight = FontWeights.Bold });
                     page.DocumentsListBox.Items.Add(textBlock);
                 }
-            
             }
         }
 
@@ -231,25 +231,47 @@ namespace Client
             TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
         }
 
-        public void SendDocument(string ProjectName, string FileName)
+        public void SendDocument(string ProjectName, string FileName,int nameInPattern)
         {
             Messenger.SendStrings(clientSocket, "GetDocument");
             string[] FileParts = FileName.Split('\\');
-            Messenger.SendStrings(clientSocket, ProjectName + "\\" + FileParts[FileParts.Length-1]);
+            Messenger.SendStrings(clientSocket, ProjectName + "\\" + FileParts[FileParts.Length-1] + "\a" + nameInPattern);
             byte[] bytes = File.ReadAllBytes(FileName);
             Messenger.SendBytes(clientSocket, bytes);
 
-            TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
+            string result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            TransactionResult(result);
             if (page.DocumentsListBox.Items.IndexOf(FileParts[FileParts.Length - 1])!=-1)
             { 
             return;
             }
-            
-            ServerDocument serverDocument = new ServerDocument();
-            serverDocument.DocumentName = FileParts[FileParts.Length - 1];
-            serverDocument.IsDone = true;
-            serverDocument.FolderID = session.receivedFolders[page.ProjectsListBox.SelectedIndex].FolderID;
-            session.receivedFolders[page.ProjectsListBox.SelectedIndex].Documents.Add(serverDocument);
+
+            var folder = session.receivedFolders.FirstOrDefault(f => f.FolderPath== ProjectName);
+            var notUniqueDoc = folder.Documents.FirstOrDefault(d=> d.InPatternID== nameInPattern);
+            if (notUniqueDoc != null)
+            {
+                notUniqueDoc.InPatternID = null;
+            }
+
+            if (result.Contains("Новый"))
+            {
+                ServerDocument serverDocument = new ServerDocument();
+                serverDocument.DocumentName = FileParts[FileParts.Length - 1];
+                serverDocument.IsDone = true;
+                serverDocument.InPatternID = nameInPattern;
+                serverDocument.FolderID = session.receivedFolders[page.ProjectsListBox.SelectedIndex].FolderID;
+                session.receivedFolders[page.ProjectsListBox.SelectedIndex].Documents.Add(serverDocument);
+            }
+            else {
+                List<ServerDocument> Documents = session.receivedFolders[page.ProjectsListBox.SelectedIndex].Documents;
+                ServerDocument serverDocument = Documents.First(d => d.DocumentName == FileParts[FileParts.Length - 1]);
+                int index = Documents.FindIndex((d => d.DocumentName == FileParts[FileParts.Length - 1]));
+                if (serverDocument != null)
+                {
+                    serverDocument.InPatternID = nameInPattern;
+                    session.receivedFolders[page.ProjectsListBox.SelectedIndex].Documents[index]= serverDocument;
+                }           
+            }
 
             UpdateDocuments(page.ProjectsListBox.SelectedIndex);
         }
@@ -292,9 +314,23 @@ namespace Client
                 timer.Stop();
             };
             timer.Start();
-
         }
 
+        public int GetNameInPatternID(int projectIndex,string nameInPattern)
+        {
+            int pID = Convert.ToInt32(session.receivedFolders[projectIndex].PatternID);
+            List<RequiredInPattern> requiredInPatterns = session.receivedPatterns[pID].RequiredInPatterns;
+
+            RequiredInPattern filteredItems = requiredInPatterns.OfType<RequiredInPattern>()
+                          .FirstOrDefault(x => x.DocumentName == nameInPattern);
+            return filteredItems.DocumentPatternID;
+        }
+
+        internal Folder GetFolderByName(string folderName)
+        {
+            Folder folder = session.receivedFolders.FirstOrDefault(f=> f.FolderPath==folderName);
+            return folder;
+        }
         public bool IsDocumentNew(int FolderCount, string docName)
         {
             docName= docName.Split('\\').Last();

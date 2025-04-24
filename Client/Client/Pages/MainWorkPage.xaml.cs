@@ -20,6 +20,9 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 using Client.Resources;
 using System.Windows.Markup;
+using static System.Collections.Specialized.BitVector32;
+using Client.Resources.Entitys;
+using Server.DataBaseFolder.Entitys;
 
 namespace Client.Pages
 {
@@ -33,6 +36,7 @@ namespace Client.Pages
         {
             InitializeComponent();
             Server = server;
+            HideSideMenu();
         }
 
         private void ProjectsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -68,7 +72,7 @@ namespace Client.Pages
             if (files.Length > 0)
             {
                 string filePath = files[0];
-                string fileName = System.IO.Path.GetFileName(filePath);               
+                string fileName = System.IO.Path.GetFileName(filePath);
             }
         }
 
@@ -128,8 +132,6 @@ namespace Client.Pages
                 return;
             }
 
-
-
             for (int i = 0; i < DropBox.Length; i++)
             {
                 DropBoxLB.SelectedIndex = i;
@@ -147,9 +149,34 @@ namespace Client.Pages
                     if (result == MessageBoxResult.No)
                     {
                         continue;
-                    }                   
+                    }
                 }
-                Server.SendDocument(ProjectsListBox.SelectedItem.ToString(), DropBox[i]);         
+                int nameInPatternID = -1;
+                if (DocumentsListBox.SelectedIndex != -1)
+                {
+                    TextBlock block = (TextBlock)DocumentsListBox.SelectedItem;
+                    var runWithNameInPattern = block.Inlines.ElementAtOrDefault(0) as Run;
+                    string nameInPattern = runWithNameInPattern.Text;
+                    
+                    if (nameInPattern.Contains("\b") || nameInPattern.Contains("\n"))
+                    {
+                        string docname = DropBox[i].Split("\\").Last();
+                        nameInPattern = nameInPattern.StartsWith("\b") ? nameInPattern.Substring(1) : nameInPattern;
+                        MessageBoxResult result = MessageBox.Show(
+                        $"Хотите добавить файл {docname}\n как {nameInPattern}", // Текст
+                        "Подтверждение",                                  // Заголовок
+                        MessageBoxButton.YesNo,                          // Кнопки Да/Нет
+                        MessageBoxImage.Question                         // Иконка
+                        );
+                        // Обработка выбора
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            nameInPatternID = Server.GetNameInPatternID(ProjectsListBox.SelectedIndex, nameInPattern);
+                        }
+                    }
+
+                }
+                Server.SendDocument(ProjectsListBox.SelectedItem.ToString(), DropBox[i] , nameInPatternID);
             }
             DropBoxLB.Items.Clear();
         }
@@ -173,24 +200,24 @@ namespace Client.Pages
 
         private void DocumentDownload_Click(object sender, RoutedEventArgs e)
         {
-            if (DocumentsListBox.SelectedIndex == -1 && ProjectsListBox.SelectedIndex==-1)
+            if (DocumentsListBox.SelectedIndex == -1 && ProjectsListBox.SelectedIndex == -1)
             { return; }
-           
+
             TextBlock block = (TextBlock)DocumentsListBox.SelectedItem;
             string file = block.Text;
             Server.DownloadDocument(ProjectsListBox.SelectedItem.ToString(), file);
         }
-        
+
         private void FindProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (FindProjectTextBox.Text == "")
             {
                 FindProjectComboBox.Items.Clear();
 
             }
             FindProjectComboBox.Items.Clear();
-            string [] folder = Server.FindFolder(FindProjectTextBox.Text);
+            string[] folder = Server.FindFolder(FindProjectTextBox.Text);
             for (int i = 0; i < folder.Length; i++)
             {
                 FindProjectComboBox.Items.Add(folder[i]);
@@ -305,7 +332,7 @@ namespace Client.Pages
         }
         private void ApplyNewProjectProperties_Click(object sender, RoutedEventArgs e)
         {
-            if (ProjectDepartments.Items.Count > 0 && AplyedProjectPattern.SelectedIndex != -1 && FindProjectComboBox.SelectedIndex!=-1)
+            if (ProjectDepartments.Items.Count > 0 && AplyedProjectPattern.SelectedIndex != -1 && FindProjectComboBox.SelectedIndex != -1)
             {
                 Server.ChangeProjectProperties(ProjectDepartments.Items.OfType<string>().ToArray(), AplyedProjectPattern.SelectedIndex, FindProjectComboBox.SelectedItem.ToString());
             }
@@ -313,12 +340,12 @@ namespace Client.Pages
         }
         private void ProjectDepartmentsAddNew_Click(object sender, RoutedEventArgs e)
         {
-            if (AllDepartmentsNew.SelectedIndex!=-1)
-            { 
+            if (AllDepartmentsNew.SelectedIndex != -1)
+            {
                 ProjectDepartmentsNew.Items.Add(AllDepartmentsNew.SelectedItem);
                 ProjectDepartmentsNew.SelectedItem = AllDepartmentsNew.SelectedItem.ToString();
                 AllDepartmentsNew.Items.RemoveAt(AllDepartmentsNew.SelectedIndex);
-            }       
+            }
         }
 
         private void ProjectDepartmentsRemoveNew_Click(object sender, RoutedEventArgs e)
@@ -350,5 +377,33 @@ namespace Client.Pages
             else { Server.TransactionResult("Все отмеченные поля обязательны для заполнения"); }
         }
 
+        private void HideFileMenu_Click(object sender, RoutedEventArgs e)
+        {
+            HideSideMenu();
+        }
+
+        private void ShowFileMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ShowSideMenu();
+        }
+        public void ShowSideMenu()
+        {
+            LastColumn.Width = new GridLength(1, GridUnitType.Star);
+            ShowFileMenu.Visibility = Visibility.Hidden;
+            PreLastColumn.Width = new GridLength(3, GridUnitType.Pixel);
+            HideFileMenu.Visibility = Visibility.Visible;
+        }
+        public void HideSideMenu()
+        {
+            LastColumn.Width = new GridLength(0, GridUnitType.Star);
+            ShowFileMenu.Visibility = Visibility.Visible;
+            PreLastColumn.Width = new GridLength(1, GridUnitType.Auto);
+            HideFileMenu.Visibility = Visibility.Hidden;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

@@ -141,12 +141,12 @@ public class Program
                     switch (or)
                     {
                         case 0:
-                            DAF.GetDocument(Path, document);
+                            DAF.GetDocument(Path.Split("\a").First(), document);
                             DBD.AddNewDocument(Path, userSession.User.UserLogin);
-                            userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\nНовый файл добавлен");
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\nНовый файл был добавлен");
                             break;
                         case 1:
-                            DAF.GetDocument(Path, document);
+                            DAF.GetDocument(Path.Split("\a").First(), document);
                             DBD.RewriteDocument(Path, userSession.User.UserLogin);
                             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\nФайл заменён");
                             break;
