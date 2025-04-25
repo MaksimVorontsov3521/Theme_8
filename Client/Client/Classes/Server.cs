@@ -50,7 +50,7 @@ namespace Client
             Server server = this;
             Entrance entrance = new Entrance(server);
             mainWindow.WorkPlace.Navigate(entrance);
-            page = new MainWorkPage(this);
+            page = new MainWorkPage(this);            
         }
 
         public void Connection(string login, string password)
@@ -99,25 +99,103 @@ namespace Client
                 page.AplyedProjectPattern.Items.Add(session.receivedPatterns[i].PatternName);
             }
             mainWindow.MainWorkPageNavigate(page);
+            page.SortBox.SelectedIndex = 0;
+        }
+
+        public void TimeSort()
+        {
+            var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.FolderID).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {              
+                page.ProjectsListBox.Items.Add(Folder[i].FolderPath);
+                page.ProjectsListBox.Items.RemoveAt(0);
+                session.receivedFolders = Folder;
+            }  
+        }
+        public void TimeSortReversed()
+        {
+            var Folder = session.receivedFolders.Cast<Folder>().OrderByDescending(f => f.FolderID).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {              
+                page.ProjectsListBox.Items.Add(Folder[i].FolderPath);
+                page.ProjectsListBox.Items.RemoveAt(0);
+                session.receivedFolders = Folder;
+            }
+        }
+        public void NameSort()
+        {
+            var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.FolderPath).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {          
+                page.ProjectsListBox.Items.Add(Folder[i].FolderPath);
+                page.ProjectsListBox.Items.RemoveAt(0);
+                session.receivedFolders = Folder;
+            }
+        }
+        public void NameSortReversed()
+        {
+            var Folder = session.receivedFolders.Cast<Folder>().OrderByDescending(f => f.FolderPath).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {             
+                page.ProjectsListBox.Items.Add(Folder[i].FolderPath);
+                page.ProjectsListBox.Items.RemoveAt(0);
+                session.receivedFolders = Folder;
+            }
         }
 
         public void UpdateDocuments(int FolderCount)
         {
             int howManyDocs = session.receivedFolders[FolderCount].Documents.Count;
-            int patternID = 0;
+            int patternID = 0;            
             if (session.receivedFolders[FolderCount].PatternID != null)
             {
                 patternID = Convert.ToInt32(session.receivedFolders[FolderCount].PatternID);
             }       
             List<string> INFolder = new List<string>();
 
-            page.DocumentsListBox.Items.Clear();           
+            page.DocumentsListBox.Items.Clear();
+
+            UpdateDocumentsFile(howManyDocs, FolderCount, ref INFolder);
+
+            patternID--;
+
+            UpdateDocumentsPattern(patternID, ref INFolder);
+        }
+
+        public void UpdateDocumentsFile(int howManyDocs, int FolderCount, ref List<string> INFolder)
+        {
+            int n= page.InPatternBox.SelectedIndex;
+            switch (n)
+            { 
+                case 0:
+                    FileTimeSort(FolderCount);
+                    PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
+                    break;
+                case 1:
+                    FileTimeSortReversed(FolderCount);
+                    PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
+                    break;
+                case 2:
+                    FileNameSort(FolderCount);
+                    PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
+                    break;
+                case 3:
+                    FileNameSortReversed(FolderCount);
+                    PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
+                    break;
+            }          
+        }
+
+        public void PrintDocAndPattern(int howManyDocs,int FolderCount, ref List<string> INFolder)
+        {
             for (int i = 0; i < howManyDocs; i++)
             {
                 TextBlock textBlock = new TextBlock();
                 textBlock.Inlines.Add(session.receivedFolders[FolderCount].Documents[i].DocumentName);
                 int IDInPattern = Convert.ToInt32(session.receivedFolders[FolderCount].Documents[i].InPatternID);
                 --IDInPattern;
+
+
                 if (IDInPattern >= 0)
                 {
                     string NameInPattern = session.receivedRequiredInPatterns[IDInPattern].DocumentName;
@@ -126,28 +204,91 @@ namespace Client
                 }
                 page.DocumentsListBox.Items.Add(textBlock);
             }
+        }
 
-            patternID--;
+
+        public void PrintPatternAndDoc(int howManyDocs, int FolderCount, ref List<string> INFolder)
+        {
+            // Я не понимаю как это развернуть. 
+            for (int i = 0; i < howManyDocs; i++)
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Inlines.Add(session.receivedFolders[FolderCount].Documents[i].DocumentName);
+                int IDInPattern = Convert.ToInt32(session.receivedFolders[FolderCount].Documents[i].InPatternID);
+                --IDInPattern;
+
+
+                if (IDInPattern >= 0)
+                {
+                    string NameInPattern = session.receivedRequiredInPatterns[IDInPattern].DocumentName;
+                    textBlock.Inlines.Add(new Run("\n" + NameInPattern) { FontWeight = FontWeights.Bold, Tag = NameInPattern });
+                    INFolder.Add(NameInPattern);
+                }
+
+                page.DocumentsListBox.Items.Add(textBlock);
+            }
+        }
+
+        public void FileTimeSort(int FolderID)
+        {
+            // У файлов нет id. Это нужно сделать на сервере
+            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderBy(d => d.DocumentId).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {
+                session.receivedFolders[FolderID].Documents = docks;
+            }
+        }
+        public void FileTimeSortReversed(int FolderID)
+        {
+            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderByDescending(d => d.DocumentId).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {
+                session.receivedFolders[FolderID].Documents = docks;
+            }
+        }
+        public void FileNameSort(int FolderID)
+        {
+            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderBy(d => d.DocumentName).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {
+                session.receivedFolders[FolderID].Documents = docks;
+            }
+        }
+        public void FileNameSortReversed(int FolderID)
+        {
+            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderByDescending(d => d.DocumentName).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {
+                session.receivedFolders[FolderID].Documents = docks;
+            }
+        }
+
+
+        public void UpdateDocumentsPattern(int patternID,ref List<string> INFolder)
+        {
             if (patternID >= 0)
-            {              
+            {
                 List<RequiredInPattern> NeedInFolderObj = session.receivedPatterns[patternID].RequiredInPatterns;
                 List<string> NeedInFolderStr = new List<string>();
                 for (int i = 0; i < NeedInFolderObj.Count; i++)
                 {
                     NeedInFolderStr.Add(NeedInFolderObj[i].DocumentName);
                 }
-                for (int i = 0; i < INFolder.Count;i++)
+                for (int i = 0; i < INFolder.Count; i++)
                 {
                     NeedInFolderStr.Remove(INFolder[i]);
                 }
                 for (int i = 0; i < NeedInFolderStr.Count; i++)
                 {
                     TextBlock textBlock = new TextBlock();
-                    textBlock.Inlines.Add( new Run("\b"+NeedInFolderStr[i]) { FontWeight = FontWeights.Bold });
+                    textBlock.Inlines.Add(new Run("\b" + NeedInFolderStr[i]) { FontWeight = FontWeights.Bold });
                     page.DocumentsListBox.Items.Add(textBlock);
                 }
             }
         }
+
+
+
 
         public void GetTables()
         {
@@ -233,6 +374,14 @@ namespace Client
 
         public void SendDocument(string ProjectName, string FileName,int nameInPattern)
         {
+            var folder = session.receivedFolders.FirstOrDefault(f => f.FolderPath == ProjectName);
+            var Doc = folder.Documents.FirstOrDefault(d => d.DocumentName ==  FileName.Split("\\").Last());
+            if (Doc!=null)
+            {
+                if (Doc.InPatternID != null)
+                { nameInPattern =Convert.ToInt32(Doc.InPatternID);}              
+            }
+
             Messenger.SendStrings(clientSocket, "GetDocument");
             string[] FileParts = FileName.Split('\\');
             Messenger.SendStrings(clientSocket, ProjectName + "\\" + FileParts[FileParts.Length-1] + "\a" + nameInPattern);
@@ -246,12 +395,12 @@ namespace Client
             return;
             }
 
-            var folder = session.receivedFolders.FirstOrDefault(f => f.FolderPath== ProjectName);
             var notUniqueDoc = folder.Documents.FirstOrDefault(d=> d.InPatternID== nameInPattern);
             if (notUniqueDoc != null)
             {
                 notUniqueDoc.InPatternID = null;
             }
+
 
             if (result.Contains("Новый"))
             {

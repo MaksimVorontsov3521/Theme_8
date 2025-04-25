@@ -38,7 +38,12 @@
                         </Grid.RowDefinitions>
 
                         <Label x:Name="Label1Project" Content="Сортировка" Grid.Column="0" Grid.Row="1"/>
-                        <ComboBox Name="SortBox"  Grid.Column="0" Grid.Row="3"/>
+                        <ComboBox Name="SortBox"  Grid.Column="0" Grid.Row="3" SelectionChanged="SortBox_SelectionChanged" >
+                            <TextBlock>По Времени ↓</TextBlock>
+                            <TextBlock>По Времени ↑</TextBlock>
+                            <TextBlock>По Имени ↓</TextBlock>
+                            <TextBlock>По Имени ↑</TextBlock>
+                        </ComboBox>
 
                         <ListBox x:Name="ProjectsListBox" d:ItemsSource="{d:SampleData ItemCount=1}"
                                  Grid.Column="0" Grid.Row="5" SelectionChanged="ProjectsListBox_SelectionChanged">
@@ -52,8 +57,13 @@
                         </ListBox>
                            
                         <Label x:Name="Label2Project" Content="Документ в шаблоне" Grid.Column="2" Grid.Row="1"/>
-                        <ComboBox Name="InPatternBox"  Grid.Column="2" Grid.Row="3"/>
-                        
+                        <ComboBox Name="InPatternBox"  Grid.Column="2" Grid.Row="3" SelectionChanged="InPatternBox_SelectionChanged" >
+                            <TextBlock>По Времени ↓</TextBlock>
+                            <TextBlock>По Времени ↑</TextBlock>
+                            <TextBlock>По Имени ↓</TextBlock>
+                            <TextBlock>По Имени ↑</TextBlock>
+                        </ComboBox>
+
                         <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="2" Grid.Row="5">
                             <ListBox.ContextMenu>
                                 <ContextMenu>
@@ -61,6 +71,7 @@
                                     <MenuItem Header="Завершить"/>
                                     <MenuItem Header="Отправить" Click="SendFilesToFolder_Click"/>
                                     <MenuItem Header="Прикрепить" Click="DocumentAdd_Click"/>
+                                    <MenuItem Header="Cбросить выбор" Click="ResetSelection_Click"/>
                                 </ContextMenu>
                             </ListBox.ContextMenu>
                         </ListBox>
@@ -79,6 +90,8 @@
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="5"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
@@ -86,6 +99,7 @@
                             <Button x:Name="DocumentDownload" Grid.Row="3" Content="↓ Скачать ↓" HorizontalAlignment="Center" Click="DocumentDownload_Click"/>
                             <Button x:Name="DocumentAdd" Grid.Row="5" Content="+ Добавить +" HorizontalAlignment="Center" Click="DocumentAdd_Click"/>
                             <Button x:Name="SendFiles" Grid.Row="7" Content="↑ Отправить ↑" HorizontalAlignment="Center" Click="SendFilesToFolder_Click"/>
+                            <Button x:Name="ResetSelection" Grid.Row="9" Content="Cбросить выбор" HorizontalAlignment="Center" Click="ResetSelection_Click"/>
                             <ListBox x:Name="DropBoxLB" Grid.Row="11" SelectionChanged="DropBoxLB_SelectionChanged"/>
                         </Grid>
                     </Grid>

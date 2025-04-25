@@ -36,12 +36,19 @@ namespace Client.Pages
         {
             InitializeComponent();
             Server = server;
-            HideSideMenu();
+            HideSideMenu();           
         }
 
         private void ProjectsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Server.UpdateDocuments(ProjectsListBox.SelectedIndex);
+            if (ProjectsListBox.SelectedIndex != -1)
+            {
+                Server.UpdateDocuments(ProjectsListBox.SelectedIndex);
+            }
+            else 
+            {
+                DocumentsListBox.Items.Clear();
+            }
         }
 
         private void Page_Drop(object sender, DragEventArgs e)
@@ -153,17 +160,18 @@ namespace Client.Pages
                 }
                 int nameInPatternID = -1;
                 if (DocumentsListBox.SelectedIndex != -1)
-                {
+                {                    
                     TextBlock block = (TextBlock)DocumentsListBox.SelectedItem;
-                    var runWithNameInPattern = block.Inlines.ElementAtOrDefault(0) as Run;
+                    int n =block.Inlines.Count;
+                    var runWithNameInPattern = block.Inlines.ElementAtOrDefault(--n) as Run;
                     string nameInPattern = runWithNameInPattern.Text;
-                    
+
                     if (nameInPattern.Contains("\b") || nameInPattern.Contains("\n"))
                     {
                         string docname = DropBox[i].Split("\\").Last();
                         nameInPattern = nameInPattern.StartsWith("\b") ? nameInPattern.Substring(1) : nameInPattern;
                         MessageBoxResult result = MessageBox.Show(
-                        $"Хотите добавить файл {docname}\n как {nameInPattern}", // Текст
+                        $"Хотите добавить файл {docname}\nкак {nameInPattern}", // Текст
                         "Подтверждение",                                  // Заголовок
                         MessageBoxButton.YesNo,                          // Кнопки Да/Нет
                         MessageBoxImage.Question                         // Иконка
@@ -401,9 +409,37 @@ namespace Client.Pages
             HideFileMenu.Visibility = Visibility.Hidden;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+
+        private void ResetSelection_Click(object sender, RoutedEventArgs e)
         {
-            
+            DocumentsListBox.SelectedIndex = -1;
+        }
+
+        private void SortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int n = SortBox.SelectedIndex;           
+            ProjectsListBox.SelectedIndex = -1;
+            switch (n)
+            {
+                case 0:
+                    Server.TimeSort();
+                    break;
+                case 1:
+                    Server.TimeSortReversed();
+                    break;
+
+                case 2:
+                    Server.NameSort();
+                    break;
+                case 3:
+                    Server.NameSortReversed();
+                    break;
+            }
+        }
+
+        private void InPatternBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Server.UpdateDocuments(ProjectsListBox.SelectedIndex);
         }
     }
 }
