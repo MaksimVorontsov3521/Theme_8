@@ -2,6 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="Baskerville Old Face"></Setter>
+    </Style>
+
+
     <DrawingBrush x:Key="GridDrawingBrushResource" 
       Viewport="0,0,10,10" 
       ViewportUnits="Absolute" TileMode="Tile">

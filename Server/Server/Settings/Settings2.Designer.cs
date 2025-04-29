@@ -34,5 +34,17 @@ namespace Server.Settings {
                 this["CanCreateNewProject"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int CanEditClient {
+            get {
+                return ((int)(this["CanEditClient"]));
+            }
+            set {
+                this["CanEditClient"] = value;
+            }
+        }
     }
 }

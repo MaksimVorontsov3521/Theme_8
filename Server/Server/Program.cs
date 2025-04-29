@@ -18,6 +18,7 @@ using System.Resources;
 using System.Text;
 using System.Xml.XPath;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 public class Program
 {
@@ -212,10 +213,78 @@ public class Program
 
                     }
                     break;
+
+                case "NewOrUpdateClient":
+                    {
+                        byte[] jsonBytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                        string json = Encoding.UTF8.GetString(jsonBytes);
+                        UserTable User = JsonSerializer.Deserialize<UserTable>(json);
+
+                        byte[] jsonBytes2 = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                        string json2 = Encoding.UTF8.GetString(jsonBytes2);
+                        string[] clientProperties = JsonSerializer.Deserialize<string[]>(json2);
+
+                        if (RoleRights.CanEditClient(User.UserLogin, User.UserPassword) == false)
+                        {
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "У вас нет прав редактировать этот фрагмент");
+                            break;
+                        }
+                        ClientCheck(clientProperties,userSession);
+
+                    }
+                    break;
+
                 default:
                     break;
             }
         }
+    }
+
+    private async void ClientCheck(string[] clientProperties,UserSession userSession)
+    {
+        var boolClientNameIsNew = DBClient.IsNew(clientProperties[0]);
+        var Availablity = DBClient.ISAvailable(clientProperties);
+
+        var (boolCN, Avai) = await RunBothAsync(boolClientNameIsNew, Availablity);
+
+        if (boolCN == true)
+        {
+            if (Avai == null)
+            {
+                DBClient.NewClient(clientProperties);
+                userSession.Messenger.SendStrings(userSession.clientSocket, "Новый клиент создан\nУспешно");
+            }
+            else
+            {
+                Client client = DBClient.FindClient(clientProperties);
+                if (client == null)
+                {
+                    userSession.Messenger.SendStrings(userSession.clientSocket, Avai);
+                }
+                else
+                {
+                    DBClient.UpdateClientName(client, clientProperties[0]);
+                    userSession.Messenger.SendStrings(userSession.clientSocket, "Имя клиента обновлено\nУспешно");
+                }
+            }
+        }
+        else
+        {
+            if (Avai == null)
+            {
+                userSession.Messenger.SendStrings(userSession.clientSocket, "Клиент с таким названием уже существует");
+            }
+            else
+            {
+                userSession.Messenger.SendStrings(userSession.clientSocket, "Этот клиент уже существует");
+            }
+        }
+    }
+
+    public async Task<(T1, T2)> RunBothAsync<T1, T2>(Task<T1> task1, Task<T2> task2)
+    {
+        await Task.WhenAll(task1, task2);
+        return (task1.Result, task2.Result);
     }
 
     internal void SendTables(UserSession userSession)

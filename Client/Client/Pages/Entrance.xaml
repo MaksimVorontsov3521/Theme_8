@@ -40,8 +40,7 @@
 
         <TextBox x:Name="Login" Text="AAaAA" Grid.Row="2" Grid.Column="1" />
         <PasswordBox x:Name="Password" Grid.Row="4" Password="aaAaa" Grid.Column="1" />
-
-
         <Button  Style="{StaticResource RoundedButtonStyle}" x:Name="Enter" Content="Войти" Grid.Row="6" Grid.Column="1" Click="Enter_Click"/>
+    
     </Grid>
 </Page>

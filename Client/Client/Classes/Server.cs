@@ -145,6 +145,7 @@ namespace Client
 
         public void UpdateDocuments(int FolderCount)
         {
+            if (FolderCount == -1) { return; }
             int howManyDocs = session.receivedFolders[FolderCount].Documents.Count;
             int patternID = 0;            
             if (session.receivedFolders[FolderCount].PatternID != null)
@@ -154,15 +155,11 @@ namespace Client
             List<string> INFolder = new List<string>();
 
             page.DocumentsListBox.Items.Clear();
-
-            UpdateDocumentsFile(howManyDocs, FolderCount, ref INFolder);
-
             patternID--;
-
-            UpdateDocumentsPattern(patternID, ref INFolder);
+            UpdateDocumentsFile(howManyDocs, FolderCount, ref INFolder,patternID);               
         }
 
-        public void UpdateDocumentsFile(int howManyDocs, int FolderCount, ref List<string> INFolder)
+        public void UpdateDocumentsFile(int howManyDocs, int FolderCount, ref List<string> INFolder, int patternID)
         {
             int n= page.InPatternBox.SelectedIndex;
             switch (n)
@@ -170,18 +167,27 @@ namespace Client
                 case 0:
                     FileTimeSort(FolderCount);
                     PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
+                    UpdateDocumentsPattern(patternID, ref INFolder);
                     break;
                 case 1:
                     FileTimeSortReversed(FolderCount);
                     PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
+                    UpdateDocumentsPattern(patternID, ref INFolder);
                     break;
                 case 2:
                     FileNameSort(FolderCount);
                     PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
+                    UpdateDocumentsPattern(patternID, ref INFolder);
                     break;
                 case 3:
                     FileNameSortReversed(FolderCount);
                     PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
+                    UpdateDocumentsPattern(patternID, ref INFolder);
+                    break;
+                case 4:
+                    UpdateDocumentsPattern(patternID, ref INFolder);
+                    FileNameSortReversed(FolderCount);
+                    PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);             
                     break;
             }          
         }
@@ -206,33 +212,9 @@ namespace Client
             }
         }
 
-
-        public void PrintPatternAndDoc(int howManyDocs, int FolderCount, ref List<string> INFolder)
-        {
-            // Я не понимаю как это развернуть. 
-            for (int i = 0; i < howManyDocs; i++)
-            {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Inlines.Add(session.receivedFolders[FolderCount].Documents[i].DocumentName);
-                int IDInPattern = Convert.ToInt32(session.receivedFolders[FolderCount].Documents[i].InPatternID);
-                --IDInPattern;
-
-
-                if (IDInPattern >= 0)
-                {
-                    string NameInPattern = session.receivedRequiredInPatterns[IDInPattern].DocumentName;
-                    textBlock.Inlines.Add(new Run("\n" + NameInPattern) { FontWeight = FontWeights.Bold, Tag = NameInPattern });
-                    INFolder.Add(NameInPattern);
-                }
-
-                page.DocumentsListBox.Items.Add(textBlock);
-            }
-        }
-
         public void FileTimeSort(int FolderID)
         {
-            // У файлов нет id. Это нужно сделать на сервере
-            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderBy(d => d.DocumentId).ToList();
+            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderBy(d => d.DocumentID).ToList();
             for (int i = 0; i < session.receivedFolders.Count; i++)
             {
                 session.receivedFolders[FolderID].Documents = docks;
@@ -240,7 +222,7 @@ namespace Client
         }
         public void FileTimeSortReversed(int FolderID)
         {
-            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderByDescending(d => d.DocumentId).ToList();
+            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderByDescending(d => d.DocumentID).ToList();
             for (int i = 0; i < session.receivedFolders.Count; i++)
             {
                 session.receivedFolders[FolderID].Documents = docks;
@@ -492,6 +474,18 @@ namespace Client
                 }
             }
             return true;
+        }
+
+        public void NewOrUpdateClient(string[]clientInfo)
+        {
+            Messenger.SendStrings(clientSocket, "NewOrUpdateClient");
+            Messenger.SendJSON(clientSocket, session.thisUser);
+
+
+            Messenger.SendJSON(clientSocket, clientInfo);
+
+            string result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            TransactionResult(result);
         }
     }
 }

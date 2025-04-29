@@ -23,6 +23,8 @@ using System.Windows.Markup;
 using static System.Collections.Specialized.BitVector32;
 using Client.Resources.Entitys;
 using Server.DataBaseFolder.Entitys;
+using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace Client.Pages
 {
@@ -36,7 +38,7 @@ namespace Client.Pages
         {
             InitializeComponent();
             Server = server;
-            HideSideMenu();           
+            HideSideMenu();
         }
 
         private void ProjectsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -270,8 +272,7 @@ namespace Client.Pages
             //
 
             Label1Pattern.FontSize = StandardSize;
-            Label2Pattern.FontSize = StandardSize;
-            Label3Pattern.FontSize = StandardSize;
+            Label2Pattern.FontSize = StandardSize;          
             Label4Pattern.FontSize = StandardSize;
             Label5Pattern.FontSize = StandardSize;
             Label6Pattern.FontSize = StandardSize;
@@ -435,11 +436,92 @@ namespace Client.Pages
                     Server.NameSortReversed();
                     break;
             }
+            InPatternBox.SelectedIndex = 0;
         }
 
         private void InPatternBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Server.UpdateDocuments(ProjectsListBox.SelectedIndex);
+        }
+
+        private void AddNewClient_Click(object sender, RoutedEventArgs e)
+        {
+            bool isValidEmail = Regex.IsMatch(Email.Text,
+                @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                RegexOptions.IgnoreCase);
+
+            if (!isValidEmail == true || Email.Text == null)
+            {
+                Email.BorderBrush = Brushes.Red;
+                return;
+            }
+            else { Email.BorderBrush = Brushes.Gray; }
+
+            if (!Regex.IsMatch(INN.Text, "^[0-9]{10}$") || INN.Text == "")
+            {
+                INN.BorderBrush = Brushes.Red;
+                return;
+            }
+            else { Email.BorderBrush = Brushes.Gray; }
+
+            if (!Regex.IsMatch(OGRN.Text, "^[0-9]{13}$") || OGRN.Text == "")
+            {
+                OGRN.BorderBrush = Brushes.Red;
+                return;
+            }
+            else { Email.BorderBrush = Brushes.Gray; }
+
+            if (!Regex.IsMatch(KPP.Text, "^[0-9]{9}$") || KPP.Text == "")
+            {
+                KPP.BorderBrush = Brushes.Red;
+                return;
+            }
+            else { Email.BorderBrush = Brushes.Gray; }
+
+            if (ClientName.Text == "")
+            {
+                ErrorMessage("Поле имени обязательно для заполнения");
+                ClientName.BorderBrush = Brushes.Red;
+                return;
+            }
+            else { Email.BorderBrush = Brushes.Gray; }
+
+            if (!Regex.IsMatch(ClientName.Text, @"^(ООО|АО|ПАО)\s+""[^""]+""$"))
+            {
+                ErrorMessage("Форма для названия ООО/АО/ПАО + \"название организации\"");
+                ClientName.BorderBrush = Brushes.Red;
+                return;
+            }
+            else { Email.BorderBrush = Brushes.Gray; }
+
+            string[] ClientInfo = new string[5];
+            ClientInfo[0] = ClientName.Text;
+            ClientInfo[1] = INN.Text;
+            ClientInfo[2] = Email.Text;
+            ClientInfo[3] = OGRN.Text;
+            ClientInfo[4] = KPP.Text;
+            Server.NewOrUpdateClient(ClientInfo);
+        }
+
+
+
+        public void ErrorMessage(string Error)
+        {
+            Popup1Text.Text = Error;
+            Popup1.IsOpen = true;
+            Popup1Text.Background = new SolidColorBrush(Colors.LightPink);
+
+            // Таймер для запуска анимации через 2 секунды
+            DispatcherTimer timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(2)
+            };
+            timer.Tick += (sender, e) =>
+                {
+                    Popup1.IsOpen = false;
+                    timer.Stop();
+                };
+             timer.Start();
         }
     }
 }

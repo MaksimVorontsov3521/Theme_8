@@ -62,6 +62,7 @@
                             <TextBlock>По Времени ↑</TextBlock>
                             <TextBlock>По Имени ↓</TextBlock>
                             <TextBlock>По Имени ↑</TextBlock>
+                            <TextBlock>Не выполненные</TextBlock>
                         </ComboBox>
 
                         <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="2" Grid.Row="5">
@@ -113,7 +114,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Rectangle x:Name="SimbolHead1" Height="10" Width="10" Fill="Black" />
-                        <TextBlock x:Name="TBHeader2" Margin="3">Шаблоны и клиетны</TextBlock>
+                        <TextBlock x:Name="TBHeader2" Margin="3">Проекты</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
 
@@ -124,8 +125,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="5"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="5"/>
-                            <ColumnDefinition Width="*"/>
+
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
 
@@ -166,13 +166,11 @@
                         <Rectangle Fill="LightCyan"  Grid.Column="0" Grid.RowSpan="25"/>
                         <Rectangle Fill="Gray" Width="1" Grid.Column="1" HorizontalAlignment="Left" Grid.RowSpan="25"/>
                         <Rectangle Fill="Gray" Width="1" Grid.Column="3" HorizontalAlignment="Right" Grid.RowSpan="25"/>
-                        <Rectangle Fill="Wheat"  Grid.Column="4" Grid.RowSpan="25"/>
 
                         <Rectangle Fill="Gray" Grid.ColumnSpan="5" Grid.Row="1" Height="1" VerticalAlignment="Top"/>
 
                         <Label Name="Label1Pattern" Content="Изменить проект" Grid.Row="0" HorizontalAlignment="Center"/>
                         <Label Name="Label2Pattern" Content="Новый проект" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"/>
-                        <Label Name="Label3Pattern" Content="Клиенты" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center"/>
 
                         <!-- Тело -->
 
@@ -213,6 +211,91 @@
                         <Button Grid.Column="2"  x:Name="NewPatternNew" Content="Создать новый шаблон" Grid.Row="17" HorizontalAlignment="Left"/>
 
                         <Button Grid.Column="2"  x:Name="CreateNewProject" Grid.Row="19" Content="Создать" Click="CreateNewProject_Click"/>
+                        
+                        
+
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="TBCilent" Margin="3">Клиенты</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                                   
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="10"/>
+                            
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="10"/>
+                            
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="10"/>
+                            
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="10"/>
+                            
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="10"/>
+
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Название организации" Grid.Row="0" Grid.Column="0"/>
+                        <Label Content="ИНН" Grid.Row="4" Grid.Column="0"/>
+                        <Label Content="Адрес электронной почты" Grid.Row="8" Grid.Column="0"/>
+                        <Label Content="ОРГН" Grid.Row="12" Grid.Column="0"/>
+                        <Label Content="КПП" Grid.Row="16" Grid.Column="0"/>
+
+                        <TextBox x:Name="ClientName" Grid.Row="2" Grid.Column="0" ToolTip="Формат: ООО/АО/ПАО + 'Название'"/>
+                        <TextBox x:Name="INN" Grid.Row="6" Grid.Column="0"/>
+                        <TextBox x:Name="Email" Grid.Row="10" Grid.Column="0"/>
+                        <TextBox x:Name="OGRN" Grid.Row="14" Grid.Column="0"/>
+                        <TextBox x:Name="KPP" Grid.Row="18" Grid.Column="0"/>
+
+                        <Button x:Name="AddNewClient" Content="Добавить" Grid.Row="21" Grid.Column="0" Click="AddNewClient_Click"/>
+
+                        
+                        <Button x:Name="Transfer" Content="←--"  Grid.Row="9" Grid.RowSpan="3" Grid.Column="2"/>
+
+
+                        <Label Content="Название организации" Grid.Row="0" Grid.Column="4"/>
+                        <Label Content="ИНН" Grid.Row="4" Grid.Column="4"/>
+                        <Label Content="Адрес электронной почты" Grid.Row="8" Grid.Column="4"/>
+                        <Label Content="ОРГН" Grid.Row="12" Grid.Column="4"/>
+                        <Label Content="КПП" Grid.Row="16" Grid.Column="4"/>
+
+                        <ComboBox x:Name="ClientNameLabel" Grid.Row="2" Grid.Column="4"/>
+                        <Label Content ="---" x:Name="INNLabel" Grid.Row="6" Grid.Column="4"/>
+                        <Label Content ="---" x:Name="EmailLabel" Grid.Row="10" Grid.Column="4"/>
+                        <Label Content ="---" x:Name="OGRNLabel" Grid.Row="14" Grid.Column="4"/>
+                        <Label Content ="---" x:Name="KPPLabel" Grid.Row="18" Grid.Column="4"/>
+
+                        <Button x:Name="Find" Content="Найти" Grid.Row="21" Grid.Column="4"/>
 
                     </Grid>
                 </TabItem.Content>
@@ -228,50 +311,7 @@
 
                 <TabItem.Content>
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="5"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="5"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="auto"/>
-
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="auto"/>
-
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="auto"/>
-
-                        </Grid.RowDefinitions>
-
-                        <Label Content="Порт сервера" Grid.Row="1" Grid.Column="0"/>
-                        <TextBox x:Name="ServerPort" Grid.Row="3" Grid.Column="0"/>
-                        <Button x:Name="ServerPortButton" Content="Изменить" Grid.Row="5" Grid.Column="0"/>
-
-                        <Label Content="Порт сервера" Grid.Row="7" Grid.Column="0"/>
-                        <TextBox x:Name="ServerURL" Grid.Row="9" Grid.Column="0"/>
-                        <Button x:Name="ServerURLButton" Content="Изменить" Grid.Row="11" Grid.Column="0"/>
-
-                        <Label Content="Порт сервера" Grid.Row="1" Grid.Column="2"/>
-                        <TextBox x:Name="RootFolder" Grid.Row="3" Grid.Column="2"/>
-                        <Button x:Name="RootFolderButton" Content="Изменить" Grid.Row="5" Grid.Column="2"/>
-
+                        <Frame Source="SettingsPage.xaml" ></Frame>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
