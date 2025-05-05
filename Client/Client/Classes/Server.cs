@@ -85,7 +85,10 @@ namespace Client
         {           
             for (int i = 0; i < session.receivedFolders.Count; i++)
             {
-                page.ProjectsListBox.Items.Add(session.receivedFolders[i].FolderPath);
+                TextBlock textBlock = new TextBlock();
+                textBlock.Inlines.Add(new Run(session.receivedFolders[i].FolderPath));
+                textBlock.Inlines.Add(new Run("\n"+session.receivedFolders[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+                page.ProjectsListBox.Items.Add(textBlock);
                 page.FindProjectComboBox.Items.Add(session.receivedFolders[i].FolderPath);
             }
             for (int i = 0; i < session.department.Count; i++)
@@ -102,12 +105,19 @@ namespace Client
             page.SortBox.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void TimeSort()
         {
             var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.FolderID).ToList();
             for (int i = 0; i < session.receivedFolders.Count; i++)
-            {              
-                page.ProjectsListBox.Items.Add(Folder[i].FolderPath);
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
+                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+
+                page.ProjectsListBox.Items.Add(textBlock);
                 page.ProjectsListBox.Items.RemoveAt(0);
                 session.receivedFolders = Folder;
             }  
@@ -116,8 +126,12 @@ namespace Client
         {
             var Folder = session.receivedFolders.Cast<Folder>().OrderByDescending(f => f.FolderID).ToList();
             for (int i = 0; i < session.receivedFolders.Count; i++)
-            {              
-                page.ProjectsListBox.Items.Add(Folder[i].FolderPath);
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
+                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+
+                page.ProjectsListBox.Items.Add(textBlock);
                 page.ProjectsListBox.Items.RemoveAt(0);
                 session.receivedFolders = Folder;
             }
@@ -126,8 +140,12 @@ namespace Client
         {
             var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.FolderPath).ToList();
             for (int i = 0; i < session.receivedFolders.Count; i++)
-            {          
-                page.ProjectsListBox.Items.Add(Folder[i].FolderPath);
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
+                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+
+                page.ProjectsListBox.Items.Add(textBlock);
                 page.ProjectsListBox.Items.RemoveAt(0);
                 session.receivedFolders = Folder;
             }
@@ -136,8 +154,42 @@ namespace Client
         {
             var Folder = session.receivedFolders.Cast<Folder>().OrderByDescending(f => f.FolderPath).ToList();
             for (int i = 0; i < session.receivedFolders.Count; i++)
-            {             
-                page.ProjectsListBox.Items.Add(Folder[i].FolderPath);
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
+                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+
+                page.ProjectsListBox.Items.Add(textBlock);
+                page.ProjectsListBox.Items.RemoveAt(0);
+                session.receivedFolders = Folder;
+            }
+        }
+
+        public void ClientSort()
+        {
+            var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.Client.ClientName).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
+                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+
+                page.ProjectsListBox.Items.Add(textBlock);
+                page.ProjectsListBox.Items.RemoveAt(0);
+                session.receivedFolders = Folder;
+            }
+        }
+
+        public void ClientSortReversed()
+        {
+            var Folder = session.receivedFolders.Cast<Folder>().OrderByDescending(f => f.Client.ClientName).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
+                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+
+                page.ProjectsListBox.Items.Add(textBlock);
                 page.ProjectsListBox.Items.RemoveAt(0);
                 session.receivedFolders = Folder;
             }
@@ -245,7 +297,9 @@ namespace Client
             }
         }
 
-
+        //
+        //
+        //
         public void UpdateDocumentsPattern(int patternID,ref List<string> INFolder)
         {
             if (patternID >= 0)
@@ -268,9 +322,6 @@ namespace Client
                 }
             }
         }
-
-
-
 
         public void GetTables()
         {
@@ -481,11 +532,31 @@ namespace Client
             Messenger.SendStrings(clientSocket, "NewOrUpdateClient");
             Messenger.SendJSON(clientSocket, session.thisUser);
 
-
             Messenger.SendJSON(clientSocket, clientInfo);
 
             string result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
             TransactionResult(result);
+        }
+
+        public void FindClient(string ClientName)
+        {
+            Messenger.SendStrings(clientSocket, "FindClient");
+            Messenger.SendJSON(clientSocket, session.thisUser);
+            Messenger.SendStrings(clientSocket, ClientName);
+
+            string result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            string [] clientInfo = result.Split('\b');           
+
+            result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            TransactionResult(result);
+
+            if (clientInfo.Length >= 5)
+            {
+                page.INNLabel.Content = clientInfo[1];
+                page.EmailLabel.Content = clientInfo[2];
+                page.OGRNLabel.Content = clientInfo[3];
+                page.KPPLabel.Content = clientInfo[4];
+            }
         }
     }
 }

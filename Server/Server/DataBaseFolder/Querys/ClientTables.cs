@@ -26,6 +26,7 @@ namespace Server.DataBaseFolder.Querys
                     .Select(fd => fd.Folder)
                     .Distinct()
                     .Include(f => f.Documents) // Загружаем документы сразу
+                    .Include(с => с.Client)
                     .ToList();
 
                 return availableFolders;
@@ -75,6 +76,7 @@ namespace Server.DataBaseFolder.Querys
                 return Documents;
             }
         }
+
 
 
         public List<Department> DepartmentsForClient()

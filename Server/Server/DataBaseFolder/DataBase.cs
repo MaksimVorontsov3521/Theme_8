@@ -40,6 +40,8 @@ namespace Server.DataBaseFolder
                 .HasOne(df => df.Folder)
                 .WithMany(f => f.DepartmentFolders)
                 .HasForeignKey(df => df.FolderID);
+
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.Resources.Entitys;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Server.DataBaseFolder.Entitys
         public Pattern Pattern { get; set; }
 
         public int? ClientID { get; set; }
+        public Customer Client { get; set; }
 
         public List<ServerDocument> Documents { get; set; } = new();
     }

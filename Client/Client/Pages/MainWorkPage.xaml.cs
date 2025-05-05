@@ -428,12 +428,17 @@ namespace Client.Pages
                 case 1:
                     Server.TimeSortReversed();
                     break;
-
                 case 2:
                     Server.NameSort();
                     break;
                 case 3:
                     Server.NameSortReversed();
+                    break;
+                case 4:
+                    Server.ClientSort();
+                    break;
+                case 5:
+                    Server.ClientSortReversed();
                     break;
             }
             InPatternBox.SelectedIndex = 0;
@@ -503,7 +508,10 @@ namespace Client.Pages
             Server.NewOrUpdateClient(ClientInfo);
         }
 
-
+        private void Find_Click(object sender, RoutedEventArgs e)
+        {
+            Server.FindClient(ClientNameLabel.Text);
+        }
 
         public void ErrorMessage(string Error)
         {
@@ -522,6 +530,15 @@ namespace Client.Pages
                     timer.Stop();
                 };
              timer.Start();
+        }
+
+        private void Transfer_Click(object sender, RoutedEventArgs e)
+        {
+            ClientName.Text = ClientNameLabel.Text;
+            INN.Text = INNLabel.Content.ToString();
+            Email.Text = EmailLabel.Content.ToString();
+            OGRN.Text = OGRNLabel.Content.ToString();
+            KPP.Text = KPPLabel.Content.ToString();
         }
     }
 }

@@ -234,6 +234,38 @@ public class Program
                     }
                     break;
 
+                case "FindClient":
+                    {
+                        byte[] jsonBytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                        string json = Encoding.UTF8.GetString(jsonBytes);
+                        UserTable User = JsonSerializer.Deserialize<UserTable>(json);
+
+                        byte[] Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+                        string stringByte = Encoding.UTF8.GetString(Bytes);
+                        Client client = new Client();
+                        if (RoleRights.CanEditClient(User.UserLogin, User.UserPassword) == false)
+                        {
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "");
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "У вас нет прав редактировать этот фрагмент");
+                            break;
+                        }
+                        client = DBClient.FindClientByName(stringByte);
+                        if (client == null)
+                        {
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "");
+                            userSession.Messenger.SendStrings(userSession.clientSocket, "Нет клиента с таким именем");
+                            break;
+
+                        }
+                        string clientInfo = client.ClientName + "\b" +
+                            client.INN + "\b" + client.Email + "\b" + client.OGRN + "\b" + client.KPP;
+
+                        userSession.Messenger.SendStrings(userSession.clientSocket, clientInfo);
+                        userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно");
+
+                    }
+                    break;
+
                 default:
                     break;
             }

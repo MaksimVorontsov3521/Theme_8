@@ -1,4 +1,5 @@
-﻿using Server.DataBaseFolder.Entitys;
+﻿using Microsoft.EntityFrameworkCore;
+using Server.DataBaseFolder.Entitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,15 @@ namespace Server.DataBaseFolder.Querys
             {
                 var client = context.Client.FirstOrDefault(c => c.INN == strings[1] && c.Email == strings[2] &&
                 c.OGRN == strings[3] && c.KPP == strings[4]);
+                return client;
+            }
+        }
+
+        static public Client FindClientByName(string ClientName)
+        {
+            using (var context = new DataBase())
+            {
+                var client = context.Client.FirstOrDefault(c => EF.Functions.Like(c.ClientName,"%"+ClientName+"_"));
                 return client;
             }
         }

@@ -43,6 +43,8 @@
                             <TextBlock>По Времени ↑</TextBlock>
                             <TextBlock>По Имени ↓</TextBlock>
                             <TextBlock>По Имени ↑</TextBlock>
+                            <TextBlock>По Заказчику ↓</TextBlock>
+                            <TextBlock>По Заказчику ↑</TextBlock>
                         </ComboBox>
 
                         <ListBox x:Name="ProjectsListBox" d:ItemsSource="{d:SampleData ItemCount=1}"
@@ -280,7 +282,7 @@
                         <Button x:Name="AddNewClient" Content="Добавить" Grid.Row="21" Grid.Column="0" Click="AddNewClient_Click"/>
 
                         
-                        <Button x:Name="Transfer" Content="←--"  Grid.Row="9" Grid.RowSpan="3" Grid.Column="2"/>
+                        <Button x:Name="Transfer" Content="←--"  Grid.Row="9" Grid.RowSpan="3" Grid.Column="2" Click="Transfer_Click"/>
 
 
                         <Label Content="Название организации" Grid.Row="0" Grid.Column="4"/>
@@ -289,13 +291,13 @@
                         <Label Content="ОРГН" Grid.Row="12" Grid.Column="4"/>
                         <Label Content="КПП" Grid.Row="16" Grid.Column="4"/>
 
-                        <ComboBox x:Name="ClientNameLabel" Grid.Row="2" Grid.Column="4"/>
+                        <TextBox x:Name="ClientNameLabel" Grid.Row="2" Grid.Column="4"/>
                         <Label Content ="---" x:Name="INNLabel" Grid.Row="6" Grid.Column="4"/>
                         <Label Content ="---" x:Name="EmailLabel" Grid.Row="10" Grid.Column="4"/>
                         <Label Content ="---" x:Name="OGRNLabel" Grid.Row="14" Grid.Column="4"/>
                         <Label Content ="---" x:Name="KPPLabel" Grid.Row="18" Grid.Column="4"/>
 
-                        <Button x:Name="Find" Content="Найти" Grid.Row="21" Grid.Column="4"/>
+                        <Button x:Name="Find" Content="Найти" Grid.Row="21" Grid.Column="4" Click="Find_Click"/>
 
                     </Grid>
                 </TabItem.Content>
