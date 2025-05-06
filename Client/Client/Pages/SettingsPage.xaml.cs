@@ -24,5 +24,26 @@ namespace Client.Pages
         {
             InitializeComponent();
         }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            int x = (int)e.NewSize.Width;
+            int y = (int)e.NewSize.Height;
+
+            double StandardSize = (x / 100) + (y / 100) + 2;
+
+            Label1.FontSize = StandardSize;
+            Label2.FontSize = StandardSize; 
+            Label3.FontSize = StandardSize;
+
+            ServerPort.FontSize = StandardSize;
+            ServerPortButton.FontSize = StandardSize;
+
+            ServerURL.FontSize = StandardSize;
+            ServerURLButton.FontSize = StandardSize;
+
+            RootFolder.FontSize = StandardSize;
+            RootFolderButton.FontSize = StandardSize;
+        }
     }
 }

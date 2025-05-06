@@ -278,19 +278,11 @@ namespace Client
         {
             if (FolderCount == -1) { return; }
             int howManyDocs = session.receivedFolders[FolderCount].Documents.Count;
-            int patternID = 0;            
-            if (session.receivedFolders[FolderCount].PatternID != null)
-            {
-                patternID = Convert.ToInt32(session.receivedFolders[FolderCount].PatternID);
-            }       
-            List<string> INFolder = new List<string>();
-
             page.DocumentsListBox.Items.Clear();
-            patternID--;
-            UpdateDocumentsFile(howManyDocs, FolderCount, ref INFolder,patternID);               
+            UpdateDocumentsFile(howManyDocs, FolderCount);               
         }
 
-        public void UpdateDocumentsFile(int howManyDocs, int FolderCount, ref List<string> INFolder, int patternID)
+        public void UpdateDocumentsFile(int howManyDocs, int FolderCount)
         {
             int n= page.InPatternBox.SelectedIndex;
             page.DocumentsListBox.Items.Clear();
@@ -298,33 +290,33 @@ namespace Client
             { 
                 case 1:
                     FileTimeSort(FolderCount);
-                    PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
-                    UpdateDocumentsPattern(patternID, ref INFolder);
+                    PrintDocAndPattern(howManyDocs, FolderCount);
+                    UpdateDocumentsPattern(FolderCount);
                     break;
                 case 2:
                     FileTimeSortReversed(FolderCount);
-                    PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
-                    UpdateDocumentsPattern(patternID, ref INFolder);
+                    PrintDocAndPattern(howManyDocs, FolderCount);
+                    UpdateDocumentsPattern(FolderCount);
                     break;
                 case 3:
                     FileNameSort(FolderCount);
-                    PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
-                    UpdateDocumentsPattern(patternID, ref INFolder);
+                    PrintDocAndPattern(howManyDocs, FolderCount);
+                    UpdateDocumentsPattern(FolderCount);
                     break;
                 case 4:
                     FileNameSortReversed(FolderCount);
-                    PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
-                    UpdateDocumentsPattern(patternID, ref INFolder);
+                    PrintDocAndPattern(howManyDocs, FolderCount);
+                    UpdateDocumentsPattern(FolderCount);
                     break;
                 case 0:
-                    UpdateDocumentsPattern(patternID, ref INFolder);
+                    UpdateDocumentsPattern(FolderCount);
                     FileNameSortReversed(FolderCount);
-                    PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);             
+                    PrintDocAndPattern(howManyDocs, FolderCount);             
                     break;
             }          
         }
 
-        public void PrintDocAndPattern(int howManyDocs,int FolderCount, ref List<string> INFolder)
+        public void PrintDocAndPattern(int howManyDocs,int FolderCount)
         {
             for (int i = 0; i < howManyDocs; i++)
             {
@@ -338,7 +330,6 @@ namespace Client
                 {
                     string NameInPattern = session.receivedRequiredInPatterns[IDInPattern].DocumentName;
                     textBlock.Inlines.Add(new Run("\n" + NameInPattern) { FontWeight = FontWeights.Bold, Tag = NameInPattern });
-                    INFolder.Add(NameInPattern);
                 }
                 page.DocumentsListBox.Items.Add(textBlock);
             }
@@ -377,20 +368,30 @@ namespace Client
             }
         }
 
-        public void UpdateDocumentsPattern(int patternID,ref List<string> INFolder)
+        public void UpdateDocumentsPattern(int FolderCount)
         {
+
+            int patternID = 0;
+            if (session.receivedFolders[FolderCount].PatternID != null)
+            {
+                patternID = Convert.ToInt32(session.receivedFolders[FolderCount].PatternID);
+            }
+            else { return; }
+            patternID--;
+
             if (patternID >= 0)
             {
                 List<RequiredInPattern> NeedInFolderObj = session.receivedPatterns[patternID].RequiredInPatterns;
                 List<string> NeedInFolderStr = new List<string>();
                 for (int i = 0; i < NeedInFolderObj.Count; i++)
                 {
-                    NeedInFolderStr.Add(NeedInFolderObj[i].DocumentName);
+                    var doc = session.receivedFolders[FolderCount].Documents.FirstOrDefault(d => d.InPatternID == NeedInFolderObj[i].DocumentPatternID);
+                    if (doc == null)
+                    {
+                        NeedInFolderStr.Add(NeedInFolderObj[i].DocumentName);
+                    }
                 }
-                for (int i = 0; i < INFolder.Count; i++)
-                {
-                    NeedInFolderStr.Remove(INFolder[i]);
-                }
+
                 for (int i = 0; i < NeedInFolderStr.Count; i++)
                 {
                     TextBlock textBlock = new TextBlock();
@@ -427,7 +428,7 @@ namespace Client
         {
             if (FileName == "")
             {
-                TransactionResult("Данный документ ещё не прикреплён");
+                StyleClass.TransactionResult("Данный документ ещё не прикреплён",page);
                 return;
             }
 
@@ -444,7 +445,7 @@ namespace Client
             }
             else
             {
-                TransactionResult("Что-то пошло не так");
+                StyleClass.TransactionResult("Что-то пошло не так", page);
                 return;
             }
 
@@ -460,7 +461,7 @@ namespace Client
             {
                 writer.Write(document, 0, document.Length);
             }
-            TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)),page);
         }
 
         internal void CreateNewProject(string[] departments, int patternID, string ProjectName)
@@ -474,12 +475,11 @@ namespace Client
             Messenger.SendStrings(clientSocket, ProjectName);
 
             string Unique= Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
-            if (Unique != "") { TransactionResult(Unique);return; }
-
+            if (Unique != "") { StyleClass.TransactionResult(Unique, page);return; }
 
             Messenger.SendJSON(clientSocket, departmentsIDs);
             Messenger.SendStrings(clientSocket, patternID.ToString());
-            TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)), page);
         }
 
         internal void ChangeProjectProperties(string[] departments, int patternID, string ProjectName)
@@ -493,15 +493,19 @@ namespace Client
             Messenger.SendStrings(clientSocket, ProjectName);
 
             string Unique = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
-            if (Unique != "") { TransactionResult(Unique); return; }
+            if (Unique != "") { StyleClass.TransactionResult(Unique, page); return; }
 
             Messenger.SendJSON(clientSocket, departmentsIDs);
             Messenger.SendStrings(clientSocket, patternID.ToString());
-            TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)), page);
         }
 
         public void SendDocument(object ProjectName, string FileName,int nameInPattern)
         {
+            //
+            //
+            //
+
             string folderPath = "";
             if (ProjectName is TextBlock selectedTextBlock)
             {               
@@ -515,10 +519,13 @@ namespace Client
             }
             else 
             {
-                TransactionResult("Что-то пошло не так");
+                StyleClass.TransactionResult("Что-то пошло не так", page);
                 return;
             }
 
+            //
+            //
+            //
 
             var folder = session.receivedFolders.FirstOrDefault(f => f.FolderPath == folderPath);
             var Doc = folder.Documents.FirstOrDefault(d => d.DocumentName ==  FileName.Split("\\").Last());
@@ -535,7 +542,7 @@ namespace Client
             Messenger.SendBytes(clientSocket, bytes);
 
             string result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
-            TransactionResult(result);
+            StyleClass.TransactionResult(result, page);
             if (page.DocumentsListBox.Items.IndexOf(FileParts[FileParts.Length - 1])!=-1)
             { 
             return;
@@ -581,35 +588,6 @@ namespace Client
             return folders;
         }
 
-        internal void TransactionResult(string Result)
-        {
-            
-            if (Result.Contains("Успешно"))
-            {
-                page.Popup1Text.Text = Result;
-                page.Popup1.IsOpen = true;
-                page.Popup1Text.Background = new SolidColorBrush(Colors.LightGreen);           
-            }
-            else
-            {
-                page.Popup1Text.Text = Result;
-                page.Popup1.IsOpen = true;
-                page.Popup1Text.Background = new SolidColorBrush(Colors.LightPink);
-            }
-
-            // Таймер для запуска анимации через 2 секунды
-            DispatcherTimer timer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(2)
-            };
-            timer.Tick += (sender, e) =>
-            {
-                page.Popup1.IsOpen = false;
-                timer.Stop();
-            };
-            timer.Start();
-        }
-
         public int GetNameInPatternID(int projectIndex,string nameInPattern)
         {
             int pID = Convert.ToInt32(session.receivedFolders[projectIndex].PatternID);
@@ -647,7 +625,7 @@ namespace Client
             Messenger.SendJSON(clientSocket, clientInfo);
 
             string result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
-            TransactionResult(result);
+            StyleClass.TransactionResult(result, page);
         }
 
         public void FindClient(string ClientName)
@@ -660,7 +638,7 @@ namespace Client
             string [] clientInfo = result.Split('\b');           
 
             result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
-            TransactionResult(result);
+            StyleClass.TransactionResult(result, page);
 
             if (clientInfo.Length >= 5)
             {

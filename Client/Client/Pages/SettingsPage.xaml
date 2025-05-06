@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SettingsPage">
 
-    <Grid Background="White">
+    <Grid Background="White" SizeChanged="Grid_SizeChanged">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="5"/>
@@ -41,15 +41,15 @@
 
         </Grid.RowDefinitions>
 
-        <Label Content="Порт сервера" Grid.Row="1" Grid.Column="0"/>
+        <Label Name="Label1" Content="Порт сервера" Grid.Row="1" Grid.Column="0"/>
         <TextBox x:Name="ServerPort" Grid.Row="3" Grid.Column="0"/>
         <Button x:Name="ServerPortButton" Content="Изменить" Grid.Row="5" Grid.Column="0"/>
 
-        <Label Content="Порт сервера" Grid.Row="7" Grid.Column="0"/>
+        <Label Name="Label2" Content="Порт сервера" Grid.Row="7" Grid.Column="0"/>
         <TextBox x:Name="ServerURL" Grid.Row="9" Grid.Column="0"/>
         <Button x:Name="ServerURLButton" Content="Изменить" Grid.Row="11" Grid.Column="0"/>
 
-        <Label Content="Порт сервера" Grid.Row="1" Grid.Column="2"/>
+        <Label Name="Label3" Content="Порт сервера" Grid.Row="1" Grid.Column="2"/>
         <TextBox x:Name="RootFolder" Grid.Row="3" Grid.Column="2"/>
         <Button x:Name="RootFolderButton" Content="Изменить" Grid.Row="5" Grid.Column="2"/>
 
