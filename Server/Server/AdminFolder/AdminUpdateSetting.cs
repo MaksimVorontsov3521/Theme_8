@@ -53,7 +53,7 @@ namespace Server.AdminFolder
                     
                     for (int i=0;i<docName.Length;i++)
                     {                        
-                        documents.Add(new Document { FolderID = lastFolderID, DocumentName = docName[i], IsDone = true,DocumentReadOnly=false });
+                        documents.Add(new Document { FolderID = lastFolderID, DocumentName = docName[i],DocumentReadOnly=false });
                     }
                     context.AddRange(documents);
                     context.SaveChanges();

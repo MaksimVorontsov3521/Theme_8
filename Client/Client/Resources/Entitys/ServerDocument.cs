@@ -12,8 +12,7 @@ namespace Server.DataBaseFolder.Entitys
         [Key]
         public int DocumentID { get; set; }
         public string DocumentName { get; set; }
-        public bool IsDone { get; set; }
-        public DateTime DeadLine { get; set; }
+
         public bool DocumentReadOnly { get; set; }
         public int? InPatternID { get; set; }
 

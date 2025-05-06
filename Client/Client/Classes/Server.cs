@@ -110,12 +110,21 @@ namespace Client
         /// </summary>
         public void TimeSort()
         {
-            var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.FolderID).ToList();
+            var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.FolderID).ToList();          
             for (int i = 0; i < session.receivedFolders.Count; i++)
             {
                 TextBlock textBlock = new TextBlock();
                 textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
                 textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+
+                if (Folder[i].IsDone == false)
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
+                }
+                else
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
+                }
 
                 page.ProjectsListBox.Items.Add(textBlock);
                 page.ProjectsListBox.Items.RemoveAt(0);
@@ -131,6 +140,15 @@ namespace Client
                 textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
                 textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
 
+                if (Folder[i].IsDone == false)
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
+                }
+                else
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
+                }
+
                 page.ProjectsListBox.Items.Add(textBlock);
                 page.ProjectsListBox.Items.RemoveAt(0);
                 session.receivedFolders = Folder;
@@ -145,6 +163,15 @@ namespace Client
                 textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
                 textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
 
+                if (Folder[i].IsDone == false)
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
+                }
+                else
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
+                }
+
                 page.ProjectsListBox.Items.Add(textBlock);
                 page.ProjectsListBox.Items.RemoveAt(0);
                 session.receivedFolders = Folder;
@@ -158,6 +185,15 @@ namespace Client
                 TextBlock textBlock = new TextBlock();
                 textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
                 textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+
+                if (Folder[i].IsDone == false)
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
+                }
+                else
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
+                }
 
                 page.ProjectsListBox.Items.Add(textBlock);
                 page.ProjectsListBox.Items.RemoveAt(0);
@@ -174,6 +210,15 @@ namespace Client
                 textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
                 textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
 
+                if (Folder[i].IsDone == false)
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
+                }
+                else
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
+                }
+
                 page.ProjectsListBox.Items.Add(textBlock);
                 page.ProjectsListBox.Items.RemoveAt(0);
                 session.receivedFolders = Folder;
@@ -188,6 +233,40 @@ namespace Client
                 TextBlock textBlock = new TextBlock();
                 textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
                 textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+
+                if (Folder[i].IsDone == false)
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
+                }
+                else
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
+                }
+
+                page.ProjectsListBox.Items.Add(textBlock);
+                page.ProjectsListBox.Items.RemoveAt(0);
+                session.receivedFolders = Folder;
+            }
+        }
+
+        public void UnDone()
+        {
+            var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.IsDone).ToList();
+            for (int i = 0; i < session.receivedFolders.Count; i++)
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
+                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
+
+                if (Folder[i].IsDone == false)
+                {
+                    textBlock.Inlines.Add(new Run("\a   " + Folder[i].DeadLine));
+                    textBlock.Inlines.Add(new Run("\a   " + "●") { Foreground = Brushes.Red });
+                }
+                else
+                {
+                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
+                }
 
                 page.ProjectsListBox.Items.Add(textBlock);
                 page.ProjectsListBox.Items.RemoveAt(0);
@@ -214,29 +293,30 @@ namespace Client
         public void UpdateDocumentsFile(int howManyDocs, int FolderCount, ref List<string> INFolder, int patternID)
         {
             int n= page.InPatternBox.SelectedIndex;
+            page.DocumentsListBox.Items.Clear();
             switch (n)
             { 
-                case 0:
+                case 1:
                     FileTimeSort(FolderCount);
                     PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
                     UpdateDocumentsPattern(patternID, ref INFolder);
                     break;
-                case 1:
+                case 2:
                     FileTimeSortReversed(FolderCount);
                     PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
                     UpdateDocumentsPattern(patternID, ref INFolder);
                     break;
-                case 2:
+                case 3:
                     FileNameSort(FolderCount);
                     PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
                     UpdateDocumentsPattern(patternID, ref INFolder);
                     break;
-                case 3:
+                case 4:
                     FileNameSortReversed(FolderCount);
                     PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);
                     UpdateDocumentsPattern(patternID, ref INFolder);
                     break;
-                case 4:
+                case 0:
                     UpdateDocumentsPattern(patternID, ref INFolder);
                     FileNameSortReversed(FolderCount);
                     PrintDocAndPattern(howManyDocs, FolderCount, ref INFolder);             
@@ -297,9 +377,6 @@ namespace Client
             }
         }
 
-        //
-        //
-        //
         public void UpdateDocumentsPattern(int patternID,ref List<string> INFolder)
         {
             if (patternID >= 0)
@@ -346,18 +423,36 @@ namespace Client
             session.department = JsonSerializer.Deserialize<List<Department>>(json);
         }
 
-        public void DownloadDocument(string ServerFileRoot, string FileName)
+        public void DownloadDocument(object ServerFileRoot, string FileName)
         {
             if (FileName == "")
             {
                 TransactionResult("Данный документ ещё не прикреплён");
                 return;
             }
+
+            string folderPath = "";
+            if (ServerFileRoot is TextBlock selectedTextBlock)
+            {
+                foreach (var inline in selectedTextBlock.Inlines)
+                {
+                    if (inline is Run run)
+                    {
+                        folderPath = ((Run)selectedTextBlock.Inlines.FirstInline).Text;
+                    }
+                }
+            }
+            else
+            {
+                TransactionResult("Что-то пошло не так");
+                return;
+            }
+
             Messenger.SendStrings(clientSocket,"SendPath");
-            Messenger.SendStrings(clientSocket, ServerFileRoot+ FileName);
+            Messenger.SendStrings(clientSocket, folderPath + FileName);
             byte[] document = Messenger.ReedBytes(clientSocket);
 
-            string[] projectName = page.ProjectsListBox.SelectedItem.ToString().Split("\\");
+            string[] projectName = folderPath.Split("\\");
             Directory.CreateDirectory(Settings1.Default.RootFolder + "\\" + projectName[projectName.Length - 2]);
             string PathToSave = Settings1.Default.RootFolder+"\\"+ projectName[projectName.Length-2] +"\\"+ FileName;
 
@@ -405,9 +500,27 @@ namespace Client
             TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)));
         }
 
-        public void SendDocument(string ProjectName, string FileName,int nameInPattern)
+        public void SendDocument(object ProjectName, string FileName,int nameInPattern)
         {
-            var folder = session.receivedFolders.FirstOrDefault(f => f.FolderPath == ProjectName);
+            string folderPath = "";
+            if (ProjectName is TextBlock selectedTextBlock)
+            {               
+                foreach (var inline in selectedTextBlock.Inlines)
+                {
+                    if (inline is Run run)
+                    {
+                       folderPath = ((Run)selectedTextBlock.Inlines.FirstInline).Text;
+                    }
+                }
+            }
+            else 
+            {
+                TransactionResult("Что-то пошло не так");
+                return;
+            }
+
+
+            var folder = session.receivedFolders.FirstOrDefault(f => f.FolderPath == folderPath);
             var Doc = folder.Documents.FirstOrDefault(d => d.DocumentName ==  FileName.Split("\\").Last());
             if (Doc!=null)
             {
@@ -417,7 +530,7 @@ namespace Client
 
             Messenger.SendStrings(clientSocket, "GetDocument");
             string[] FileParts = FileName.Split('\\');
-            Messenger.SendStrings(clientSocket, ProjectName + "\\" + FileParts[FileParts.Length-1] + "\a" + nameInPattern);
+            Messenger.SendStrings(clientSocket, folderPath + "\\" + FileParts[FileParts.Length-1] + "\a" + nameInPattern);
             byte[] bytes = File.ReadAllBytes(FileName);
             Messenger.SendBytes(clientSocket, bytes);
 
@@ -439,7 +552,6 @@ namespace Client
             {
                 ServerDocument serverDocument = new ServerDocument();
                 serverDocument.DocumentName = FileParts[FileParts.Length - 1];
-                serverDocument.IsDone = true;
                 serverDocument.InPatternID = nameInPattern;
                 serverDocument.FolderID = session.receivedFolders[page.ProjectsListBox.SelectedIndex].FolderID;
                 session.receivedFolders[page.ProjectsListBox.SelectedIndex].Documents.Add(serverDocument);
@@ -501,7 +613,7 @@ namespace Client
         public int GetNameInPatternID(int projectIndex,string nameInPattern)
         {
             int pID = Convert.ToInt32(session.receivedFolders[projectIndex].PatternID);
-            List<RequiredInPattern> requiredInPatterns = session.receivedPatterns[pID].RequiredInPatterns;
+            List<RequiredInPattern> requiredInPatterns = session.receivedPatterns[pID-1].RequiredInPatterns;
 
             RequiredInPattern filteredItems = requiredInPatterns.OfType<RequiredInPattern>()
                           .FirstOrDefault(x => x.DocumentName == nameInPattern);

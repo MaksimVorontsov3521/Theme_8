@@ -39,6 +39,7 @@
 
                         <Label x:Name="Label1Project" Content="Сортировка" Grid.Column="0" Grid.Row="1"/>
                         <ComboBox Name="SortBox"  Grid.Column="0" Grid.Row="3" SelectionChanged="SortBox_SelectionChanged" >
+                            <TextBlock>Невыполненные</TextBlock>
                             <TextBlock>По Времени ↓</TextBlock>
                             <TextBlock>По Времени ↑</TextBlock>
                             <TextBlock>По Имени ↓</TextBlock>
@@ -52,7 +53,7 @@
                             <ListBox.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Скачать"/>
-                                    <MenuItem Header="Завершить"/>
+                                    <MenuItem Header="Завершить" Click="MenuItem_Click"/>
                                     <MenuItem Header="Загрузить"/>
                                 </ContextMenu>
                             </ListBox.ContextMenu>
@@ -60,11 +61,12 @@
                            
                         <Label x:Name="Label2Project" Content="Документ в шаблоне" Grid.Column="2" Grid.Row="1"/>
                         <ComboBox Name="InPatternBox"  Grid.Column="2" Grid.Row="3" SelectionChanged="InPatternBox_SelectionChanged" >
+                            <TextBlock>Не выполненные</TextBlock>
                             <TextBlock>По Времени ↓</TextBlock>
                             <TextBlock>По Времени ↑</TextBlock>
                             <TextBlock>По Имени ↓</TextBlock>
                             <TextBlock>По Имени ↑</TextBlock>
-                            <TextBlock>Не выполненные</TextBlock>
+                            
                         </ComboBox>
 
                         <ListBox x:Name="DocumentsListBox" d:ItemsSource="{d:SampleData ItemCount=1}" Grid.Column="2" Grid.Row="5">

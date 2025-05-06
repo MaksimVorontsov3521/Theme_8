@@ -44,6 +44,8 @@ CREATE TABLE Folder(
     FolderID INT PRIMARY KEY IDENTITY (1,1),
     FolderPath NVARCHAR(255) NOT NULL UNIQUE,
     PatternID INT  REFERENCES Pattern(PatternID),
+    DeadLine DATETIME2,
+    IsDone BIT DEFAULT false,
     ClientID INT REFERENCES Client(ClientID)
 );
 CREATE TABLE RequiredInPattern(
@@ -54,9 +56,7 @@ CREATE TABLE RequiredInPattern(
 CREATE TABLE Document(
     DocumentID INT PRIMARY KEY IDENTITY (1,1),
     FolderID INT NOT NULL REFERENCES Folder(FolderID),
-    DocumentName NVARCHAR(255) NOT NULL,
-    IsDone BIT NOT NULL DEFAULT 'false',
-    DeadLine DATETIME2,
+    DocumentName NVARCHAR(255) NOT NULL,   
     DocumentReadOnly BIT NOT NULL DEFAULT 'false',
     InPatternID INT REFERENCES RequiredInPattern(PatternID)
 );

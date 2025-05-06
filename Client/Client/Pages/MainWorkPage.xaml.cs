@@ -38,7 +38,7 @@ namespace Client.Pages
         {
             InitializeComponent();
             Server = server;
-            HideSideMenu();
+            HideSideMenu();           
         }
 
         private void ProjectsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -128,7 +128,7 @@ namespace Client.Pages
             {
                 DropBox[i] = DropBoxLB.Items[i].ToString();
                 int a = DropBox[i].Length;
-                DropBox[i] = DropBox[i].Remove(DropBox[i].Length - 2, 2);
+                //DropBox[i] = DropBox[i].Remove(DropBox[i].Length - 2, 2);
             }
             if (ProjectsListBox.SelectedIndex == -1)
             {
@@ -185,8 +185,8 @@ namespace Client.Pages
                         }
                     }
 
-                }
-                Server.SendDocument(ProjectsListBox.SelectedItem.ToString(), DropBox[i] , nameInPatternID);
+                }                
+                Server.SendDocument(ProjectsListBox.SelectedItem, DropBox[i] , nameInPatternID);
             }
             DropBoxLB.Items.Clear();
         }
@@ -215,7 +215,7 @@ namespace Client.Pages
 
             TextBlock block = (TextBlock)DocumentsListBox.SelectedItem;
             string file = block.Text;
-            Server.DownloadDocument(ProjectsListBox.SelectedItem.ToString(), file);
+            Server.DownloadDocument(ProjectsListBox.SelectedItem, file);
         }
 
         private void FindProjectButton_Click(object sender, RoutedEventArgs e)
@@ -423,21 +423,24 @@ namespace Client.Pages
             switch (n)
             {
                 case 0:
-                    Server.TimeSort();
+                    Server.UnDone();
                     break;
                 case 1:
-                    Server.TimeSortReversed();
+                    Server.TimeSort();
                     break;
                 case 2:
-                    Server.NameSort();
+                    Server.TimeSortReversed();
                     break;
                 case 3:
-                    Server.NameSortReversed();
+                    Server.NameSort();
                     break;
                 case 4:
-                    Server.ClientSort();
+                    Server.NameSortReversed();
                     break;
                 case 5:
+                    Server.ClientSort();
+                    break;
+                case 6:
                     Server.ClientSortReversed();
                     break;
             }
@@ -539,6 +542,11 @@ namespace Client.Pages
             Email.Text = EmailLabel.Content.ToString();
             OGRN.Text = OGRNLabel.Content.ToString();
             KPP.Text = KPPLabel.Content.ToString();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

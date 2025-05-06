@@ -12,7 +12,8 @@ namespace Server.DataBaseFolder.Entitys
         [Key]
         public int FolderID { get; set; }
         public string FolderPath { get; set; }
-
+        public DateTime DeadLine { get; set; }
+        public bool IsDone { get; set; }
         public int? PatternID { get; set; }
         public Pattern Pattern { get; set; }
 
