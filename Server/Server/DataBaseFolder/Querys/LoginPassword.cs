@@ -18,7 +18,7 @@ namespace Server.DataBaseFolder.DbContexts
             this.dbContext = dbContext;
         }
 
-        public UserTable Login(string login, string enteredPassword)
+        public static UserTable Login(string login, string enteredPassword)
         {
             using (var context = new DataBase())
             {
@@ -33,7 +33,7 @@ namespace Server.DataBaseFolder.DbContexts
             }
         }
 
-        public int GetLevel(int UserRoleID)
+        public static int GetLevel(int UserRoleID)
         {
             using (var context = new DataBase())
             {

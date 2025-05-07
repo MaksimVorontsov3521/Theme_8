@@ -9,7 +9,7 @@ namespace Server.LocalinfoControl
 {
     internal class DocumentsAndFolders
     {        
-        public byte[] ToSendPath(string Path)       
+        public static byte[] ToSendPath(string Path)       
         {
             try
             {
@@ -24,7 +24,7 @@ namespace Server.LocalinfoControl
             }
         }
 
-        public void GetDocument(string Path, byte[] document)
+        public static void GetDocument(string Path, byte[] document)
         {    
             using (FileStream writer = new FileStream(Path, FileMode.Create))
             {

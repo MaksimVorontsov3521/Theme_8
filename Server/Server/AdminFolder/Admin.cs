@@ -26,7 +26,9 @@ namespace Server.AdminFolder
 
         async public void Connection()
         {
-            
+            //AdminUpdateSetting setting = new AdminUpdateSetting();
+            //setting.UpdateBaseFolder("D:\\Desktop\\Root");
+
             Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
             serverSocket.Listen(10); // Backlog

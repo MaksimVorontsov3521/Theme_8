@@ -15,7 +15,7 @@ namespace Server.DataBaseFolder.Querys
     internal class DBDocumentWork
     {
 
-        public int GetProjectId (string ProjectName)
+        public static int GetProjectId (string ProjectName)
         {
             ProjectName = Settings1.Default.BaseFolder +"\\"+ ProjectName+"\\";
             using (var db = new DataBase())
@@ -27,7 +27,7 @@ namespace Server.DataBaseFolder.Querys
             }      
         }
 
-        public void ChangeProject(string ProjectName, int[] departmentsIDs, int patternId)
+        public static void ChangeProject(string ProjectName, int[] departmentsIDs, int patternId)
         {
             ProjectName = Settings1.Default.BaseFolder + "\\" + ProjectName + "\\";
             ++patternId;
@@ -64,7 +64,7 @@ namespace Server.DataBaseFolder.Querys
             }
         }
 
-        public void NewProject(string ProjectName, int[] departmentsIDs, int patternId)
+        public static void NewProject(string ProjectName, int[] departmentsIDs, int patternId)
         {
             Folder folder = new Folder();
             folder.FolderPath = Settings1.Default.BaseFolder + "\\" + ProjectName+"\\";
@@ -89,7 +89,7 @@ namespace Server.DataBaseFolder.Querys
             }
         }
 
-        public int CanAddNewDocument(string path)
+        public static int CanAddNewDocument(string path)
         {
             // 0 - Новый фалй
             // 1 - Можно перезаписать
@@ -117,7 +117,7 @@ namespace Server.DataBaseFolder.Querys
             return result;
         }
 
-        public void RewriteDocument(string path, string UserLogin)
+        public static void RewriteDocument(string path, string UserLogin)
         {
             string pa = path.Split('\a').First();
             string[] st = pa.Split('\\');
@@ -170,7 +170,7 @@ namespace Server.DataBaseFolder.Querys
                 }
             }
         }
-        public void AddNewDocument(string path,string UserLogin)
+        public static void AddNewDocument(string path,string UserLogin)
         {
             string pa = path.Split('\a').First();
             string[] st = pa.Split('\\');
