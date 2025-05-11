@@ -22,6 +22,8 @@ using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
 using System.Reflection.Metadata;
 using Azure.Core;
+using System.Net.Security;
+using System.Security.Authentication;
 
 public class Program
 {
@@ -67,9 +69,6 @@ public class Program
         Thread adminThread = new Thread(() => admin.Connection());
         adminThread.Start();
 
-        // Загрузка сертификата
-        //serverCertificate = new X509Certificate2("server.pfx", "password");
-
         // Настройки сервера для клиента
         Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -81,6 +80,7 @@ public class Program
         while (true)
         {
             Socket clientSocket = serverSocket.Accept();
+            
             Thread clientThread = new Thread(() => HandelClient(clientSocket));
             clientThread.Start();
         }
@@ -89,17 +89,20 @@ public class Program
 
     private void HandelClient(Socket clientSocket)
     {
-        ReadAndWrite Messenger = new ReadAndWrite();
-        UserTable user = CheckPassword(clientSocket);
-        UserSession userSession = SendUser(user,clientSocket);
+        Security security = new Security(clientSocket);
+        ReadAndWrite Messenger = new ReadAndWrite(security);
+        UserTable user = CheckPassword(clientSocket,security);
+        UserSession userSession = SendUser(user,clientSocket, security);
+        if (userSession == null) { return; }
+        userSession.Messenger = Messenger;
 
         SendTables(userSession);
         ClientServerWork(userSession);
     }
 
-    private static UserTable CheckPassword(Socket clientSocket)
+    private static UserTable CheckPassword(Socket clientSocket,Security security)
     {
-        ReadAndWrite Messenger = new ReadAndWrite();
+        ReadAndWrite Messenger = new ReadAndWrite(security);
         string message = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
 
         // Проверка пароля
@@ -117,9 +120,9 @@ public class Program
         }
     }
 
-    private static UserSession SendUser(UserTable user, Socket clientSocket)
+    private static UserSession SendUser(UserTable user, Socket clientSocket, Security security)
     {
-        ReadAndWrite Messenger = new ReadAndWrite();
+        ReadAndWrite Messenger = new ReadAndWrite(security);
         UserSession userSession = new UserSession();
         if (user != null)
         {
@@ -134,7 +137,7 @@ public class Program
         else
         {
             Messenger.SendStrings(clientSocket, "Wrong");
-            return userSession;
+            return null;
         }
     }
 

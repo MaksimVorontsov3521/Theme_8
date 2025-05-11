@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "F:\\Program\\Theme_8\\Client\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\classes\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\classes\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\classes\\security.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\classes\\security.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|f:\\program\\theme_8\\client\\client\\classes\\readandwrite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0C96277-6D77-40F0-9D96-7851E89054D7}|Client\\Client.csproj|solutionrelative:client\\classes\\readandwrite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Server.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\Server.cs",
-              "RelativeDocumentMoniker": "Client\\Classes\\Server.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\Server.cs",
-              "RelativeToolTip": "Client\\Classes\\Server.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Title": "Security.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\Security.cs",
+              "RelativeDocumentMoniker": "Client\\Classes\\Security.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\Security.cs",
+              "RelativeToolTip": "Client\\Classes\\Security.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAowE4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T17:11:45.18Z",
+              "WhenOpened": "2025-05-11T16:51:42.419Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ReadAndWrite.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\ReadAndWrite.cs",
+              "RelativeDocumentMoniker": "Client\\Classes\\ReadAndWrite.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\ReadAndWrite.cs",
+              "RelativeToolTip": "Client\\Classes\\ReadAndWrite.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAowFQAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T16:47:04.769Z",
               "EditorCaption": ""
             }
           ]

@@ -25,14 +25,17 @@ using System.Windows.Media.Animation;
 using Client.Resources.Entitys;
 using System.Windows.Documents;
 using System.Collections;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Client
 {
     public class Server
     {
         MainWindow mainWindow;
-        ReadAndWrite Messenger = new ReadAndWrite();
         MainWorkPage page;
+
+        ReadAndWrite Messenger;
 
         Session session;
         Socket clientSocket;
@@ -55,11 +58,13 @@ namespace Client
 
         public void Connection(string login, string password)
         {
-
+            
             try
             {
                 clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 clientSocket.Connect(IPAddress.Parse(serverIP), port);
+                ReadAndWrite messenger = new ReadAndWrite(clientSocket);
+                Messenger = messenger;
             }
             catch
             {
@@ -367,7 +372,6 @@ namespace Client
                 session.receivedFolders[FolderID].Documents = docks;
             }
         }
-
         public void UpdateDocumentsPattern(int FolderCount)
         {
 

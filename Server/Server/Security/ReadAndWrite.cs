@@ -5,43 +5,57 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace Server.Security
 {
     internal class ReadAndWrite
     {
+        Security security;
+        internal ReadAndWrite(Security Security)
+        {
+            security = Security;
+        }
+        internal ReadAndWrite()
+        {
+            
+        }
         internal void SendJSON(Socket socket, object data)
         {
             string json = JsonSerializer.Serialize(data);
             byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
+            jsonBytes = security.Encrypt(jsonBytes);
 
             // Сначала отправляем длину данных
             byte[] lengthBytes = BitConverter.GetBytes(jsonBytes.Length);
             socket.Send(lengthBytes);
 
-            // Затем отправляем сами данные
+            // Затем отправляем сами данные       
             socket.Send(jsonBytes);
         }
 
         internal void SendStrings(Socket socket, string stringData)
         {
             byte[] Bytes = Encoding.UTF8.GetBytes(stringData);
+            Bytes = security.Encrypt(Bytes);
 
             // Сначала отправляем длину данных
             byte[] lengthBytes = BitConverter.GetBytes(Bytes.Length);
             socket.Send(lengthBytes);
 
-            // Затем отправляем сами данные
+            // Затем отправляем сами данные   
             socket.Send(Bytes);
         }
 
         internal void SendBytes(Socket socket, byte[] Bytes)
         {
+            Bytes = security.Encrypt(Bytes);
+
             // Сначала отправляем длину данных
             byte[] lengthBytes = BitConverter.GetBytes(Bytes.Length);
             socket.Send(lengthBytes);
 
-            // Затем отправляем сами данные
+            // Затем отправляем сами данные    
             socket.Send(Bytes);
         }
 
@@ -49,6 +63,10 @@ namespace Server.Security
         {
             try
             {
+
+                byte[] IV = new byte[16];
+                socket.Receive(IV);
+
                 // Читаем длину сообщения (первые 4 байта)
                 byte[] lengthBuffer = new byte[4];
                 socket.Receive(lengthBuffer);
@@ -57,11 +75,12 @@ namespace Server.Security
                 // Читаем само сообщение
                 byte[] messageBuffer = new byte[messageLength];
                 int bytesRead = 0;
+
                 while (bytesRead < messageLength)
                 {
                     bytesRead += socket.Receive(messageBuffer);
+                    messageBuffer = security.Decrypt(messageBuffer, IV);
                 }
-
                 return messageBuffer;
             }
             catch
