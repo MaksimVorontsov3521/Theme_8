@@ -14,18 +14,18 @@ namespace Server.Session
     internal class ClientServerWorkClass : Program
     {
         //
-        public static void SendPath(string message, UserSession userSession)
+        public static async Task SendPath(string message, UserSession userSession)
         {
-            message = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
+            message = Encoding.UTF8.GetString( await userSession.Messenger.ReedBytes(userSession.clientSocket));
             byte[] byffer = DocumentsAndFolders.ToSendPath(message);
             userSession.Messenger.SendBytes(userSession.clientSocket, byffer);
             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\n Файлы загружены");
         }
         //
-        public static void GetDocument(string message, UserSession userSession)
+        public static async Task GetDocument(string message, UserSession userSession)
         {
-            string Path = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
-            byte[] document = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            string Path = Encoding.UTF8.GetString(await userSession.Messenger.ReedBytes(userSession.clientSocket));
+            byte[] document = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             int or = DBDocumentWork.CanAddNewDocument(Path);
             switch (or)
             {
@@ -45,9 +45,9 @@ namespace Server.Session
             }
         }
         //
-        public static void CreateNewProject(UserSession userSession)
+        public static async Task CreateNewProject(UserSession userSession)
         {
-            byte[] Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            byte[] Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             string ProjectName = Encoding.UTF8.GetString(Bytes);
 
             if (DBDocumentWork.GetProjectId(ProjectName) == -1)
@@ -60,11 +60,11 @@ namespace Server.Session
                 return;
             }
 
-            Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             string json = Encoding.UTF8.GetString(Bytes);
             int[] departmentsIDs = JsonSerializer.Deserialize<int[]>(json);
 
-            Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             int patternID = Convert.ToInt32(Encoding.UTF8.GetString(Bytes));
 
             Directory.CreateDirectory(Settings1.Default.BaseFolder + "\\" + ProjectName);
@@ -72,9 +72,9 @@ namespace Server.Session
             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно");
         }
         //
-        public static void ChangeProjectProperties(UserSession userSession)
+        public static async void ChangeProjectProperties(UserSession userSession)
         {
-            byte[] Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            byte[] Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             string ProjectName = Encoding.UTF8.GetString(Bytes);
             ProjectName = ProjectName.Remove(ProjectName.Length - 1, 1);
             ProjectName = ProjectName.Split("\\").Last();
@@ -89,24 +89,24 @@ namespace Server.Session
                 userSession.Messenger.SendStrings(userSession.clientSocket, "");
             }
 
-            Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             string json = Encoding.UTF8.GetString(Bytes);
             int[] departmentsIDs = JsonSerializer.Deserialize<int[]>(json);
 
-            Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             int patternID = Convert.ToInt32(Encoding.UTF8.GetString(Bytes));
 
             DBDocumentWork.ChangeProject(ProjectName, departmentsIDs, patternID);
             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно");
         }
         //
-        public static void NewOrUpdateClient(UserSession userSession)
+        public static async void NewOrUpdateClient(UserSession userSession)
         {
-            byte[] jsonBytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            byte[] jsonBytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             string json = Encoding.UTF8.GetString(jsonBytes);
             UserTable User = JsonSerializer.Deserialize<UserTable>(json);
 
-            byte[] jsonBytes2 = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            byte[] jsonBytes2 = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             string json2 = Encoding.UTF8.GetString(jsonBytes2);
             string[] clientProperties = JsonSerializer.Deserialize<string[]>(json2);
 
@@ -168,13 +168,13 @@ namespace Server.Session
 
         //
 
-        public static void FindClient(UserSession userSession)
+        public static async void FindClient(UserSession userSession)
         {
-            byte[] jsonBytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            byte[] jsonBytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             string json = Encoding.UTF8.GetString(jsonBytes);
             UserTable User = JsonSerializer.Deserialize<UserTable>(json);
 
-            byte[] Bytes = userSession.Messenger.ReedBytes(userSession.clientSocket);
+            byte[] Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             string stringByte = Encoding.UTF8.GetString(Bytes);
             Client client = new Client();
             if (RoleRights.CanEditClient(User.UserLogin, User.UserPassword) == false)

@@ -54,7 +54,6 @@
                                 <ContextMenu>
                                     <MenuItem Header="Скачать"/>
                                     <MenuItem Header="Завершить" Click="MenuItem_Click"/>
-                                    <MenuItem Header="Загрузить"/>
                                 </ContextMenu>
                             </ListBox.ContextMenu>
                         </ListBox>
@@ -73,7 +72,6 @@
                             <ListBox.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Скачать" Click="DocumentDownload_Click"/>
-                                    <MenuItem Header="Завершить"/>
                                     <MenuItem Header="Отправить" Click="SendFilesToFolder_Click"/>
                                     <MenuItem Header="Прикрепить" Click="DocumentAdd_Click"/>
                                     <MenuItem Header="Cбросить выбор" Click="ResetSelection_Click"/>

@@ -40,12 +40,12 @@ namespace Client.Classes
             }
         }
 
-        public byte[] Encrypt(byte[] plainBytes)
+        public async Task<byte[]> Encrypt(byte[] plainBytes)
         {
             using (Aes aes = Aes.Create())
             {
                 aes.Key = PrivateKey[..32]; // AES-256
-                aes.IV = new byte[16]; // В реальном коде IV должен быть случайным
+                aes.GenerateIV(); // В реальном коде IV должен быть случайным
 
                 socket.Send(aes.IV);
 
@@ -62,14 +62,14 @@ namespace Client.Classes
             }
         }
 
-        public byte[] Decrypt(byte[] FullMessage, byte[] IV)
+        public async Task<byte[]> Decrypt(byte[] FullMessage, byte[] IV)
         {
             using (Aes aes = Aes.Create())
             {
                 aes.Key = PrivateKey[..32]; // AES-256
-                aes.IV = new byte[16]; // В реальном коде IV должен быть случайным
+                aes.IV = IV; // В реальном коде IV должен быть случайным
 
-                FullMessage = (DecryptMessage(aes, FullMessage));
+                FullMessage = ( await DecryptMessage(aes, FullMessage));
 
                 return FullMessage;
             }
@@ -77,7 +77,7 @@ namespace Client.Classes
         }
 
 
-        static byte[] DecryptMessage(Aes aes, byte[] cipherText)
+        static async Task<byte[]> DecryptMessage(Aes aes, byte[] cipherText)
         {
             using (var decryptor = aes.CreateDecryptor())
             using (var ms = new System.IO.MemoryStream())

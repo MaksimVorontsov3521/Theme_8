@@ -18,9 +18,10 @@ namespace Server.Security
         }
         internal ReadAndWrite()
         {
-            
+
         }
-        internal void SendJSON(Socket socket, object data)
+
+        internal async void SendJSON(Socket socket, object data)
         {
             string json = JsonSerializer.Serialize(data);
             byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
@@ -31,7 +32,7 @@ namespace Server.Security
             socket.Send(lengthBytes);
 
             // Затем отправляем сами данные       
-            socket.Send(jsonBytes);
+            await socket.SendAsync(jsonBytes);
         }
 
         internal void SendStrings(Socket socket, string stringData)
@@ -44,7 +45,7 @@ namespace Server.Security
             socket.Send(lengthBytes);
 
             // Затем отправляем сами данные   
-            socket.Send(Bytes);
+            socket.SendAsync(Bytes);
         }
 
         internal void SendBytes(Socket socket, byte[] Bytes)
@@ -56,14 +57,13 @@ namespace Server.Security
             socket.Send(lengthBytes);
 
             // Затем отправляем сами данные    
-            socket.Send(Bytes);
+            socket.SendAsync(Bytes);
         }
 
-        internal byte[] ReedBytes(Socket socket)
+        internal async Task<byte[]> ReedBytes(Socket socket)
         {
             try
             {
-
                 byte[] IV = new byte[16];
                 socket.Receive(IV);
 
@@ -72,13 +72,14 @@ namespace Server.Security
                 socket.Receive(lengthBuffer);
                 int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
 
+
                 // Читаем само сообщение
                 byte[] messageBuffer = new byte[messageLength];
                 int bytesRead = 0;
 
                 while (bytesRead < messageLength)
                 {
-                    bytesRead += socket.Receive(messageBuffer);
+                    bytesRead += await socket.ReceiveAsync(messageBuffer);
                     messageBuffer = security.Decrypt(messageBuffer, IV);
                 }
                 return messageBuffer;
@@ -89,6 +90,5 @@ namespace Server.Security
                 return Error;
             }
         }
-
     }
 }

@@ -27,6 +27,8 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Globalization;
 using Client.Classes;
+using System.Net.Http;
+using System.Runtime.CompilerServices;
 
 namespace Client.Pages
 {
@@ -217,6 +219,7 @@ namespace Client.Pages
 
             TextBlock block = (TextBlock)DocumentsListBox.SelectedItem;
             string file = block.Text;
+
             Server.DownloadDocument(ProjectsListBox.SelectedItem, file);
         }
 

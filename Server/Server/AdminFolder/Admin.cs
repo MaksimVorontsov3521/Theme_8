@@ -41,11 +41,11 @@ namespace Server.AdminFolder
 
         }
 
-        private void HandelAdmin(Socket adminSocket)
+        private async void HandelAdmin(Socket adminSocket)
         {
             ReadAndWrite Messenger = new ReadAndWrite();
 
-            string message = Encoding.UTF8.GetString(Messenger.ReedBytes(adminSocket));
+            string message = Encoding.UTF8.GetString(await Messenger.ReedBytes(adminSocket));
             // Проверка пароля
             DataBase dataBase = new DataBase();
             LoginPassword loginPassword = new LoginPassword(dataBase);
@@ -99,7 +99,7 @@ namespace Server.AdminFolder
             bool whileBoll = true;
             while (whileBoll)
             {
-                string[] AdminCommand = Encoding.UTF8.GetString(Messenger.ReedBytes(adminSocket)).Split('\a');
+                string[] AdminCommand = Encoding.UTF8.GetString(await Messenger.ReedBytes(adminSocket)).Split('\a');
                 switch (AdminCommand[0])
                 {
                     case "UpdateBaseFolder":

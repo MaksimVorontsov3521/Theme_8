@@ -47,7 +47,7 @@ namespace Server.Security
             using (Aes aes = Aes.Create())
             {
                 aes.Key = PrivateKey[..32]; // AES-256
-                aes.IV = new byte[16]; // В реальном коде IV должен быть случайным
+                aes.IV = IV; // В реальном коде IV должен быть случайным
 
                 FullMessage = (DecryptMessage(aes, FullMessage));
 
@@ -74,7 +74,7 @@ namespace Server.Security
             using (Aes aes = Aes.Create())
             {
                 aes.Key = PrivateKey[..32]; // AES-256
-                aes.IV = new byte[16]; // В реальном коде IV должен быть случайным
+                aes.GenerateIV(); // В реальном коде IV должен быть случайным
 
                 socket.Send(aes.IV);
 

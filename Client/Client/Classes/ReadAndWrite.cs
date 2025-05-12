@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -11,58 +13,55 @@ namespace Client.Classes
 {
     internal class ReadAndWrite
     {
-
         Security security;
         internal ReadAndWrite(Socket socket)
         {
             Security Security = new Security(socket);
             security = Security;
         }
-
-        internal void SendJSON(Socket socket, object data)
+        internal async void SendJSON(Socket socket, object data)
         {
             string json = JsonSerializer.Serialize(data);
             byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
-            jsonBytes = security.Encrypt(jsonBytes);
+            jsonBytes = await security.Encrypt(jsonBytes);
 
             // Сначала отправляем длину данных
             byte[] lengthBytes = BitConverter.GetBytes(jsonBytes.Length);
             socket.Send(lengthBytes);
 
             // Затем отправляем сами данные       
-            socket.Send(jsonBytes);      
+            await socket.SendAsync(jsonBytes);      
         }
 
-        internal void SendStrings(Socket socket, string stringData)
+        internal async Task SendStrings(Socket socket, string stringData)
         {
             byte[] Bytes = Encoding.UTF8.GetBytes(stringData);
-            Bytes = security.Encrypt(Bytes);
+            Bytes = await security.Encrypt(Bytes);
 
             // Сначала отправляем длину данных
             byte[] lengthBytes = BitConverter.GetBytes(Bytes.Length);
             socket.Send(lengthBytes);
 
             // Затем отправляем сами данные   
-            socket.Send(Bytes);
+            socket.SendAsync(Bytes);
         }
 
-        internal void SendBytes(Socket socket, byte[] Bytes)
+        internal async Task SendBytes(Socket socket, byte[] Bytes)
         {
-            Bytes = security.Encrypt(Bytes);
+            Bytes = await security.Encrypt(Bytes);
 
             // Сначала отправляем длину данных
             byte[] lengthBytes = BitConverter.GetBytes(Bytes.Length);
             socket.Send(lengthBytes);
 
             // Затем отправляем сами данные    
-            socket.Send(Bytes);
+            socket.SendAsync(Bytes);
         }
 
-        internal byte[] ReedBytes(Socket socket)
+        internal async Task <byte[]> ReedBytes(Socket socket)
         {
-            //try
-            //{
-
+            try
+            {
                 byte[] IV = new byte[16];
                 socket.Receive(IV);
 
@@ -75,20 +74,20 @@ namespace Client.Classes
                 // Читаем само сообщение
                 byte[] messageBuffer = new byte[messageLength];
                 int bytesRead = 0;
+                using var ms = new MemoryStream();
 
                 while (bytesRead < messageLength)
                 {
-                    bytesRead += socket.Receive(messageBuffer);
-                    messageBuffer = security.Decrypt(messageBuffer, IV);
+                    bytesRead += await socket.ReceiveAsync(messageBuffer);
+                    messageBuffer = await security.Decrypt(messageBuffer, IV);
                 }
-                Console.WriteLine(Encoding.UTF8.GetString(messageBuffer));
                 return messageBuffer;
-            //}
-            //catch
-            //{
-            //    byte[] Error = new byte[4];
-            //    return Error;
-            //}
+            }
+            catch
+            {
+                byte[] Error = new byte[4];
+                return Error;
+            }
         }
     }
 }

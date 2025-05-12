@@ -27,6 +27,8 @@ using System.Windows.Documents;
 using System.Collections;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Net.Http;
+using System.Diagnostics;
 
 namespace Client
 {
@@ -56,13 +58,12 @@ namespace Client
             page = new MainWorkPage(this);            
         }
 
-        public void Connection(string login, string password)
-        {
-            
+        public async Task Connection(string login, string password)
+        {        
             try
             {
                 clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                clientSocket.Connect(IPAddress.Parse(serverIP), port);
+                clientSocket.ConnectAsync(IPAddress.Parse(serverIP), port);
                 ReadAndWrite messenger = new ReadAndWrite(clientSocket);
                 Messenger = messenger;
             }
@@ -72,7 +73,7 @@ namespace Client
                 return;
             }
             Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
-            string response = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            string response = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
             if (response.Contains("Right"))
             {
                 session = new Session();
@@ -405,30 +406,31 @@ namespace Client
             }
         }
 
-        public void GetTables()
+        public async void GetTables()
         {
-            byte[] jsonBytes = Messenger.ReedBytes(clientSocket);
+            byte[] jsonBytes = await Messenger.ReedBytes(clientSocket);
             string json = Encoding.UTF8.GetString(jsonBytes);
             session.thisUser = JsonSerializer.Deserialize<ThisUser>(json);
 
-            jsonBytes = Messenger.ReedBytes(clientSocket);
+            jsonBytes = await Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
             session.receivedFolders = JsonSerializer.Deserialize<List<Folder>>(json);
 
-            jsonBytes = Messenger.ReedBytes(clientSocket);
+            jsonBytes = await Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
             session.receivedPatterns = JsonSerializer.Deserialize<List<Pattern>>(json);
 
-            jsonBytes = Messenger.ReedBytes(clientSocket);
+            jsonBytes = await Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
             session.receivedRequiredInPatterns = JsonSerializer.Deserialize<List<RequiredInPattern>>(json);
 
-            jsonBytes = Messenger.ReedBytes(clientSocket);
+            jsonBytes = await Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
             session.department = JsonSerializer.Deserialize<List<Department>>(json);
         }
 
-        public void DownloadDocument(object ServerFileRoot, string FileName)
+
+        public async void DownloadDocument(object ServerFileRoot, string FileName)
         {
             if (FileName == "")
             {
@@ -453,9 +455,13 @@ namespace Client
                 return;
             }
 
-            Messenger.SendStrings(clientSocket,"SendPath");
+            Messenger.SendStrings(clientSocket, "SendPath");
             Messenger.SendStrings(clientSocket, folderPath + FileName);
-            byte[] document = Messenger.ReedBytes(clientSocket);
+
+
+            byte[] document = await Messenger.ReedBytes(clientSocket);
+
+
 
             string[] projectName = folderPath.Split("\\");
             Directory.CreateDirectory(Settings1.Default.RootFolder + "\\" + projectName[projectName.Length - 2]);
@@ -463,12 +469,13 @@ namespace Client
 
             using (FileStream writer = new FileStream(PathToSave, FileMode.Create))
             {
-                writer.Write(document, 0, document.Length);
+                writer.WriteAsync(document, 0, document.Length);
             }
-            StyleClass.TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)),page);
+
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket)),page);
         }
 
-        internal void CreateNewProject(string[] departments, int patternID, string ProjectName)
+        internal async Task CreateNewProject(string[] departments, int patternID, string ProjectName)
         {
             int[] departmentsIDs = new int[departments.Length];
             for (int i = 0; i < departments.Length; i++)
@@ -478,15 +485,15 @@ namespace Client
             Messenger.SendStrings(clientSocket, "CreateNewProject");
             Messenger.SendStrings(clientSocket, ProjectName);
 
-            string Unique= Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            string Unique= Encoding.UTF8.GetString( await Messenger.ReedBytes(clientSocket));
             if (Unique != "") { StyleClass.TransactionResult(Unique, page);return; }
 
             Messenger.SendJSON(clientSocket, departmentsIDs);
             Messenger.SendStrings(clientSocket, patternID.ToString());
-            StyleClass.TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)), page);
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket)), page);
         }
 
-        internal void ChangeProjectProperties(string[] departments, int patternID, string ProjectName)
+        internal async void ChangeProjectProperties(string[] departments, int patternID, string ProjectName)
         {
             int[] departmentsIDs = new int[departments.Length];
             for (int i = 0; i < departments.Length; i++)
@@ -496,15 +503,15 @@ namespace Client
             Messenger.SendStrings(clientSocket, "ChangeProjectProperties");
             Messenger.SendStrings(clientSocket, ProjectName);
 
-            string Unique = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            string Unique = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
             if (Unique != "") { StyleClass.TransactionResult(Unique, page); return; }
 
             Messenger.SendJSON(clientSocket, departmentsIDs);
             Messenger.SendStrings(clientSocket, patternID.ToString());
-            StyleClass.TransactionResult(Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)), page);
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket)), page);
         }
 
-        public void SendDocument(object ProjectName, string FileName,int nameInPattern)
+        public async void SendDocument(object ProjectName, string FileName,int nameInPattern)
         {
             //
             //
@@ -545,7 +552,7 @@ namespace Client
             byte[] bytes = File.ReadAllBytes(FileName);
             Messenger.SendBytes(clientSocket, bytes);
 
-            string result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            string result = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
             StyleClass.TransactionResult(result, page);
             if (page.DocumentsListBox.Items.IndexOf(FileParts[FileParts.Length - 1])!=-1)
             { 
@@ -621,27 +628,27 @@ namespace Client
             return true;
         }
 
-        public void NewOrUpdateClient(string[]clientInfo)
+        public async void NewOrUpdateClient(string[]clientInfo)
         {
             Messenger.SendStrings(clientSocket, "NewOrUpdateClient");
             Messenger.SendJSON(clientSocket, session.thisUser);
 
             Messenger.SendJSON(clientSocket, clientInfo);
 
-            string result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            string result = Encoding.UTF8.GetString( await Messenger.ReedBytes(clientSocket));
             StyleClass.TransactionResult(result, page);
         }
 
-        public void FindClient(string ClientName)
+        public async void FindClient(string ClientName)
         {
             Messenger.SendStrings(clientSocket, "FindClient");
             Messenger.SendJSON(clientSocket, session.thisUser);
             Messenger.SendStrings(clientSocket, ClientName);
 
-            string result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            string result = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
             string [] clientInfo = result.Split('\b');           
 
-            result = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+            result = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
             StyleClass.TransactionResult(result, page);
 
             if (clientInfo.Length >= 5)

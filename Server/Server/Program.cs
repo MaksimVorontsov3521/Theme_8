@@ -87,11 +87,11 @@ public class Program
 
     }
 
-    private void HandelClient(Socket clientSocket)
+    private async Task HandelClient(Socket clientSocket)
     {
         Security security = new Security(clientSocket);
         ReadAndWrite Messenger = new ReadAndWrite(security);
-        UserTable user = CheckPassword(clientSocket,security);
+        UserTable user = await CheckPassword(clientSocket,security);
         UserSession userSession = SendUser(user,clientSocket, security);
         if (userSession == null) { return; }
         userSession.Messenger = Messenger;
@@ -100,10 +100,10 @@ public class Program
         ClientServerWork(userSession);
     }
 
-    private static UserTable CheckPassword(Socket clientSocket,Security security)
+    private async static Task<UserTable> CheckPassword(Socket clientSocket,Security security)
     {
         ReadAndWrite Messenger = new ReadAndWrite(security);
-        string message = Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket));
+        string message = Encoding.UTF8.GetString( await Messenger.ReedBytes(clientSocket));
 
         // Проверка пароля
         UserTable user = null;
@@ -142,12 +142,12 @@ public class Program
     }
 
 
-    private void ClientServerWork(UserSession userSession)
+    private async Task ClientServerWork(UserSession userSession)
     {
         string message;
         while (true)
         {
-            message = Encoding.UTF8.GetString(userSession.Messenger.ReedBytes(userSession.clientSocket));
+            message = Encoding.UTF8.GetString( await userSession.Messenger.ReedBytes(userSession.clientSocket));
             switch (message)
             { 
                 case "SendPath":
