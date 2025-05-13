@@ -11,15 +11,15 @@ using System.Threading.Tasks;
 
 namespace Client.Classes
 {
-    internal class ReadAndWrite
+    public class ReadAndWrite
     {
         Security security;
-        internal ReadAndWrite(Socket socket)
+        public ReadAndWrite(Socket socket)
         {
             Security Security = new Security(socket);
             security = Security;
         }
-        internal async void SendJSON(Socket socket, object data)
+        public async Task SendJSON(Socket socket, object data)
         {
             string json = JsonSerializer.Serialize(data);
             byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
@@ -33,7 +33,7 @@ namespace Client.Classes
             await socket.SendAsync(jsonBytes);      
         }
 
-        internal async Task SendStrings(Socket socket, string stringData)
+        public async Task SendStrings(Socket socket, string stringData)
         {
             byte[] Bytes = Encoding.UTF8.GetBytes(stringData);
             Bytes = await security.Encrypt(Bytes);
@@ -46,7 +46,7 @@ namespace Client.Classes
             socket.SendAsync(Bytes);
         }
 
-        internal async Task SendBytes(Socket socket, byte[] Bytes)
+        public async Task SendBytes(Socket socket, byte[] Bytes)
         {
             Bytes = await security.Encrypt(Bytes);
 
@@ -58,7 +58,7 @@ namespace Client.Classes
             socket.SendAsync(Bytes);
         }
 
-        internal async Task <byte[]> ReedBytes(Socket socket)
+        public async Task <byte[]> ReedBytes(Socket socket)
         {
             try
             {

@@ -53,7 +53,8 @@
                             <ListBox.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Скачать"/>
-                                    <MenuItem Header="Завершить" Click="MenuItem_Click"/>
+                                    <MenuItem x:Name="CompleteProject" Header="Завершить" Click="CompleteProject_Click" />
+                                    <MenuItem x:Name="Continue" Header="Продолжить" Click="Continue_Click"/>
                                 </ContextMenu>
                             </ListBox.ContextMenu>
                         </ListBox>

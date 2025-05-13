@@ -1,5 +1,4 @@
 ﻿using Client.Resources.Entitys;
-using Server.DataBaseFolder.Entitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Client.Resources
 {
-    internal class Session
+    public class Session
     {
-        internal ThisUser thisUser { get; set; }
-        internal int level { get; set; }
-        internal List<Folder> receivedFolders = new List<Folder>();
-        internal List<Pattern> receivedPatterns = new List<Pattern>();
-        internal List<RequiredInPattern> receivedRequiredInPatterns = new List<RequiredInPattern>();
-        internal List<Department> department = new List<Department>();
+        public ThisUser thisUser { get; set; }
+        public int level { get; set; }
+        public List<Folder> receivedFolders = new List<Folder>();
+        public List<Pattern> receivedPatterns = new List<Pattern>();
+        public List<RequiredInPattern> receivedRequiredInPatterns = new List<RequiredInPattern>();
+        public List<Department> department = new List<Department>();
     }
 }

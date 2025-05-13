@@ -198,5 +198,14 @@ namespace Server.Session
             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно");
         }
 
+        //
+        public static async void ContinueProject(UserSession userSession)
+        {
+            byte[] jsonBytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
+            string json = Encoding.UTF8.GetString(jsonBytes);
+            Folder folder = JsonSerializer.Deserialize<Folder>(json);
+            DBDocumentWork.UpdateFolder(folder);
+            userSession.Messenger.SendStrings(userSession.clientSocket, "Изменено успешно");
+        }
     }
 }

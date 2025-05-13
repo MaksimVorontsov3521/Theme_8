@@ -235,5 +235,13 @@ namespace Server.DataBaseFolder.Querys
                 }
             }
         }
+        public static void UpdateFolder(Folder folder)
+        {
+            using (var db = new DataBase())
+            {
+                db.Folder.Update(folder);
+                db.SaveChanges();
+            }
+        }
     }
 }

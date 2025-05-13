@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 
 namespace Client.Classes
 {
-    internal class Security
+    public class Security
     {
 
         private Socket socket;

@@ -22,13 +22,12 @@ using Client.Resources;
 using System.Windows.Markup;
 using static System.Collections.Specialized.BitVector32;
 using Client.Resources.Entitys;
-using Server.DataBaseFolder.Entitys;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Globalization;
-using Client.Classes;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using Client.Classes.Visual;
 
 namespace Client.Pages
 {
@@ -47,6 +46,7 @@ namespace Client.Pages
 
         private void ProjectsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Server.IsProjectDone(ProjectsListBox.SelectedIndex);
             if (ProjectsListBox.SelectedIndex != -1)
             {
                 Server.UpdateDocuments(ProjectsListBox.SelectedIndex);
@@ -193,8 +193,9 @@ namespace Client.Pages
                 Server.SendDocument(ProjectsListBox.SelectedItem, DropBox[i] , nameInPatternID);
             }
             DropBoxLB.Items.Clear();
-        }
 
+
+        }
         private void DocumentAdd_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -238,9 +239,6 @@ namespace Client.Pages
                 FindProjectComboBox.Items.Add(folder[i]);
             }
         }
-
-
-
 
         private void ProjectDepartmentsAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -342,7 +340,6 @@ namespace Client.Pages
             HideFileMenu.Visibility = Visibility.Hidden;
         }
 
-
         private void ResetSelection_Click(object sender, RoutedEventArgs e)
         {
             DocumentsListBox.SelectedIndex = -1;
@@ -350,7 +347,11 @@ namespace Client.Pages
 
         private void SortBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int n = SortBox.SelectedIndex;           
+            SortBox_SelectionChanged();
+        }
+        public void SortBox_SelectionChanged()
+        {
+            int n = SortBox.SelectedIndex;
             ProjectsListBox.SelectedIndex = -1;
             switch (n)
             {
@@ -475,15 +476,19 @@ namespace Client.Pages
             OGRN.Text = OGRNLabel.Content.ToString();
             KPP.Text = KPPLabel.Content.ToString();
         }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             StyleClass.MainSizeChanged(sender, e, this);
+        }
+
+        private void Continue_Click(object sender, RoutedEventArgs e)
+        {
+            Server.ContinueProject(ProjectsListBox.SelectedIndex);
+        }
+
+        private void CompleteProject_Click(object sender, RoutedEventArgs e)
+        {
+            Server.CompleteProject(ProjectsListBox.SelectedIndex);
         }
     }
 }

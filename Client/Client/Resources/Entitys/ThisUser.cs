@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Client.Resources.Entitys
 {
-    class ThisUser
+    public class ThisUser
     {
 
         [Key]

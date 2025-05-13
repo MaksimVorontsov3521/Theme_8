@@ -168,6 +168,9 @@ public class Program
                 case "FindClient":
                     ClientServerWorkClass.FindClient(userSession);
                     break;
+                case "ContinueProject":
+                    ClientServerWorkClass.ContinueProject(userSession);
+                    break;
                 default:
                     break;
             }

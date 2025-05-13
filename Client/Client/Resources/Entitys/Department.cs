@@ -1,4 +1,4 @@
-﻿using Server.DataBaseFolder.Entitys;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Client.Resources.Entitys
 {
-    class Department
+    public class Department
     {
         [Key]
         public int DepartmentID { get; set; }

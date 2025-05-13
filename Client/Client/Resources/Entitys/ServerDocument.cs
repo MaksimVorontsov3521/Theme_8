@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.DataBaseFolder.Entitys
+namespace Client.Resources.Entitys
 {
-    internal class ServerDocument
+    public class ServerDocument
     {
         [Key]
         public int DocumentID { get; set; }

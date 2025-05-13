@@ -13,7 +13,6 @@ using System.Windows;
 using System.Text.Json;
 using Client.Classes;
 using System.Reflection.Metadata;
-using Server.DataBaseFolder.Entitys;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using System.Windows.Shapes;
@@ -29,6 +28,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Http;
 using System.Diagnostics;
+using Client.Classes.Visual;
 
 namespace Client
 {
@@ -63,7 +63,7 @@ namespace Client
             try
             {
                 clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                clientSocket.ConnectAsync(IPAddress.Parse(serverIP), port);
+                await clientSocket.ConnectAsync(IPAddress.Parse(serverIP), port);
                 ReadAndWrite messenger = new ReadAndWrite(clientSocket);
                 Messenger = messenger;
             }
@@ -72,7 +72,7 @@ namespace Client
                 MessageBox.Show("Сервер недоступен");
                 return;
             }
-            Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
+            await Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
             string response = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
             if (response.Contains("Right"))
             {
@@ -116,294 +116,39 @@ namespace Client
         /// </summary>
         public void TimeSort()
         {
-            var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.FolderID).ToList();          
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
-                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
-
-                if (Folder[i].IsDone == false)
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
-                }
-                else
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
-                }
-
-                page.ProjectsListBox.Items.Add(textBlock);
-                page.ProjectsListBox.Items.RemoveAt(0);
-                session.receivedFolders = Folder;
-            }  
+            StyleClass.TimeSort(session, page);
         }
         public void TimeSortReversed()
         {
-            var Folder = session.receivedFolders.Cast<Folder>().OrderByDescending(f => f.FolderID).ToList();
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
-                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
-
-                if (Folder[i].IsDone == false)
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
-                }
-                else
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
-                }
-
-                page.ProjectsListBox.Items.Add(textBlock);
-                page.ProjectsListBox.Items.RemoveAt(0);
-                session.receivedFolders = Folder;
-            }
+            StyleClass.TimeSortReversed(session, page);
         }
         public void NameSort()
         {
-            var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.FolderPath).ToList();
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
-                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
-
-                if (Folder[i].IsDone == false)
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
-                }
-                else
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
-                }
-
-                page.ProjectsListBox.Items.Add(textBlock);
-                page.ProjectsListBox.Items.RemoveAt(0);
-                session.receivedFolders = Folder;
-            }
+            StyleClass.NameSort(session,page);
         }
         public void NameSortReversed()
         {
-            var Folder = session.receivedFolders.Cast<Folder>().OrderByDescending(f => f.FolderPath).ToList();
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
-                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
-
-                if (Folder[i].IsDone == false)
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
-                }
-                else
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
-                }
-
-                page.ProjectsListBox.Items.Add(textBlock);
-                page.ProjectsListBox.Items.RemoveAt(0);
-                session.receivedFolders = Folder;
-            }
+            StyleClass.NameSortReversed(session,page);
         }
-
         public void ClientSort()
         {
-            var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.Client.ClientName).ToList();
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
-                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
-
-                if (Folder[i].IsDone == false)
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
-                }
-                else
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
-                }
-
-                page.ProjectsListBox.Items.Add(textBlock);
-                page.ProjectsListBox.Items.RemoveAt(0);
-                session.receivedFolders = Folder;
-            }
+            StyleClass.ClientSort(session,page);
         }
-
         public void ClientSortReversed()
         {
-            var Folder = session.receivedFolders.Cast<Folder>().OrderByDescending(f => f.Client.ClientName).ToList();
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
-                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
-
-                if (Folder[i].IsDone == false)
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Red });
-                }
-                else
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
-                }
-
-                page.ProjectsListBox.Items.Add(textBlock);
-                page.ProjectsListBox.Items.RemoveAt(0);
-                session.receivedFolders = Folder;
-            }
+            StyleClass.ClientSortReversed(session,page);
         }
-
         public void UnDone()
         {
-            var Folder = session.receivedFolders.Cast<Folder>().OrderBy(f => f.IsDone).ToList();
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Inlines.Add(new Run(Folder[i].FolderPath));
-                textBlock.Inlines.Add(new Run("\n" + Folder[i].Client.ClientName) { FontWeight = FontWeights.Bold });
-
-                if (Folder[i].IsDone == false)
-                {
-                    textBlock.Inlines.Add(new Run("\a   " + Folder[i].DeadLine));
-                    textBlock.Inlines.Add(new Run("\a   " + "●") { Foreground = Brushes.Red });
-                }
-                else
-                {
-                    textBlock.Inlines.Add(new Run("\a" + "●") { Foreground = Brushes.Green });
-                }
-
-                page.ProjectsListBox.Items.Add(textBlock);
-                page.ProjectsListBox.Items.RemoveAt(0);
-                session.receivedFolders = Folder;
-            }
+            StyleClass.UnDone(session,page);
         }
+
+        //
 
         public void UpdateDocuments(int FolderCount)
         {
-            if (FolderCount == -1) { return; }
-            int howManyDocs = session.receivedFolders[FolderCount].Documents.Count;
-            page.DocumentsListBox.Items.Clear();
-            UpdateDocumentsFile(howManyDocs, FolderCount);               
-        }
-
-        public void UpdateDocumentsFile(int howManyDocs, int FolderCount)
-        {
-            int n= page.InPatternBox.SelectedIndex;
-            page.DocumentsListBox.Items.Clear();
-            switch (n)
-            { 
-                case 1:
-                    FileTimeSort(FolderCount);
-                    PrintDocAndPattern(howManyDocs, FolderCount);
-                    UpdateDocumentsPattern(FolderCount);
-                    break;
-                case 2:
-                    FileTimeSortReversed(FolderCount);
-                    PrintDocAndPattern(howManyDocs, FolderCount);
-                    UpdateDocumentsPattern(FolderCount);
-                    break;
-                case 3:
-                    FileNameSort(FolderCount);
-                    PrintDocAndPattern(howManyDocs, FolderCount);
-                    UpdateDocumentsPattern(FolderCount);
-                    break;
-                case 4:
-                    FileNameSortReversed(FolderCount);
-                    PrintDocAndPattern(howManyDocs, FolderCount);
-                    UpdateDocumentsPattern(FolderCount);
-                    break;
-                case 0:
-                    UpdateDocumentsPattern(FolderCount);
-                    FileNameSortReversed(FolderCount);
-                    PrintDocAndPattern(howManyDocs, FolderCount);             
-                    break;
-            }          
-        }
-
-        public void PrintDocAndPattern(int howManyDocs,int FolderCount)
-        {
-            for (int i = 0; i < howManyDocs; i++)
-            {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Inlines.Add(session.receivedFolders[FolderCount].Documents[i].DocumentName);
-                int IDInPattern = Convert.ToInt32(session.receivedFolders[FolderCount].Documents[i].InPatternID);
-                --IDInPattern;
-
-
-                if (IDInPattern >= 0)
-                {
-                    string NameInPattern = session.receivedRequiredInPatterns[IDInPattern].DocumentName;
-                    textBlock.Inlines.Add(new Run("\n" + NameInPattern) { FontWeight = FontWeights.Bold, Tag = NameInPattern });
-                }
-                page.DocumentsListBox.Items.Add(textBlock);
-            }
-        }
-
-        public void FileTimeSort(int FolderID)
-        {
-            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderBy(d => d.DocumentID).ToList();
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                session.receivedFolders[FolderID].Documents = docks;
-            }
-        }
-        public void FileTimeSortReversed(int FolderID)
-        {
-            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderByDescending(d => d.DocumentID).ToList();
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                session.receivedFolders[FolderID].Documents = docks;
-            }
-        }
-        public void FileNameSort(int FolderID)
-        {
-            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderBy(d => d.DocumentName).ToList();
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                session.receivedFolders[FolderID].Documents = docks;
-            }
-        }
-        public void FileNameSortReversed(int FolderID)
-        {
-            var docks = session.receivedFolders[FolderID].Documents.Cast<ServerDocument>().OrderByDescending(d => d.DocumentName).ToList();
-            for (int i = 0; i < session.receivedFolders.Count; i++)
-            {
-                session.receivedFolders[FolderID].Documents = docks;
-            }
-        }
-        public void UpdateDocumentsPattern(int FolderCount)
-        {
-
-            int patternID = 0;
-            if (session.receivedFolders[FolderCount].PatternID != null)
-            {
-                patternID = Convert.ToInt32(session.receivedFolders[FolderCount].PatternID);
-            }
-            else { return; }
-            patternID--;
-
-            if (patternID >= 0)
-            {
-                List<RequiredInPattern> NeedInFolderObj = session.receivedPatterns[patternID].RequiredInPatterns;
-                List<string> NeedInFolderStr = new List<string>();
-                for (int i = 0; i < NeedInFolderObj.Count; i++)
-                {
-                    var doc = session.receivedFolders[FolderCount].Documents.FirstOrDefault(d => d.InPatternID == NeedInFolderObj[i].DocumentPatternID);
-                    if (doc == null)
-                    {
-                        NeedInFolderStr.Add(NeedInFolderObj[i].DocumentName);
-                    }
-                }
-
-                for (int i = 0; i < NeedInFolderStr.Count; i++)
-                {
-                    TextBlock textBlock = new TextBlock();
-                    textBlock.Inlines.Add(new Run("\b" + NeedInFolderStr[i]) { FontWeight = FontWeights.Bold });
-                    page.DocumentsListBox.Items.Add(textBlock);
-                }
-            }
+            ShowDocuments showDocuments = new ShowDocuments(session, page);
+            showDocuments.UpdateDocuments(FolderCount);
         }
 
         public async void GetTables()
@@ -455,13 +200,11 @@ namespace Client
                 return;
             }
 
-            Messenger.SendStrings(clientSocket, "SendPath");
-            Messenger.SendStrings(clientSocket, folderPath + FileName);
+            await Messenger.SendStrings(clientSocket, "SendPath");
+            await Messenger.SendStrings(clientSocket, folderPath + FileName);
 
 
             byte[] document = await Messenger.ReedBytes(clientSocket);
-
-
 
             string[] projectName = folderPath.Split("\\");
             Directory.CreateDirectory(Settings1.Default.RootFolder + "\\" + projectName[projectName.Length - 2]);
@@ -475,39 +218,39 @@ namespace Client
             StyleClass.TransactionResult(Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket)),page);
         }
 
-        internal async Task CreateNewProject(string[] departments, int patternID, string ProjectName)
+        public async Task CreateNewProject(string[] departments, int patternID, string ProjectName)
         {
             int[] departmentsIDs = new int[departments.Length];
             for (int i = 0; i < departments.Length; i++)
             {
                 departmentsIDs[i]=Convert.ToInt32(departments[i].Split("\a").First());
             }
-            Messenger.SendStrings(clientSocket, "CreateNewProject");
-            Messenger.SendStrings(clientSocket, ProjectName);
+            await Messenger.SendStrings(clientSocket, "CreateNewProject");
+            await Messenger.SendStrings(clientSocket, ProjectName);
 
             string Unique= Encoding.UTF8.GetString( await Messenger.ReedBytes(clientSocket));
             if (Unique != "") { StyleClass.TransactionResult(Unique, page);return; }
 
-            Messenger.SendJSON(clientSocket, departmentsIDs);
-            Messenger.SendStrings(clientSocket, patternID.ToString());
+            await Messenger.SendJSON(clientSocket, departmentsIDs);
+            await Messenger.SendStrings(clientSocket, patternID.ToString());
             StyleClass.TransactionResult(Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket)), page);
         }
 
-        internal async void ChangeProjectProperties(string[] departments, int patternID, string ProjectName)
+        public async void ChangeProjectProperties(string[] departments, int patternID, string ProjectName)
         {
             int[] departmentsIDs = new int[departments.Length];
             for (int i = 0; i < departments.Length; i++)
             {
                 departmentsIDs[i] = Convert.ToInt32(departments[i].Split("\a").First());
             }
-            Messenger.SendStrings(clientSocket, "ChangeProjectProperties");
-            Messenger.SendStrings(clientSocket, ProjectName);
+            await Messenger.SendStrings(clientSocket, "ChangeProjectProperties");
+            await Messenger.SendStrings(clientSocket, ProjectName);
 
             string Unique = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
             if (Unique != "") { StyleClass.TransactionResult(Unique, page); return; }
 
-            Messenger.SendJSON(clientSocket, departmentsIDs);
-            Messenger.SendStrings(clientSocket, patternID.ToString());
+            await Messenger.SendJSON(clientSocket, departmentsIDs);
+            await Messenger.SendStrings(clientSocket, patternID.ToString());
             StyleClass.TransactionResult(Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket)), page);
         }
 
@@ -537,7 +280,7 @@ namespace Client
             //
             //
             //
-
+            FileName = FileName.Trim(new char[] { '\n', '\r' });
             var folder = session.receivedFolders.FirstOrDefault(f => f.FolderPath == folderPath);
             var Doc = folder.Documents.FirstOrDefault(d => d.DocumentName ==  FileName.Split("\\").Last());
             if (Doc!=null)
@@ -546,12 +289,13 @@ namespace Client
                 { nameInPattern =Convert.ToInt32(Doc.InPatternID);}              
             }
 
-            Messenger.SendStrings(clientSocket, "GetDocument");
+            await Messenger.SendStrings(clientSocket, "GetDocument");
             string[] FileParts = FileName.Split('\\');
-            Messenger.SendStrings(clientSocket, folderPath + "\\" + FileParts[FileParts.Length-1] + "\a" + nameInPattern);
-            byte[] bytes = File.ReadAllBytes(FileName);
-            Messenger.SendBytes(clientSocket, bytes);
 
+            await Messenger.SendStrings(clientSocket, folderPath + "\\" + FileParts[FileParts.Length - 1] + "\a" + nameInPattern);
+            byte[] bytes = File.ReadAllBytes(FileName);
+            await Messenger.SendBytes(clientSocket, bytes);
+            
             string result = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
             StyleClass.TransactionResult(result, page);
             if (page.DocumentsListBox.Items.IndexOf(FileParts[FileParts.Length - 1])!=-1)
@@ -584,11 +328,48 @@ namespace Client
                     session.receivedFolders[page.ProjectsListBox.SelectedIndex].Documents[index]= serverDocument;
                 }           
             }
-
+            IsProjectDone(page.ProjectsListBox.SelectedIndex);
             UpdateDocuments(page.ProjectsListBox.SelectedIndex);
         }
 
-        internal string[] FindFolder(string Name)
+        public void IsProjectDone(int ProjectID)
+        {
+            int howManyPattern = 0;
+            int patternID = 0;
+            if (session.receivedFolders[ProjectID].PatternID != null)
+            {
+                patternID = Convert.ToInt32(session.receivedFolders[ProjectID].PatternID);
+            }
+            else { return; }
+            patternID--;
+
+            if (patternID >= 0)
+            {
+                List<RequiredInPattern> NeedInFolderObj = session.receivedPatterns[patternID].RequiredInPatterns;
+                List<string> NeedInFolderStr = new List<string>();
+                for (int i = 0; i < NeedInFolderObj.Count; i++)
+                {
+                    var doc = session.receivedFolders[ProjectID].Documents.FirstOrDefault(d => d.InPatternID == NeedInFolderObj[i].DocumentPatternID);
+                    if (doc == null)
+                    {
+                        NeedInFolderStr.Add(NeedInFolderObj[i].DocumentName);
+                    }
+                }
+
+                for (int i = 0; i < NeedInFolderStr.Count; i++)
+                {
+                    howManyPattern++;
+                }
+            }
+
+            if(howManyPattern==0)
+            {
+                CompleteProject(ProjectID);
+                StyleClass.TransactionResult("Проект Успешно завершён", page);
+            }        
+        }
+
+        public string[] FindFolder(string Name)
         {
             var matching = session.receivedFolders.Where(f => f.FolderPath.Contains(Name)).ToList();
             string[] folders = new string[matching.Count];
@@ -609,7 +390,7 @@ namespace Client
             return filteredItems.DocumentPatternID;
         }
 
-        internal Folder GetFolderByName(string folderName)
+        public Folder GetFolderByName(string folderName)
         {
             Folder folder = session.receivedFolders.FirstOrDefault(f=> f.FolderPath==folderName);
             return folder;
@@ -630,10 +411,10 @@ namespace Client
 
         public async void NewOrUpdateClient(string[]clientInfo)
         {
-            Messenger.SendStrings(clientSocket, "NewOrUpdateClient");
-            Messenger.SendJSON(clientSocket, session.thisUser);
+            await Messenger.SendStrings(clientSocket, "NewOrUpdateClient");
+            await Messenger.SendJSON(clientSocket, session.thisUser);
 
-            Messenger.SendJSON(clientSocket, clientInfo);
+            await Messenger.SendJSON(clientSocket, clientInfo);
 
             string result = Encoding.UTF8.GetString( await Messenger.ReedBytes(clientSocket));
             StyleClass.TransactionResult(result, page);
@@ -641,9 +422,9 @@ namespace Client
 
         public async void FindClient(string ClientName)
         {
-            Messenger.SendStrings(clientSocket, "FindClient");
-            Messenger.SendJSON(clientSocket, session.thisUser);
-            Messenger.SendStrings(clientSocket, ClientName);
+            await Messenger.SendStrings(clientSocket, "FindClient");
+            await Messenger.SendJSON(clientSocket, session.thisUser);
+            await Messenger.SendStrings(clientSocket, ClientName);
 
             string result = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
             string [] clientInfo = result.Split('\b');           
@@ -659,5 +440,40 @@ namespace Client
                 page.KPPLabel.Content = clientInfo[4];
             }
         }
+
+        public void ContinueProject(int ProjectID)
+        {
+            Folder folder = session.receivedFolders[ProjectID];
+            if (folder.IsDone == false)
+            {
+                StyleClass.TransactionResult("Проект уже активен", page);
+                return;
+            }
+            folder.IsDone = false;
+            ChangeProject(folder);
+        }
+
+        public void CompleteProject(int ProjectID)
+        {
+            Folder folder = session.receivedFolders[ProjectID];
+            if (folder.IsDone == true)
+            {
+                StyleClass.TransactionResult("Проект уже завершён", page);
+                return;
+            }
+            folder.IsDone = true;
+            ChangeProject(folder);
+        }
+
+        private async void ChangeProject(Folder folder)
+        {           
+            await Messenger.SendStrings(clientSocket, "ContinueProject");
+            await Messenger.SendJSON(clientSocket, folder);
+            string a = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
+            StyleClass.TransactionResult(a, page);
+            page.SortBox_SelectionChanged();
+        }
+
+
     }
 }

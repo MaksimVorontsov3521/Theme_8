@@ -7,9 +7,9 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.DataBaseFolder.Entitys
+namespace Client.Resources.Entitys
 {
-    internal class Folder
+    public class Folder
     {
         [Key]
         public int FolderID { get; set; }

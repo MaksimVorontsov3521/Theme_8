@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.DataBaseFolder.Entitys
+namespace Client.Resources.Entitys
 {
-    internal class RequiredInPattern
+    public class RequiredInPattern
     {
         [Key]
         public int DocumentPatternID { get; set; }
