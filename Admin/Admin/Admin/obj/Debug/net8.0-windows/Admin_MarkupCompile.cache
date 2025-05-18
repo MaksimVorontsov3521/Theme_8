@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 F:\Program\Theme_8\Admin\Admin\Admin\App.xaml
-5-875168605
+6-1627120616
 
-15-262329203
+19694194864
 198-344842731
-MainWindow.xaml;Pages\AddNewUser.xaml;Pages\Entrance.xaml;Pages\LogsPage.xaml;Pages\MainWorkPage.xaml;
+MainWindow.xaml;Pages\AddNewUser.xaml;Pages\ChangeUser.xaml;Pages\Entrance.xaml;Pages\LogsPage.xaml;Pages\MainWorkPage.xaml;
 
 False
 

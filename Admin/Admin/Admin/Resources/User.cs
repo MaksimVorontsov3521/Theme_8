@@ -18,10 +18,15 @@ namespace Admin.Resources
         public string? PhoneNumber { get; set; }
         public string UserLogin { get; set; }
         public string UserPassword { get; set; }
+        public string? Email { get; set; }
+        public bool Blocked { get; set; }
 
         public int RoleID { get; set; }
+        public Role Role { get; set; }
 
         public int DepartmentID { get; set; }
+        public Department Department { get; set; }
+
 
     }
 }

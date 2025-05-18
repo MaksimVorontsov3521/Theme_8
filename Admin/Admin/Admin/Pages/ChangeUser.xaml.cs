@@ -14,25 +14,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Admin.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для AddNewUser.xaml
+    /// Логика взаимодействия для ChangeUser.xaml
     /// </summary>
-    public partial class AddNewUser : Page
+    public partial class ChangeUser : Page
     {
         User User;
         Server server;
         MainWorkPage Frame;
-        public AddNewUser( Server Server, MainWorkPage frame)
-        {
+        internal ChangeUser(User user,Server Server,MainWorkPage frame)
+        { 
             InitializeComponent();
-            User user = new User();
             Frame = frame;
             server = Server;
             User = user;
-
             for (int i = 0; i < server.receivedRole.Count; i++)
             {
                 UserRole.Items.Add(server.receivedRole[i].RoleName);
@@ -42,15 +41,25 @@ namespace Admin.Pages
             {
                 UserDepartment.Items.Add(server.receivedDepartment[i].DepartmentName);
             }
+
+            Firtsname.Text = user.UserName;
+            SecondName.Text = user.Surname;
+            Patronymic.Text = user.Patronymic;
+
+            PhoneNumber.Text = user.PhoneNumber;
+            UserLogin.Text = user.UserLogin;
+            UserPassword.Text = user.UserPassword;
+
+            UserRole.SelectedIndex = user.RoleID-1;
+            UserDepartment.SelectedIndex = user.DepartmentID-1;
+            TBEmail.Text = user.Email;
+
+            if (user.Blocked == false)
+            {Blocked.IsChecked = false;}
+            else{ Blocked.IsChecked = true;}
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Page page = new Page();
-            Frame.UserFrame.Navigate(page);
-        }
-
-        private void AddUserButton_Click(object sender, RoutedEventArgs e)
+        private void ChangeUserButton_Click(object sender, RoutedEventArgs e)
         {
             User.UserName = Firtsname.Text;
             User.Surname = SecondName.Text;
@@ -60,12 +69,15 @@ namespace Admin.Pages
             User.UserLogin = UserLogin.Text;
             User.UserPassword = UserPassword.Text;
 
-            User.RoleID = UserRole.SelectedIndex + 1;
-            User.DepartmentID = UserDepartment.SelectedIndex + 1;
+            User.RoleID = UserRole.SelectedIndex+1;
+            User.DepartmentID = UserDepartment.SelectedIndex+1;
             User.Email = TBEmail.Text;
-            User.Blocked = false;
 
             int returnCount = 0;
+
+            if (Blocked.IsChecked == false)
+            { User.Blocked = false; }
+            else { User.Blocked = true; }
 
             if (string.IsNullOrEmpty(Firtsname.Text))
             { Firtsname.BorderBrush = new SolidColorBrush(Colors.Red); returnCount++; }
@@ -89,11 +101,17 @@ namespace Admin.Pages
 
             if (returnCount > 0)
             {
-                StyleClass.TransactionResult("Все поля обязательны для заполнения", Frame);
-                return;
+                StyleClass.TransactionResult("Все поля обязательны для заполнения",Frame);
+                return;         
             }
 
             server.UpdateClient(User);
+            Page page = new Page();
+            Frame.UserFrame.Navigate(page);
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
             Page page = new Page();
             Frame.UserFrame.Navigate(page);
         }

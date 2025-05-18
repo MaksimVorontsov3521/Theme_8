@@ -16,10 +16,6 @@ namespace Server.Security
         {
             security = Security;
         }
-        internal ReadAndWrite()
-        {
-
-        }
 
         internal async void SendJSON(Socket socket, object data)
         {

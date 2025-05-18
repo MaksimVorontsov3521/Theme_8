@@ -22,5 +22,10 @@
         <Rectangle Fill="Orange" Grid.ColumnSpan="3" Grid.Row="3"/>
         <Label x:Name="OOO" Content="ООО Индустрия ПБ Админское приложение" Grid.Row="0" Grid.Column="1" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Frame x:Name="WorkPlace" Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+
+        <Popup x:Name="Popup1" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+            <TextBlock x:Name="Popup1Text" TextWrapping="Wrap" Width="180" Background="LightGreen" Opacity="0.9" >
+            </TextBlock>
+        </Popup>
     </Grid>
 </Window>

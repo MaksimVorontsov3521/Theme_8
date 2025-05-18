@@ -87,11 +87,11 @@ public class Program
 
     }
 
-    private async Task HandelClient(Socket clientSocket)
+    private async void HandelClient(Socket clientSocket)
     {
         Security security = new Security(clientSocket);
         ReadAndWrite Messenger = new ReadAndWrite(security);
-        UserTable user = await CheckPassword(clientSocket,security);
+        UserTable user = await CheckPassword(clientSocket, Messenger);
         UserSession userSession = SendUser(user,clientSocket, security);
         if (userSession == null) { return; }
         userSession.Messenger = Messenger;
@@ -100,9 +100,8 @@ public class Program
         ClientServerWork(userSession);
     }
 
-    private async static Task<UserTable> CheckPassword(Socket clientSocket,Security security)
+    private async static Task<UserTable> CheckPassword(Socket clientSocket, ReadAndWrite Messenger)
     {
-        ReadAndWrite Messenger = new ReadAndWrite(security);
         string message = Encoding.UTF8.GetString( await Messenger.ReedBytes(clientSocket));
 
         // Проверка пароля

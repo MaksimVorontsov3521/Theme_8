@@ -47,11 +47,11 @@
 
                         <Label Grid.Column="6" Content="🔍" HorizontalAlignment="Right"/>
                         <TextBox x:Name="FindUser" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" VerticalAlignment="Center"/>
-                        <Button x:Name="ButtonAdd" Content="Добавить" Grid.Column="1" Grid.Row="1"/>
+                        <Button x:Name="ButtonAddUser" Content="Добавить" Grid.Column="1" Grid.Row="1" Click="ButtonAddUser_Click"/>
                         <Button x:Name="ButtonFind" Content="Найти" Grid.Column="3" Grid.Row="1"/>
-                        <Button x:Name="ButtonChange" Content="Изменить" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" Height="20" Margin="30,0,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="ButtonChange_Click"/>
+                        <Button x:Name="ButtonChangeUser" Content="Изменить" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" Height="20" Margin="30,0,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="ButtonChangeUser_Click"/>
                         <DataGrid x:Name="UsersGrid"  Grid.Row="3" Grid.ColumnSpan="9" AutoGenerateColumns="True"/>
-                        <Frame Name="AddNewUserFrame" Grid.Row="3" Grid.ColumnSpan="9"/>
+                        <Frame Name="UserFrame" Grid.Row="3" Grid.ColumnSpan="9"/>
                     </Grid>
                 </TabItem.Content>
 
@@ -290,6 +290,11 @@
             </TabItem>
 
         </TabControl>
+
+        <Popup x:Name="Popup1" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+            <TextBlock x:Name="Popup1Text" TextWrapping="Wrap" Width="180" Background="LightGreen" Opacity="0.9" >
+            </TextBlock>
+        </Popup>
 
     </Grid>
 </Page>

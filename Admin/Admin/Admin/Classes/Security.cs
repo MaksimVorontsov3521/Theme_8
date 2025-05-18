@@ -5,13 +5,11 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Shapes;
 
-namespace Client.Classes
+namespace Admin.Classes
 {
     internal class Security
     {
-
         private Socket socket;
         private byte[] PublicKey { get; set; }
         private byte[] PrivateKey;
@@ -69,7 +67,7 @@ namespace Client.Classes
                 aes.Key = PrivateKey[..32]; // AES-256
                 aes.IV = IV; // В реальном коде IV должен быть случайным
 
-                FullMessage = ( await DecryptMessage(aes, FullMessage));
+                FullMessage = (await DecryptMessage(aes, FullMessage));
 
                 return FullMessage;
             }

@@ -18,6 +18,8 @@ namespace Server.DataBaseFolder.Entitys
         public string? PhoneNumber { get; set; }
         public string UserLogin { get; set; }
         public string UserPassword { get; set; }
+        public string? Email { get; set; }
+        public bool Blocked { get; set; }
 
         public int RoleID { get; set; }
         public RoleTable Role { get; set; }

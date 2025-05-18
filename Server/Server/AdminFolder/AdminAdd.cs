@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Server.AdminFolder
@@ -20,6 +21,27 @@ namespace Server.AdminFolder
             }
         }
 
+        internal void UpdateClient(byte[] userByte)
+        {
+            UserTable user = JsonSerializer.Deserialize<UserTable>(userByte);
+            using (var context = new DataBase())
+            {
+                context.UserTable.Update(user);
 
+                context.SaveChanges();
+            }
+        }
+
+
+        internal void AddClient(byte[] userByte)
+        {
+            UserTable user = JsonSerializer.Deserialize<UserTable>(userByte);
+            using (var context = new DataBase())
+            {
+                context.UserTable.Add(user);
+
+                context.SaveChanges();
+            }
+        }
     }
 }

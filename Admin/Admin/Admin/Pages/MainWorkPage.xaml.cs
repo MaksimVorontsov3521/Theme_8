@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,7 +40,6 @@ namespace Admin.Pages
             server.UpdateBaseFolder(BaseFolderTB.Text);
         }
 
-
         private void ButtonAddDepartment_Click(object sender, RoutedEventArgs e)
         {
             server.AddDepartment(FindDepartment.Text);
@@ -52,9 +52,24 @@ namespace Admin.Pages
 
         private void ButtonChange_Click(object sender, RoutedEventArgs e)
         {
-            User user = UsersGrid.SelectedItem
-            AddNewUser addNewUser = new AddNewUser();
-            AddNewUserFrame.Navigate(addNewUser);
+
+
+        }
+        private void ButtonAddUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonChangeUser_Click(object sender, RoutedEventArgs e)
+        {
+            string json = JsonSerializer.Serialize(UsersGrid.SelectedItem);
+            User user = JsonSerializer.Deserialize<User>(json);
+            if (user == null)
+            {
+                return;
+            }
+            ChangeUser changeUser = new ChangeUser(user,server,this);
+            UserFrame.Navigate(changeUser);
         }
     }
 }

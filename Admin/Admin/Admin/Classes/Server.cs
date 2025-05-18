@@ -17,7 +17,7 @@ namespace Admin.Classes
     public class Server
     {
         MainWindow mainWindow;
-        ReadAndWrite Messenger = new ReadAndWrite();
+        ReadAndWrite Messenger;
 
         Socket clientSocket;
         string serverIP = Resources.Settings1.Default.ServerUrl;
@@ -25,8 +25,9 @@ namespace Admin.Classes
 
         internal List<User> receivedUser;
         internal List<Role> receivedRole;
-        internal List<Log> receivedLog;
-        internal List<LogAction> receivedLogAction;
+        //internal List<LogAction> receivedLogAction;
+        //internal List<Log> receivedLog;
+        internal List<Department> receivedDepartment;
 
 
         public Server(MainWindow mainWindow)
@@ -39,13 +40,15 @@ namespace Admin.Classes
         }
 
 
-        public void Connection(string login, string password)
+        public async void Connection(string login, string password)
         {
             
             try
             {
                 clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                clientSocket.Connect(IPAddress.Parse(serverIP), port);
+                clientSocket.ConnectAsync(IPAddress.Parse(serverIP), port);
+                ReadAndWrite messenger = new ReadAndWrite(clientSocket);
+                Messenger = messenger;
             }
             catch
             { 
@@ -53,41 +56,55 @@ namespace Admin.Classes
                 return;
             }
 
-            Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
+            await Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
 
-            if (Encoding.UTF8.GetString(Messenger.ReedBytes(clientSocket)).Contains("Right"))
+            byte[] get = await Messenger.ReedBytes(clientSocket);
+            
+            if (Encoding.UTF8.GetString(get).Contains("Right"))
             { }
             else { MessageBox.Show("Неверный логин или пароль"); return; }
 
 
-            byte[] jsonBytes = Messenger.ReedBytes(clientSocket);
+            byte[] jsonBytes = await Messenger.ReedBytes(clientSocket);
             string json = Encoding.UTF8.GetString(jsonBytes);
             receivedUser = JsonSerializer.Deserialize<List<User>>(json);
 
-            jsonBytes = Messenger.ReedBytes(clientSocket);
+            jsonBytes = await Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
             receivedRole = JsonSerializer.Deserialize<List<Role>>(json);
 
-            //jsonBytes = ReedBytes(clientSocket);
-            //json = Encoding.UTF8.GetString(jsonBytes);
-            //receivedLog = JsonSerializer.Deserialize<List<Log>>(json);
-
-            jsonBytes = Messenger.ReedBytes(clientSocket);
+            jsonBytes = await Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
-            receivedLogAction = JsonSerializer.Deserialize<List<LogAction>>(json);
+            receivedDepartment = JsonSerializer.Deserialize<List<Department>>(json);
 
             MainWorkPage mainWorkPage = new MainWorkPage(this);
             mainWindow.WorkPlace.Navigate(mainWorkPage);
         }
 
-        public void UpdateBaseFolder(string NewPath)
+        internal async Task UpdateBaseFolder(string NewPath)
         {
-            Messenger.SendStrings(clientSocket, "UpdateBaseFolder\a"+ NewPath);
+           await Messenger.SendStrings(clientSocket, "UpdateBaseFolder\a"+ NewPath);
         }
 
-        public void AddDepartment(string DepartmentName)
+        internal async void AddDepartment(string DepartmentName)
         {
-            Messenger.SendStrings(clientSocket, "AddDepartment\a" + DepartmentName);
+           await Messenger.SendStrings(clientSocket, "AddDepartment\a" + DepartmentName);
+        }
+
+        internal async void UpdateClient(User user)
+        {
+            await Messenger.SendStrings(clientSocket, "UpdateClient\a");
+            await Messenger.SendJSON(clientSocket, user);
+            byte[] bytes =  await Messenger.ReedBytes(clientSocket);
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
+        }
+
+        internal async void AddClient(User user)
+        {
+            await Messenger.SendStrings(clientSocket, "AddClient\a");
+            await Messenger.SendJSON(clientSocket, user);
+            byte[] bytes = await Messenger.ReedBytes(clientSocket);
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
         }
     }
 }

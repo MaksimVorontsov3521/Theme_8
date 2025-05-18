@@ -49,6 +49,21 @@ namespace Server.DataBaseFolder.Querys
             }
         }
 
+        public List<Department> Department()
+        {
+            List<Department> departments = new List<Department>();
+            using (var context = new DataBase())
+            {
+                var X = context.Department;
+
+                foreach (var worker in X)
+                {
+                    departments.Add(worker);
+                }
+                return departments;
+            }
+        }
+
         public List<LogTable> LogTable()
         {
             List<LogTable> users = new List<LogTable>();

@@ -43,12 +43,14 @@ namespace Server.AdminFolder
 
         private async void HandelAdmin(Socket adminSocket)
         {
-            ReadAndWrite Messenger = new ReadAndWrite();
+            Security.Security security = new Security.Security(adminSocket);
+            ReadAndWrite Messenger = new ReadAndWrite(security);
 
             string message = Encoding.UTF8.GetString(await Messenger.ReedBytes(adminSocket));
             // Проверка пароля
             DataBase dataBase = new DataBase();
             LoginPassword loginPassword = new LoginPassword(dataBase);
+
             bool a = false;
             try
             {
@@ -72,9 +74,7 @@ namespace Server.AdminFolder
             }
 
 
-
-
-            Console.WriteLine("Entered");
+            Console.WriteLine("AdminEntered");
             TablesForAdmin tablesForAdmin = new TablesForAdmin(dataBase);
 
             List<UserTable> users = tablesForAdmin.UserTable();
@@ -86,9 +86,11 @@ namespace Server.AdminFolder
             //List<Log> log = tablesForAdmin.LogTable();
             //Messenger.SendJSON(stream, log);
 
-            List<LogAction> logActions = tablesForAdmin.LogActionTable();
-            Messenger.SendJSON(adminSocket, logActions);
+            //List<LogAction> logActions = tablesForAdmin.LogActionTable();
+            //Messenger.SendJSON(adminSocket, logActions);
 
+            List<Department> department = tablesForAdmin.Department();
+            Messenger.SendJSON(adminSocket, department);
 
             //
             //
@@ -107,6 +109,16 @@ namespace Server.AdminFolder
                         break;
                     case "AddDepartment":
                         adminAdd.AddDepartment(AdminCommand[1]);
+                        break;
+                    case "UpdateClient":
+                        byte[] UpdateUser = await Messenger.ReedBytes(adminSocket);
+                        adminAdd.UpdateClient(UpdateUser);
+                        Messenger.SendStrings(adminSocket,"Успешно");
+                        break;
+                    case "AddClient":
+                        byte[] AddUser = await Messenger.ReedBytes(adminSocket);
+                        adminAdd.AddClient(AddUser);
+                        Messenger.SendStrings(adminSocket, "Успешно");
                         break;
                     default:
                         Console.WriteLine("Неизвестная команда");
