@@ -22,13 +22,16 @@ namespace Server.DataBaseFolder.DbContexts
         {
             using (var context = new DataBase())
             {
-                var X = context.UserTable
-                    .Where(w => w.UserLogin == login && w.UserPassword == enteredPassword);
+                var X = context.UserTable.FirstOrDefault(w => w.UserLogin == login);
 
-                foreach (var worker in X)
-                {
-                    return worker;                 
+                if(X==null)
+                { return null; }
+
+                if (Security.Security.VerifyPassword(enteredPassword, X.UserPassword) == true)
+                { 
+                return X;
                 }
+
                 return null;
             }
         }
@@ -52,14 +55,16 @@ namespace Server.DataBaseFolder.DbContexts
         {
             using (var context = new DataBase())
             {
-                var X = context.UserTable
-                    .Where(w => w.UserLogin == login && w.UserPassword == enteredPassword && w.RoleID == 1)
-                    .ToList();
+                var X = context.UserTable.FirstOrDefault(w => w.UserLogin == login && w.RoleID == 1);
 
-                foreach (var worker in X)
+                if (X == null)
+                { return false; }
+
+                if (Security.Security.VerifyPassword(enteredPassword, X.UserPassword) == true)
                 {
                     return true;
                 }
+
                 return false;
             }
         }

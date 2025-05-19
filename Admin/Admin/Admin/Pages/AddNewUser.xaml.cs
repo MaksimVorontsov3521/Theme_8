@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Security.Cryptography;
 
 namespace Admin.Pages
 {
@@ -52,6 +54,14 @@ namespace Admin.Pages
 
         private void AddUserButton_Click(object sender, RoutedEventArgs e)
         {
+
+            Firtsname.BorderBrush = new SolidColorBrush(Colors.Gray);
+            SecondName.BorderBrush = new SolidColorBrush(Colors.Gray);
+            PhoneNumber.BorderBrush = new SolidColorBrush(Colors.Gray);
+            UserLogin.BorderBrush = new SolidColorBrush(Colors.Gray);
+            UserPassword.BorderBrush = new SolidColorBrush(Colors.Gray);
+            TBEmail.BorderBrush = new SolidColorBrush(Colors.Gray);
+
             User.UserName = Firtsname.Text;
             User.Surname = SecondName.Text;
             User.Patronymic = Patronymic.Text;
@@ -82,6 +92,17 @@ namespace Admin.Pages
             if (string.IsNullOrEmpty(TBEmail.Text))
             { TBEmail.BorderBrush = new SolidColorBrush(Colors.Red); returnCount++; }
 
+            bool isValidEmail = Regex.IsMatch(TBEmail.Text,
+               @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+               RegexOptions.IgnoreCase);
+
+            if (!isValidEmail == true || TBEmail.Text == null)
+            {
+                TBEmail.BorderBrush = Brushes.Red;
+                return;
+            }
+            else { TBEmail.BorderBrush = Brushes.Gray; }
+
             if (UserRole.SelectedIndex == -1)
             { UserRole.BorderBrush = new SolidColorBrush(Colors.Red); returnCount++; }
             if (UserDepartment.SelectedIndex == -1)
@@ -93,9 +114,12 @@ namespace Admin.Pages
                 return;
             }
 
+            User.UserPassword = Security.HashPassword(User.UserPassword);
+
             server.UpdateClient(User);
             Page page = new Page();
             Frame.UserFrame.Navigate(page);
         }
+
     }
 }

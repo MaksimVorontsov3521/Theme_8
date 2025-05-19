@@ -15,13 +15,14 @@ using System.Data.SqlTypes;
 using System.IO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Server.Security;
+using System.Dynamic;
 
 namespace Server.AdminFolder
 {
     public class Admin
     {
 
-        string ipAddress = "127.0.0.1";
+        string ipAddress = Settings.Settings1.Default.ServerUrl;
         private int port = Settings.Settings1.Default.AdminPort;
 
         async public void Connection()
@@ -91,6 +92,18 @@ namespace Server.AdminFolder
 
             List<Department> department = tablesForAdmin.Department();
             Messenger.SendJSON(adminSocket, department);
+
+            List<object> settingsList = new List<object>();
+
+            settingsList.Add(Settings.Settings1.Default.AdminPort);
+            settingsList.Add(Settings.Settings1.Default.UserPort);
+            settingsList.Add(Settings.Settings1.Default.ServerUrl);
+            settingsList.Add(Settings.Settings1.Default.BaseFolder);
+
+            settingsList.Add(Settings.Settings2.Default.CanCreateNewProject);
+            settingsList.Add(Settings.Settings2.Default.CanEditClient);
+
+            Messenger.SendJSON(adminSocket, settingsList);
 
             //
             //

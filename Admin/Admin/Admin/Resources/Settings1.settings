@@ -2,14 +2,23 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Admin.Resources" GeneratedClassName="Settings1">
   <Profiles />
   <Settings>
-    <Setting Name="AdminPort" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">9091</Value>
-    </Setting>
     <Setting Name="UserPort" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">8080</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ServerUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">127.0.0.1</Value>
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="BaseFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CanCreateNewProject" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CanEditClient" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AdminPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

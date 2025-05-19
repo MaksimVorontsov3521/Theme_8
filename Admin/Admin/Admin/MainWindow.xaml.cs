@@ -1,5 +1,6 @@
 ﻿using Admin.Classes;
 using Admin.Pages;
+using Admin.Resources;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
+using System.Configuration;
 
 namespace Admin
 {

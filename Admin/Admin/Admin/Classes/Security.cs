@@ -87,5 +87,25 @@ namespace Admin.Classes
                 return ms.ToArray(); // Возвращаем сырые байты
             }
         }
+
+        public static string HashPassword(string password)
+        {
+            // Генерируем случайную соль
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+            // Настройки PBKDF2
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000, HashAlgorithmName.SHA256);
+            byte[] hash = pbkdf2.GetBytes(20); // 20 байт хеша
+
+            // Объединяем соль и хеш
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            // Конвертируем в Base64 для хранения
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+            return savedPasswordHash;
+        }
     }
 }

@@ -24,10 +24,11 @@ using System.Reflection.Metadata;
 using Azure.Core;
 using System.Net.Security;
 using System.Security.Authentication;
+using System.Configuration;
 
 public class Program
 {
-    string ipAddress = "127.0.0.1";
+    string ipAddress = Settings1.Default.ServerUrl;
     int port = Settings1.Default.UserPort;
     private static X509Certificate2 serverCertificate;
 

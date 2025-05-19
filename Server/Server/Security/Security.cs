@@ -92,5 +92,27 @@ namespace Server.Security
         }
 
 
+        public static bool VerifyPassword(string password, string savedPasswordHash)
+        {
+            // Декодируем сохранённый хеш
+            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+
+            // Извлекаем соль (первые 16 байт)
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+
+            // Вычисляем хеш введённого пароля
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000, HashAlgorithmName.SHA256);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            // Сравниваем хеши
+            for (int i = 0; i < 20; i++)
+            {
+                if (hashBytes[i + 16] != hash[i])
+                    return false;
+            }
+            return true;
+        }
+
     }
 }

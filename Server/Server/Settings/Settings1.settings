@@ -11,5 +11,8 @@
     <Setting Name="BaseFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\Desktop\Root</Value>
     </Setting>
+    <Setting Name="ServerUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">127.0.0.4</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "F:\\Program\\Theme_8\\Server\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\databasefolder\\querys\\loginpassword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\databasefolder\\querys\\loginpassword.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\adminfolder\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\adminfolder\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\adminfolder\\adminadd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\adminfolder\\adminadd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\security\\security.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\security\\security.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,30 +26,56 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AdminAdd.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\AdminAdd.cs",
-              "RelativeDocumentMoniker": "Server\\AdminFolder\\AdminAdd.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\AdminAdd.cs",
-              "RelativeToolTip": "Server\\AdminFolder\\AdminAdd.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwCwAAAAJAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "LoginPassword.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\DataBaseFolder\\Querys\\LoginPassword.cs",
+              "RelativeDocumentMoniker": "Server\\DataBaseFolder\\Querys\\LoginPassword.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\DataBaseFolder\\Querys\\LoginPassword.cs",
+              "RelativeToolTip": "Server\\DataBaseFolder\\Querys\\LoginPassword.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAwwEEAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T12:47:24.161Z",
+              "WhenOpened": "2025-05-19T13:13:14.238Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "Security.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\Security\\Security.cs",
+              "RelativeDocumentMoniker": "Server\\Security\\Security.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\Security\\Security.cs",
+              "RelativeToolTip": "Server\\Security\\Security.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAqwGoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T13:12:23.348Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\Program.cs",
+              "RelativeDocumentMoniker": "Server\\Program.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\Program.cs",
+              "RelativeToolTip": "Server\\Program.cs",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAEwGcAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T10:31:31.336Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Admin.cs",
               "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\Admin.cs",
               "RelativeDocumentMoniker": "Server\\AdminFolder\\Admin.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\Admin.cs",
               "RelativeToolTip": "Server\\AdminFolder\\Admin.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAowHMAAABFAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAWwDQAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-17T12:40:02.419Z",
               "EditorCaption": ""

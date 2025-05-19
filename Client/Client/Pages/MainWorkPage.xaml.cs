@@ -403,21 +403,21 @@ namespace Client.Pages
                 INN.BorderBrush = Brushes.Red;
                 return;
             }
-            else { Email.BorderBrush = Brushes.Gray; }
+            else { INN.BorderBrush = Brushes.Gray; }
 
             if (!Regex.IsMatch(OGRN.Text, "^[0-9]{13}$") || OGRN.Text == "")
             {
                 OGRN.BorderBrush = Brushes.Red;
                 return;
             }
-            else { Email.BorderBrush = Brushes.Gray; }
+            else { OGRN.BorderBrush = Brushes.Gray; }
 
             if (!Regex.IsMatch(KPP.Text, "^[0-9]{9}$") || KPP.Text == "")
             {
                 KPP.BorderBrush = Brushes.Red;
                 return;
             }
-            else { Email.BorderBrush = Brushes.Gray; }
+            else { KPP.BorderBrush = Brushes.Gray; }
 
             if (ClientName.Text == "")
             {
@@ -425,7 +425,7 @@ namespace Client.Pages
                 ClientName.BorderBrush = Brushes.Red;
                 return;
             }
-            else { Email.BorderBrush = Brushes.Gray; }
+            else { ClientName.BorderBrush = Brushes.Gray; }
 
             if (!Regex.IsMatch(ClientName.Text, @"^(ООО|АО|ПАО)\s+""[^""]+""$"))
             {
@@ -433,7 +433,7 @@ namespace Client.Pages
                 ClientName.BorderBrush = Brushes.Red;
                 return;
             }
-            else { Email.BorderBrush = Brushes.Gray; }
+            else { ClientName.BorderBrush = Brushes.Gray; }
 
             string[] ClientInfo = new string[5];
             ClientInfo[0] = ClientName.Text;

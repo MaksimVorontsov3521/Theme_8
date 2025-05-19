@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -76,11 +77,28 @@ namespace Admin.Classes
             jsonBytes = await Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
             receivedDepartment = JsonSerializer.Deserialize<List<Department>>(json);
+            
+            jsonBytes = await Messenger.ReedBytes(clientSocket);
+            json = Encoding.UTF8.GetString(jsonBytes);
+            List<JsonElement> settingsList = JsonSerializer.Deserialize<List<JsonElement>>(json);
+
+            GetSettings(settingsList);
+            
 
             MainWorkPage mainWorkPage = new MainWorkPage(this);
             mainWindow.WorkPlace.Navigate(mainWorkPage);
         }
 
+        internal void GetSettings(List<JsonElement> settingsList)
+        {
+            Settings1.Default.AdminPort = settingsList[0].GetInt32();
+            Settings1.Default.UserPort = settingsList[1].GetInt32();
+            Settings1.Default.ServerUrl = settingsList[2].GetString();
+            Settings1.Default.BaseFolder = settingsList[3].GetString();
+            Settings1.Default.CanCreateNewProject = settingsList[4].GetInt32();
+            Settings1.Default.CanEditClient = settingsList[5].GetInt32();
+            Settings1.Default.Save();
+        }
         internal async Task UpdateBaseFolder(string NewPath)
         {
            await Messenger.SendStrings(clientSocket, "UpdateBaseFolder\a"+ NewPath);
