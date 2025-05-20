@@ -218,25 +218,33 @@ namespace Client
             StyleClass.TransactionResult(Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket)),page);
         }
 
-        public async Task CreateNewProject(string[] departments, int patternID, string ProjectName)
+        public async Task CreateNewProject(string[] departments, int patternID, string ProjectName,DateTime DeadLine,string client)
         {
             int[] departmentsIDs = new int[departments.Length];
             for (int i = 0; i < departments.Length; i++)
             {
                 departmentsIDs[i]=Convert.ToInt32(departments[i].Split("\a").First());
             }
+
             await Messenger.SendStrings(clientSocket, "CreateNewProject");
             await Messenger.SendStrings(clientSocket, ProjectName);
 
             string Unique= Encoding.UTF8.GetString( await Messenger.ReedBytes(clientSocket));
             if (Unique != "") { StyleClass.TransactionResult(Unique, page);return; }
 
+            await Messenger.SendStrings(clientSocket, client);
+
+            byte[] IsAClient =  await Messenger.ReedBytes(clientSocket);
+            string IsAClientString = Encoding.UTF8.GetString(IsAClient);
+            if (IsAClientString != "+") { StyleClass.TransactionResult(IsAClientString,page);return; }
+
             await Messenger.SendJSON(clientSocket, departmentsIDs);
             await Messenger.SendStrings(clientSocket, patternID.ToString());
+            await Messenger.SendJSON(clientSocket, DeadLine);
             StyleClass.TransactionResult(Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket)), page);
         }
 
-        public async void ChangeProjectProperties(string[] departments, int patternID, string ProjectName)
+        public async void ChangeProjectProperties(string[] departments, int patternID, string ProjectName,DateTime date)
         {
             int[] departmentsIDs = new int[departments.Length];
             for (int i = 0; i < departments.Length; i++)
@@ -251,6 +259,7 @@ namespace Client
 
             await Messenger.SendJSON(clientSocket, departmentsIDs);
             await Messenger.SendStrings(clientSocket, patternID.ToString());
+            await Messenger.SendJSON(clientSocket, date);
             StyleClass.TransactionResult(Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket)), page);
         }
 

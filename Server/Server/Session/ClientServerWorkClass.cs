@@ -61,14 +61,32 @@ namespace Server.Session
             }
 
             Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
+            string client = Encoding.UTF8.GetString(Bytes);
+
+            if (DBDocumentWork.IsAClient(client) == true)
+            {
+                userSession.Messenger.SendStrings(userSession.clientSocket, "+");
+            }
+            else
+            {
+                userSession.Messenger.SendStrings(userSession.clientSocket, "Такого клиента не существует");
+                return;
+            }
+
+            Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             string json = Encoding.UTF8.GetString(Bytes);
             int[] departmentsIDs = JsonSerializer.Deserialize<int[]>(json);
 
             Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             int patternID = Convert.ToInt32(Encoding.UTF8.GetString(Bytes));
 
+
+            Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
+            json = Encoding.UTF8.GetString(Bytes);
+            DateTime DeadLine = JsonSerializer.Deserialize<DateTime>(json);
+
             Directory.CreateDirectory(Settings1.Default.BaseFolder + "\\" + ProjectName);
-            DBDocumentWork.NewProject(ProjectName, departmentsIDs, patternID);
+            DBDocumentWork.NewProject(ProjectName, departmentsIDs, patternID,DeadLine,client);
             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно");
         }
         //
@@ -96,7 +114,11 @@ namespace Server.Session
             Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
             int patternID = Convert.ToInt32(Encoding.UTF8.GetString(Bytes));
 
-            DBDocumentWork.ChangeProject(ProjectName, departmentsIDs, patternID);
+            Bytes = await userSession.Messenger.ReedBytes(userSession.clientSocket);
+            json = Encoding.UTF8.GetString(Bytes);
+            DateTime DeadLine = JsonSerializer.Deserialize<DateTime>(json);
+
+            DBDocumentWork.ChangeProject(ProjectName, departmentsIDs, patternID,DeadLine);
             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно");
         }
         //

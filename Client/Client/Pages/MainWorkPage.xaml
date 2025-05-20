@@ -190,6 +190,10 @@
                         <Button Content="Добавить" x:Name="ProjectDepartmentsAdd" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120" Grid.RowSpan="2" VerticalAlignment="Top" Click="ProjectDepartmentsAdd_Click"/>
                         <Button Content="Убрать" x:Name="ProjectDepartmentsRemove" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120" Click="ProjectDepartmentsRemove_Click"/>
 
+
+                        <Label Name="LabelDeadLineChange"  HorizontalAlignment="Center" Content="DeadLine " Grid.Row="7"/>
+                        <DatePicker x:Name="DeadLineChange" Grid.Row="9" HorizontalAlignment="Center"/>
+
                         <Label Name="Label7Pattern"  Content="Шаблоны" Grid.Row="13"/>
                         <ComboBox Name="AplyedProjectPattern" Grid.Row="15"/>
                         <Button x:Name="NewPattern" Content="Создать новый шаблон" Grid.Row="17" HorizontalAlignment="Left"/>
@@ -202,12 +206,20 @@
                         <Label Name="Label11Pattern" Grid.Column="2" Content="Название проекта" Grid.Row="1" HorizontalAlignment="Center"/>
                         <TextBox x:Name="NewProjectName" Grid.Column="2" Grid.Row="3"  MinWidth="200" VerticalAlignment="Center"/>
 
+                        
+                        <TextBox Name="FindClientComboBox" Grid.Row="5" Grid.Column="2" TextChanged="FindClientComboBox_TextChanged"/>
+                        <TextBox Name="FindClientComboBoxPlaceholder" Text="Полное имя клиента" Foreground="Gray" Grid.Row="5" Grid.Column="2" IsHitTestVisible="False"/>
+                        
                         <Label Name="Label8Pattern"  Grid.Column="2" Content="Все департаменты" Grid.Row="7"/>
                         <Label  Name="Label9Pattern" Grid.Column="2" Content="Департаменты проекта" HorizontalAlignment="Right" Grid.Row="7"/>
                         <ComboBox Grid.Column="2" Name="AllDepartmentsNew" Grid.Row="9" HorizontalAlignment="Left" MinWidth="120"/>
                         <ComboBox Grid.Column="2"  Name="ProjectDepartmentsNew" Grid.Row="9" HorizontalAlignment="Right" MinWidth="120"/>
                         <Button Grid.Column="2"  Content="Добавить" x:Name="ProjectDepartmentsAddNew" Grid.Row="11" HorizontalAlignment="Left" MinWidth="120" Click="ProjectDepartmentsAddNew_Click"/>
                         <Button Grid.Column="2"  Content="Убрать" x:Name="ProjectDepartmentsRemoveNew" Grid.Row="11" HorizontalAlignment="Right" MinWidth="120" Click="ProjectDepartmentsRemoveNew_Click"/>
+
+                        <Label Name="LabelDeadLineNew"  HorizontalAlignment="Center" Content="DeadLine" Grid.Column="2" Grid.Row="7"/>
+                        <DatePicker x:Name="DeadLineNew" Grid.Row="9" Grid.Column="2" HorizontalAlignment="Center"/>
+
 
                         <Label Name="Label10Pattern"  Grid.Column="2"  Content="Шаблоны" Grid.Row="13"/>
                         <ComboBox Grid.Column="2"  Name="AplyedNewProjectPattern" Grid.Row="15"/>

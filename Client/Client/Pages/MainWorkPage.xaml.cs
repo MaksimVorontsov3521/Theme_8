@@ -41,7 +41,9 @@ namespace Client.Pages
         {
             InitializeComponent();
             Server = server;
-            HideSideMenu();           
+            HideSideMenu();
+            DeadLineNew.SelectedDate = DateTime.Now;
+            DeadLineChange.SelectedDate = DateTime.Now;
         }
 
         private void ProjectsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -271,9 +273,14 @@ namespace Client.Pages
         }
         private void ApplyNewProjectProperties_Click(object sender, RoutedEventArgs e)
         {
+            DateTime DeadLine = DateTime.Now;
+            try
+            { DeadLine = DeadLineChange.SelectedDate.Value; }
+            catch { }
+
             if (ProjectDepartments.Items.Count > 0 && AplyedProjectPattern.SelectedIndex != -1 && FindProjectComboBox.SelectedIndex != -1)
             {
-                Server.ChangeProjectProperties(ProjectDepartments.Items.OfType<string>().ToArray(), AplyedProjectPattern.SelectedIndex, FindProjectComboBox.SelectedItem.ToString());
+                Server.ChangeProjectProperties(ProjectDepartments.Items.OfType<string>().ToArray(), AplyedProjectPattern.SelectedIndex, FindProjectComboBox.SelectedItem.ToString(), DeadLine);
             }
             else { StyleClass.TransactionResult("Все отмеченные поля обязательны для заполнения", this); }
         }
@@ -309,9 +316,14 @@ namespace Client.Pages
 
         private void CreateNewProject_Click(object sender, RoutedEventArgs e)
         {
+            DateTime DeadLine = DateTime.Now;
+            try
+            { DeadLine = DeadLineNew.SelectedDate.Value; }
+            catch { }
+
             if (ProjectDepartmentsNew.Items.Count > 0 && AplyedNewProjectPattern.SelectedIndex != -1 && NewProjectName.Text != "")
             {
-                Server.CreateNewProject(ProjectDepartmentsNew.Items.OfType<string>().ToArray(), AplyedNewProjectPattern.SelectedIndex, NewProjectName.Text);
+                Server.CreateNewProject(ProjectDepartmentsNew.Items.OfType<string>().ToArray(), AplyedNewProjectPattern.SelectedIndex, NewProjectName.Text,DeadLine,FindClientComboBox.Text);
             }
             else { StyleClass.TransactionResult("Все отмеченные поля обязательны для заполнения",this); }
         }
@@ -489,6 +501,13 @@ namespace Client.Pages
         private void CompleteProject_Click(object sender, RoutedEventArgs e)
         {
             Server.CompleteProject(ProjectsListBox.SelectedIndex);
+        }
+
+        private void FindClientComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            FindClientComboBoxPlaceholder.Visibility = string.IsNullOrEmpty(FindClientComboBox.Text)
+                ? Visibility.Visible 
+                : Visibility.Collapsed;
         }
     }
 }

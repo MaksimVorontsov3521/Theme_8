@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "Admin\\Pages\\ChangeUser.xaml.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\ChangeUser.xaml.cs",
               "RelativeToolTip": "Admin\\Pages\\ChangeUser.xaml.cs",
-              "ViewState": "AgIAAGQAAAAAAAAAAAAowIIAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAowIIAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-19T13:05:35.69Z",
               "EditorCaption": ""
@@ -51,8 +51,7 @@
               "RelativeToolTip": "Admin\\Classes\\Security.cs",
               "ViewState": "AgIAAE0AAAAAAAAAAAAQwGwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T13:05:04.866Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T13:05:04.866Z"
             },
             {
               "$type": "Document",
@@ -64,8 +63,7 @@
               "RelativeToolTip": "Admin\\MainWindow.xaml.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAABoAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T10:02:07.358Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T10:02:07.358Z"
             },
             {
               "$type": "Document",
@@ -77,8 +75,7 @@
               "RelativeToolTip": "Admin\\Classes\\Server.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAACQAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T09:08:47.752Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T09:08:47.752Z"
             }
           ]
         }

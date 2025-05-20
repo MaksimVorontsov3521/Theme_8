@@ -27,7 +27,7 @@ namespace Server.DataBaseFolder.Querys
             }      
         }
 
-        public static void ChangeProject(string ProjectName, int[] departmentsIDs, int patternId)
+        public static void ChangeProject(string ProjectName, int[] departmentsIDs, int patternId,DateTime date)
         {
             ProjectName = Settings1.Default.BaseFolder + "\\" + ProjectName + "\\";
             ++patternId;
@@ -40,6 +40,7 @@ namespace Server.DataBaseFolder.Querys
                 {
                     // Изменяем значения
                     folder.PatternID = patternId;
+                    folder.DeadLine = date;
                 }
                 db.SaveChanges();
 
@@ -64,13 +65,17 @@ namespace Server.DataBaseFolder.Querys
             }
         }
 
-        public static void NewProject(string ProjectName, int[] departmentsIDs, int patternId)
+        public static void NewProject(string ProjectName, int[] departmentsIDs, int patternId,DateTime date,string client)
         {
             Folder folder = new Folder();
             folder.FolderPath = Settings1.Default.BaseFolder + "\\" + ProjectName+"\\";
             folder.PatternID = ++patternId;
+            folder.DeadLine = date;
             using (var db = new DataBase())
             {
+                Client client1 = db.Client.FirstOrDefault(c => c.ClientName == client);
+                folder.ClientID = client1.ClientId;
+
                 db.Folder.Add(folder);
                 db.SaveChanges();
 
@@ -170,6 +175,18 @@ namespace Server.DataBaseFolder.Querys
                 }
             }
         }
+
+        public static bool IsAClient(string client)
+        {
+            using (var db = new DataBase())
+            {
+                Client client1 = db.Client.FirstOrDefault(c => c.ClientName == client);
+                if (client1 != null)
+                { return true; }
+                else { return false; }
+            }
+        }
+
         public static void AddNewDocument(string path,string UserLogin)
         {
             string pa = path.Split('\a').First();
