@@ -48,9 +48,13 @@
                         <Label Grid.Column="6" Content="🔍" HorizontalAlignment="Right"/>
                         <TextBox x:Name="FindUser" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" VerticalAlignment="Center"/>
                         <Button x:Name="ButtonAddUser" Content="Добавить" Grid.Column="1" Grid.Row="1" Click="ButtonAddUser_Click"/>
-                        <Button x:Name="ButtonFind" Content="Найти" Grid.Column="3" Grid.Row="1"/>
                         <Button x:Name="ButtonChangeUser" Content="Изменить" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" Height="20" Margin="30,0,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="ButtonChangeUser_Click"/>
-                        <DataGrid x:Name="UsersGrid"  Grid.Row="3" Grid.ColumnSpan="9" AutoGenerateColumns="True"/>
+
+
+                        <DataGrid x:Name="UsersGrid"  Grid.Row="3" Grid.ColumnSpan="9" AutoGenerateColumns="True">
+                        </DataGrid>
+                        
+                        
                         <Frame Name="UserFrame" Grid.Row="3" Grid.ColumnSpan="9"/>
                     </Grid>
                 </TabItem.Content>
@@ -120,9 +124,7 @@
                         <Label Content="Часстота Backup в днях" Grid.Row="13" Grid.Column="2"/>
                         <TextBox x:Name="BackupOftenTb" Grid.Row="15" Grid.Column="2"/>
                         <Button x:Name="BackupOftenAply" Content="Изменить" Grid.Row="17" Grid.Column="2"/>
-                        <Label Content="Логи" Grid.Row="0" Grid.Column="4"/>
-                        <DataGrid Name="PatternAndLogs" Grid.Column="4" Grid.Row="1" Grid.RowSpan="25"/>
-
+                        
                     </Grid>
                 </TabItem.Content>
 
@@ -277,12 +279,9 @@
 
                         <Label Content="+" HorizontalAlignment="Right"/>
                         <TextBox x:Name="FindDepartment" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" VerticalAlignment="Center"/>
-                        <Button x:Name="ButtonAddDepartment" Content="Добавить" Grid.Column="1" Grid.Row="1" Click="ButtonAddDepartment_Click"/>
-                        <Button x:Name="ButtonFindDepartment" Content="Найти" Grid.Column="3" Grid.Row="1"/>
-                        <Button x:Name="ButtonChangeDepartment" Content="Изменить" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" Height="20" Margin="30,0,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="ButtonChangeDepartment_Click"/>
+                        <Button x:Name="ButtonAddDepartment" Content="Добавить" Grid.Column="3" Grid.Row="1" Click="ButtonAddDepartment_Click"/>
                         <DataGrid x:Name="DepartmentGrid"  Grid.Row="3" Grid.ColumnSpan="9" AutoGenerateColumns="True"/>
                         <Frame Name="AddNewDepartmentFrame" Grid.Row="3" Grid.ColumnSpan="9"/>
-                        <Label Content="🔍" Grid.Column="6" HorizontalAlignment="Left"/>
 
                     </Grid>
                 </TabItem.Content>

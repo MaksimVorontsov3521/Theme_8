@@ -84,6 +84,7 @@ public class Program
             
             Thread clientThread = new Thread(() => HandelClient(clientSocket));
             clientThread.Start();
+            Console.WriteLine("1");
         }
 
     }
@@ -144,8 +145,9 @@ public class Program
 
     private async Task ClientServerWork(UserSession userSession)
     {
+        bool continueHandleClient = true;
         string message;
-        while (true)
+        while (continueHandleClient)
         {
             message = Encoding.UTF8.GetString( await userSession.Messenger.ReedBytes(userSession.clientSocket));
             switch (message)
@@ -172,6 +174,8 @@ public class Program
                     ClientServerWorkClass.ContinueProject(userSession);
                     break;
                 default:
+                    userSession.clientSocket.Close();
+                    continueHandleClient = false;
                     break;
             }
         }

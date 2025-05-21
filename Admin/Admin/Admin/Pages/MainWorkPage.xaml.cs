@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Admin.Classes.StyleClass;
 
 namespace Admin.Pages
 {
@@ -27,8 +28,15 @@ namespace Admin.Pages
         public MainWorkPage(Server server)
         {
             InitializeComponent();
-            UsersGrid.ItemsSource = server.receivedUser;
             this.server = server;
+            PrintGrids();
+            
+        }
+
+        public void PrintGrids()
+        {
+            StyleClass.PrintUserGrid(UsersGrid, server);
+            DepartmentGrid.ItemsSource = server.receivedDepartment;
         }
 
         private void ConnectionStringButton_Click(object sender, RoutedEventArgs e)
@@ -38,36 +46,32 @@ namespace Admin.Pages
         private void BaseFolderButton_Click(object sender, RoutedEventArgs e)
         {
             server.UpdateBaseFolder(BaseFolderTB.Text);
+            server.PrintGrids(this);
         }
 
         private void ButtonAddDepartment_Click(object sender, RoutedEventArgs e)
         {
             server.AddDepartment(FindDepartment.Text);
+            server.PrintGrids(this);
         }
 
-        private void ButtonChangeDepartment_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ButtonChange_Click(object sender, RoutedEventArgs e)
-        {
-
-
-        }
         private void ButtonAddUser_Click(object sender, RoutedEventArgs e)
         {
-
+            AddNewUser addNewUser = new AddNewUser(server,this);
+            UserFrame.Navigate(addNewUser);
         }
 
         private void ButtonChangeUser_Click(object sender, RoutedEventArgs e)
         {
             string json = JsonSerializer.Serialize(UsersGrid.SelectedItem);
-            User user = JsonSerializer.Deserialize<User>(json);
-            if (user == null)
+            ShowUser userGrid = JsonSerializer.Deserialize<ShowUser>(json);
+
+            if (userGrid == null)
             {
                 return;
             }
+
+            User user = server.receivedUser.FirstOrDefault(u=> u.UserID == userGrid.ID);
             ChangeUser changeUser = new ChangeUser(user,server,this);
             UserFrame.Navigate(changeUser);
         }

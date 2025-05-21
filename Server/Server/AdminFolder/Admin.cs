@@ -74,36 +74,7 @@ namespace Server.AdminFolder
                 return;
             }
 
-
-            Console.WriteLine("AdminEntered");
-            TablesForAdmin tablesForAdmin = new TablesForAdmin(dataBase);
-
-            List<UserTable> users = tablesForAdmin.UserTable();
-            Messenger.SendJSON(adminSocket, users);
-
-            List<RoleTable> role = tablesForAdmin.RoleTable();
-            Messenger.SendJSON(adminSocket, role);
-
-            //List<Log> log = tablesForAdmin.LogTable();
-            //Messenger.SendJSON(stream, log);
-
-            //List<LogAction> logActions = tablesForAdmin.LogActionTable();
-            //Messenger.SendJSON(adminSocket, logActions);
-
-            List<Department> department = tablesForAdmin.Department();
-            Messenger.SendJSON(adminSocket, department);
-
-            List<object> settingsList = new List<object>();
-
-            settingsList.Add(Settings.Settings1.Default.AdminPort);
-            settingsList.Add(Settings.Settings1.Default.UserPort);
-            settingsList.Add(Settings.Settings1.Default.ServerUrl);
-            settingsList.Add(Settings.Settings1.Default.BaseFolder);
-
-            settingsList.Add(Settings.Settings2.Default.CanCreateNewProject);
-            settingsList.Add(Settings.Settings2.Default.CanEditClient);
-
-            Messenger.SendJSON(adminSocket, settingsList);
+            SendTables(dataBase, Messenger, adminSocket);
 
             //
             //
@@ -119,26 +90,56 @@ namespace Server.AdminFolder
                 {
                     case "UpdateBaseFolder":
                         adminUpdateSetting.UpdateBaseFolder(AdminCommand[1]);
+                        SendTables(dataBase, Messenger, adminSocket);
                         break;
                     case "AddDepartment":
                         adminAdd.AddDepartment(AdminCommand[1]);
+                        SendTables(dataBase, Messenger, adminSocket);
                         break;
                     case "UpdateClient":
                         byte[] UpdateUser = await Messenger.ReedBytes(adminSocket);
                         adminAdd.UpdateClient(UpdateUser);
                         Messenger.SendStrings(adminSocket,"Успешно");
+                        SendTables(dataBase, Messenger, adminSocket);
                         break;
                     case "AddClient":
                         byte[] AddUser = await Messenger.ReedBytes(adminSocket);
                         adminAdd.AddClient(AddUser);
                         Messenger.SendStrings(adminSocket, "Успешно");
+                        SendTables(dataBase, Messenger, adminSocket);
                         break;
                     default:
-                        Console.WriteLine("Неизвестная команда");
                         whileBoll = false;
+                        adminSocket.Close();
                         break;
                 }
             }
+        }
+
+        private void SendTables(DataBase dataBase, ReadAndWrite Messenger, Socket adminSocket)
+        {
+            TablesForAdmin tablesForAdmin = new TablesForAdmin(dataBase);
+
+            List<UserTable> users = tablesForAdmin.UserTable();
+            Messenger.SendJSON(adminSocket, users);
+
+            List<RoleTable> role = tablesForAdmin.RoleTable();
+            Messenger.SendJSON(adminSocket, role);
+
+            List<Department> department = tablesForAdmin.Department();
+            Messenger.SendJSON(adminSocket, department);
+
+            List<object> settingsList = new List<object>();
+
+            settingsList.Add(Settings.Settings1.Default.AdminPort);
+            settingsList.Add(Settings.Settings1.Default.UserPort);
+            settingsList.Add(Settings.Settings1.Default.ServerUrl);
+            settingsList.Add(Settings.Settings1.Default.BaseFolder);
+
+            settingsList.Add(Settings.Settings2.Default.CanCreateNewProject);
+            settingsList.Add(Settings.Settings2.Default.CanEditClient);
+
+            Messenger.SendJSON(adminSocket, settingsList);
         }
     }
 }

@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "Client\\Classes\\Server.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Classes\\Server.cs",
               "RelativeToolTip": "Client\\Classes\\Server.cs",
-              "ViewState": "AgIAANIAAAAAAAAAAAAQwPEAAABMAAAAAAAAAA==",
+              "ViewState": "AgIAANUAAAAAAAAAAAAgwPEAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-20T08:37:48.69Z",
               "EditorCaption": ""
@@ -47,8 +47,7 @@
               "RelativeToolTip": "Client\\Pages\\MainWorkPage.xaml.cs",
               "ViewState": "AgIAACsBAAAAAAAAAAAQwE4BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T09:00:01.777Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T09:00:01.777Z"
             },
             {
               "$type": "Document",
@@ -59,8 +58,7 @@
               "ToolTip": "F:\\Program\\Theme_8\\Client\\Client\\Pages\\MainWorkPage.xaml",
               "RelativeToolTip": "Client\\Pages\\MainWorkPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-13T09:22:10.284Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-13T09:22:10.284Z"
             }
           ]
         }

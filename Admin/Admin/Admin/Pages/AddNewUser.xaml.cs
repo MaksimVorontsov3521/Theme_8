@@ -118,6 +118,7 @@ namespace Admin.Pages
 
             server.UpdateClient(User);
             Page page = new Page();
+            server.PrintGrids(Frame);
             Frame.UserFrame.Navigate(page);
         }
 

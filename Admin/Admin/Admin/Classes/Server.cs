@@ -26,8 +26,6 @@ namespace Admin.Classes
 
         internal List<User> receivedUser;
         internal List<Role> receivedRole;
-        //internal List<LogAction> receivedLogAction;
-        //internal List<Log> receivedLog;
         internal List<Department> receivedDepartment;
 
 
@@ -65,7 +63,14 @@ namespace Admin.Classes
             { }
             else { MessageBox.Show("Неверный логин или пароль"); return; }
 
+            GetTables(Messenger, clientSocket);
 
+            MainWorkPage mainWorkPage = new MainWorkPage(this);
+            mainWindow.WorkPlace.Navigate(mainWorkPage);
+        }
+
+        internal async void GetTables(ReadAndWrite messenger, Socket clientSocket)
+        {
             byte[] jsonBytes = await Messenger.ReedBytes(clientSocket);
             string json = Encoding.UTF8.GetString(jsonBytes);
             receivedUser = JsonSerializer.Deserialize<List<User>>(json);
@@ -77,16 +82,12 @@ namespace Admin.Classes
             jsonBytes = await Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
             receivedDepartment = JsonSerializer.Deserialize<List<Department>>(json);
-            
+
             jsonBytes = await Messenger.ReedBytes(clientSocket);
             json = Encoding.UTF8.GetString(jsonBytes);
             List<JsonElement> settingsList = JsonSerializer.Deserialize<List<JsonElement>>(json);
 
             GetSettings(settingsList);
-            
-
-            MainWorkPage mainWorkPage = new MainWorkPage(this);
-            mainWindow.WorkPlace.Navigate(mainWorkPage);
         }
 
         internal void GetSettings(List<JsonElement> settingsList)
@@ -102,11 +103,13 @@ namespace Admin.Classes
         internal async Task UpdateBaseFolder(string NewPath)
         {
            await Messenger.SendStrings(clientSocket, "UpdateBaseFolder\a"+ NewPath);
+            GetTables(Messenger, clientSocket);
         }
 
         internal async void AddDepartment(string DepartmentName)
         {
            await Messenger.SendStrings(clientSocket, "AddDepartment\a" + DepartmentName);
+           GetTables(Messenger, clientSocket);
         }
 
         internal async void UpdateClient(User user)
@@ -115,6 +118,8 @@ namespace Admin.Classes
             await Messenger.SendJSON(clientSocket, user);
             byte[] bytes =  await Messenger.ReedBytes(clientSocket);
             StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
+            GetTables(Messenger, clientSocket);
+            
         }
 
         internal async void AddClient(User user)
@@ -123,6 +128,13 @@ namespace Admin.Classes
             await Messenger.SendJSON(clientSocket, user);
             byte[] bytes = await Messenger.ReedBytes(clientSocket);
             StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
+            GetTables(Messenger, clientSocket);
+
         }
+        internal void PrintGrids(MainWorkPage mainWorkPage)
+        {
+            mainWorkPage.PrintGrids();
+        }
+
     }
 }
