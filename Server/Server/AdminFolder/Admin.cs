@@ -83,6 +83,7 @@ namespace Server.AdminFolder
             AdminAdd adminAdd = new AdminAdd();
             AdminUpdateSetting adminUpdateSetting = new AdminUpdateSetting();
             bool whileBoll = true;
+            string result;
             while (whileBoll)
             {
                 string[] AdminCommand = Encoding.UTF8.GetString(await Messenger.ReedBytes(adminSocket)).Split('\a');
@@ -93,8 +94,9 @@ namespace Server.AdminFolder
                         SendTables(dataBase, Messenger, adminSocket);
                         break;
                     case "AddDepartment":
-                        adminAdd.AddDepartment(AdminCommand[1]);
+                        result = adminAdd.AddDepartment(AdminCommand[1]);
                         SendTables(dataBase, Messenger, adminSocket);
+                        Messenger.SendStrings(adminSocket, result);
                         break;
                     case "UpdateClient":
                         byte[] UpdateUser = await Messenger.ReedBytes(adminSocket);
@@ -105,6 +107,12 @@ namespace Server.AdminFolder
                     case "AddClient":
                         byte[] AddUser = await Messenger.ReedBytes(adminSocket);
                         adminAdd.AddClient(AddUser);
+                        Messenger.SendStrings(adminSocket, "Успешно");
+                        SendTables(dataBase, Messenger, adminSocket);
+                        break;
+                    case "CreateNewRole":
+                        byte[] newRole = await Messenger.ReedBytes(adminSocket);
+                        result = adminAdd.AddRole(newRole);
                         Messenger.SendStrings(adminSocket, "Успешно");
                         SendTables(dataBase, Messenger, adminSocket);
                         break;

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+using static Admin.Classes.StyleClass;
 
 namespace Admin.Classes
 {
@@ -87,7 +88,22 @@ namespace Admin.Classes
             public string Отдел { get; set; }
             public bool Заблокирован { get; set; }
 
+        }
 
+        public static void PrintRoleGrid(DataGrid grid, Server server)
+        {
+            ObservableCollection<Role> showRole = new ObservableCollection<Role>();
+
+            List<Role> role = server.receivedRole;
+
+            for (int i = 0; i < role.Count; i++)
+            {
+                showRole.Add(new Role
+                {
+                    RoleId = role[i].RoleId, RoleName =role[i].RoleName, Rights = role[i].Rights, RoleLevel = role[i].RoleLevel
+                });
+            }
+            grid.ItemsSource = showRole;
         }
 
         public static void PrintUserGrid(DataGrid grid,Server server)

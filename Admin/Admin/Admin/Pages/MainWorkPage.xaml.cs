@@ -37,6 +37,14 @@ namespace Admin.Pages
         {
             StyleClass.PrintUserGrid(UsersGrid, server);
             DepartmentGrid.ItemsSource = server.receivedDepartment;
+            StyleClass.PrintRoleGrid(RolesDataGird,server);
+
+            BaseFolderTB.Text = Settings1.Default.BaseFolder;
+            AdminPortTB.Text =Settings1.Default.AdminPort.ToString();
+            UsersPortTB.Text = Settings1.Default.UserPort.ToString();
+            ServerIP.Text =Settings1.Default.ServerUrl;
+            CreateClient.Text = Settings1.Default.CanEditClient.ToString();
+            CreateProject.Text = Settings1.Default.CanCreateNewProject.ToString();
         }
 
         private void ConnectionStringButton_Click(object sender, RoutedEventArgs e)
@@ -74,6 +82,60 @@ namespace Admin.Pages
             User user = server.receivedUser.FirstOrDefault(u=> u.UserID == userGrid.ID);
             ChangeUser changeUser = new ChangeUser(user,server,this);
             UserFrame.Navigate(changeUser);
+        }
+
+        private void RolesDataGird_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RolesDataGird.SelectedIndex == -1)
+            {
+                RoleNameTB.Text = string.Empty; ;
+                RoleRightsTB.Text = string.Empty;
+                RoleLevelTB.Text = string.Empty;
+            }
+            if (RolesDataGird.SelectedItem is Role selectedRole)
+            {
+                RoleNameTB.Text = selectedRole.RoleName;
+                RoleRightsTB.Text =selectedRole.Rights;
+                RoleLevelTB.Text = selectedRole.RoleLevel.ToString();
+            }
+            
+        }
+
+        private void CreateNewRole_Click(object sender, RoutedEventArgs e)
+        {
+            Role role = new Role();
+            if (RolesDataGird.SelectedIndex == -1)
+            {
+                try
+                {
+                    role.RoleLevel = Convert.ToInt32(RoleLevelTB.Text);
+                }
+                catch { MessageBox.Show("Уровень - это только целые числа, цифрами");return; }
+
+                if (string.IsNullOrEmpty(RoleNameTB.Text))
+                { StyleClass.TransactionResult("Название обязательно",this);
+                    return;
+                }
+                role.RoleName = RoleNameTB.Text;
+                role.Rights = RoleRightsTB.Text;
+                server.CreateNewRole(role);
+            }
+            else
+            {
+                if (RolesDataGird.SelectedItem is Role selectedRole)
+                {
+                    selectedRole.RoleName = RoleNameTB.Text ;
+                    selectedRole.Rights = RoleRightsTB.Text ;
+                    try
+                    { selectedRole.RoleLevel = Convert.ToInt32(RoleLevelTB.Text); }
+                    catch
+                    {
+                        MessageBox.Show("Уровень - это только целые числа, цифрами"); return;
+                    }
+                    server.CreateNewRole(selectedRole);              
+                }
+            }
+            server.PrintGrids(this);
         }
     }
 }

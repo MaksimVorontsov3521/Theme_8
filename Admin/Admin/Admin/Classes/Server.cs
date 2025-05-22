@@ -90,6 +90,15 @@ namespace Admin.Classes
             GetSettings(settingsList);
         }
 
+
+        internal async void CreateNewRole(Role role)
+        {
+            await Messenger.SendStrings(clientSocket, "CreateNewRole\a");
+            await Messenger.SendJSON(clientSocket,role);
+            byte[] bytes = await Messenger.ReedBytes(clientSocket);
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
+            GetTables(Messenger, clientSocket);
+        }
         internal void GetSettings(List<JsonElement> settingsList)
         {
             Settings1.Default.AdminPort = settingsList[0].GetInt32();
@@ -102,14 +111,16 @@ namespace Admin.Classes
         }
         internal async Task UpdateBaseFolder(string NewPath)
         {
-           await Messenger.SendStrings(clientSocket, "UpdateBaseFolder\a"+ NewPath);
+            await Messenger.SendStrings(clientSocket, "UpdateBaseFolder\a"+ NewPath);
             GetTables(Messenger, clientSocket);
         }
 
         internal async void AddDepartment(string DepartmentName)
         {
-           await Messenger.SendStrings(clientSocket, "AddDepartment\a" + DepartmentName);
-           GetTables(Messenger, clientSocket);
+           await Messenger.SendStrings(clientSocket, "AddDepartment\a" + DepartmentName);          
+            GetTables(Messenger, clientSocket);
+            byte[] bytes = await Messenger.ReedBytes(clientSocket);
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
         }
 
         internal async void UpdateClient(User user)

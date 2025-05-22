@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "F:\\Program\\Theme_8\\Server\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\databasefolder\\querys\\dbclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\databasefolder\\querys\\dbclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\adminfolder\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\adminfolder\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|f:\\program\\theme_8\\server\\server\\adminfolder\\adminadd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D33DB74-CB4E-43C3-9A28-4FAAC3C88F3F}|Server\\Server.csproj|solutionrelative:server\\adminfolder\\adminadd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,45 +18,33 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DBClient.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\DataBaseFolder\\Querys\\DBClient.cs",
-              "RelativeDocumentMoniker": "Server\\DataBaseFolder\\Querys\\DBClient.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\DataBaseFolder\\Querys\\DBClient.cs",
-              "RelativeToolTip": "Server\\DataBaseFolder\\Querys\\DBClient.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA1wAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "AdminAdd.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\AdminAdd.cs",
+              "RelativeDocumentMoniker": "Server\\AdminFolder\\AdminAdd.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\AdminAdd.cs",
+              "RelativeToolTip": "Server\\AdminFolder\\AdminAdd.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAgwDwAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-21T12:16:46.123Z",
+              "WhenOpened": "2025-05-22T11:15:47.014Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Admin.cs",
               "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\Admin.cs",
               "RelativeDocumentMoniker": "Server\\AdminFolder\\Admin.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\Admin.cs",
-              "RelativeToolTip": "Server\\AdminFolder\\Admin.cs",
-              "ViewState": "AgIAAFEAAAAAAAAAAAAowFwAAABFAAAAAAAAAA==",
+              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\AdminFolder\\Admin.cs*",
+              "RelativeToolTip": "Server\\AdminFolder\\Admin.cs*",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAuwHQAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-20T12:47:48.76Z",
+              "WhenOpened": "2025-05-22T10:44:28.552Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Server\\Server\\Program.cs",
-              "RelativeDocumentMoniker": "Server\\Program.cs",
-              "ToolTip": "F:\\Program\\Theme_8\\Server\\Server\\Program.cs",
-              "RelativeToolTip": "Server\\Program.cs",
-              "ViewState": "AgIAAJQAAAAAAAAAAAAmwLAAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T10:31:31.336Z"
             }
           ]
         }

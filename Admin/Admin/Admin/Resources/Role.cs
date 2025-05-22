@@ -13,7 +13,7 @@ namespace Admin.Resources
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public string? Rights { get; set; }
-        public int Level { get; set; }
+        public int RoleLevel { get; set; }
 
         public List<User> Users { get; set; } = new();
     }

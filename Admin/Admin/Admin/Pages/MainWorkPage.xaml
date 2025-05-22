@@ -234,9 +234,9 @@
                                 <Label Content="Уровень роли" Grid.Row="7" Grid.Column="0"/>
                                 <TextBox x:Name="RoleLevelTB" Grid.Row="9" Grid.Column="0"/>
 
-                                <Button x:Name="CreateNewRole" Grid.Row="9" Content="Создать/Изменить Роль" Grid.Column="2"/>
+                                <Button x:Name="CreateNewRole" Grid.Row="9" Content="Создать/Изменить Роль" Grid.Column="2" Click="CreateNewRole_Click"/>
 
-                                <DataGrid Name="RolesDataGird" Grid.Row="13" Grid.ColumnSpan="4"/>
+                                <DataGrid Name="RolesDataGird" Grid.Row="13" Grid.ColumnSpan="4" SelectionChanged="RolesDataGird_SelectionChanged"/>
                             </Grid>
                         </GroupBox>
 
