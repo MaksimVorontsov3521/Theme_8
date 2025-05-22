@@ -116,6 +116,23 @@ namespace Server.AdminFolder
                         Messenger.SendStrings(adminSocket, "Успешно");
                         SendTables(dataBase, Messenger, adminSocket);
                         break;
+                    case "ChangeServerSettingsTwo":
+
+                        byte[] ServerSettingsTwo = await Messenger.ReedBytes(adminSocket);
+                        int[] ints = JsonSerializer.Deserialize<int[]>(ServerSettingsTwo);
+
+                        ServerSettingsTwo = await Messenger.ReedBytes(adminSocket);
+                        string ServerUrl = Encoding.UTF8.GetString(ServerSettingsTwo);
+
+                        adminUpdateSetting.updateTwo(ints,ServerUrl);
+
+                        Messenger.SendStrings(adminSocket, "Успешно");
+                        SendTables(dataBase, Messenger, adminSocket);
+                        break;
+                    case "UpdateConnectionStrings":
+                        adminUpdateSetting.updateConnectionStrings(AdminCommand[1]);
+                        Messenger.SendStrings(adminSocket, "Успешно");
+                        break;
                     default:
                         whileBoll = false;
                         adminSocket.Close();

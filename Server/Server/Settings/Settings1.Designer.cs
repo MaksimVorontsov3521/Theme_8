@@ -23,21 +23,27 @@ namespace Server.Settings {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("9091")]
         public int AdminPort {
             get {
                 return ((int)(this["AdminPort"]));
             }
+            set {
+                this["AdminPort"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8080")]
         public int UserPort {
             get {
                 return ((int)(this["UserPort"]));
+            }
+            set {
+                this["UserPort"] = value;
             }
         }
         

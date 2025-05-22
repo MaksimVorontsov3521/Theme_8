@@ -194,7 +194,7 @@
                         <Label Content="Уровень создания клиентов" Grid.Row="15" Grid.Column="0"/>
                         <TextBox x:Name="CreateClient" Grid.Row="17" Grid.Column="0"/>
 
-                        <Button Grid.Row="20" Grid.ColumnSpan="3" Content="Изменить настройки сервера"/>
+                        <Button x:Name="ChangeServerSettingsTwo" Grid.Row="20" Grid.ColumnSpan="3" Content="Изменить настройки сервера" Click="ChangeServerSettingsTwo_Click"/>
 
                         <GroupBox Grid.Column="4" Grid.Row="1" Grid.RowSpan="25">
                             <Grid>

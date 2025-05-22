@@ -7,11 +7,35 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Server.DataBaseFolder.Entitys;
 using Server.DataBaseFolder;
+using System.Configuration;
 
 namespace Server.AdminFolder
 {
     internal class AdminUpdateSetting
     {
+
+        public void updateConnectionStrings(string connectionString)
+        {
+            // Загружаем конфигурацию приложения
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            // Изменяем строку подключения
+            config.ConnectionStrings.ConnectionStrings["DefaultConnection"].ConnectionString = connectionString;
+
+            // Сохраняем изменения
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("connectionStrings");
+        }
+
+        public void updateTwo(int[] ints,string Url)
+        {
+            Settings1.Default.ServerUrl = Url;
+            Settings1.Default.UserPort = ints[0];
+            Settings1.Default.AdminPort = ints[1];
+
+            Settings2.Default.CanCreateNewProject = ints[2];
+            Settings2.Default.CanEditClient = ints[3];
+        }
         public void UpdateBaseFolder(string NewPath)
         {
             Settings1.Default.BaseFolder = NewPath;

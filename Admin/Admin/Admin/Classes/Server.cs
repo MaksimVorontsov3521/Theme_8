@@ -117,8 +117,15 @@ namespace Admin.Classes
 
         internal async void AddDepartment(string DepartmentName)
         {
-           await Messenger.SendStrings(clientSocket, "AddDepartment\a" + DepartmentName);          
+            await Messenger.SendStrings(clientSocket, "AddDepartment\a" + DepartmentName);          
             GetTables(Messenger, clientSocket);
+            byte[] bytes = await Messenger.ReedBytes(clientSocket);
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
+        }
+
+        internal async void UpdateConnectionStrings(string connectionString)
+        {
+            await Messenger.SendStrings(clientSocket, "UpdateConnectionStrings\a" + connectionString);
             byte[] bytes = await Messenger.ReedBytes(clientSocket);
             StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
         }
@@ -131,6 +138,23 @@ namespace Admin.Classes
             StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
             GetTables(Messenger, clientSocket);
             
+        }
+
+        internal async void ChangeServerSettingsTwo(int UserPort, int AdminPort, int CanCreateNewProject,int CanEditClient, string ServerUrl)
+        {
+            int[] ints = new int[4];
+            ints[0] = UserPort;
+            ints[1] = AdminPort;
+            ints[2] = CanCreateNewProject;
+            ints[3] = CanEditClient;
+            await Messenger.SendStrings(clientSocket, "ChangeServerSettingsTwo\a");
+            await Messenger.SendJSON(clientSocket, ints);
+            await Messenger.SendStrings(clientSocket, ServerUrl);
+
+            byte[] bytes = await Messenger.ReedBytes(clientSocket);
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
+            GetTables(Messenger, clientSocket);
+
         }
 
         internal async void AddClient(User user)

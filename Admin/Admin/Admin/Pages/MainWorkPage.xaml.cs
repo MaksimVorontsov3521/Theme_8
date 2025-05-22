@@ -49,6 +49,7 @@ namespace Admin.Pages
 
         private void ConnectionStringButton_Click(object sender, RoutedEventArgs e)
         {
+            server.UpdateConnectionStrings(ConnectionStringTB.Text);
         }
 
         private void BaseFolderButton_Click(object sender, RoutedEventArgs e)
@@ -136,6 +137,28 @@ namespace Admin.Pages
                 }
             }
             server.PrintGrids(this);
+        }
+
+        private void ChangeServerSettingsTwo_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Settings1.Default.UserPort = Convert.ToInt32(UsersPortTB.Text);
+                int UserPort = Convert.ToInt32(UsersPortTB.Text);
+                Settings1.Default.AdminPort = Convert.ToInt32(AdminPortTB.Text);
+                int AdminPort = Convert.ToInt32(AdminPortTB.Text);            
+                Settings1.Default.CanCreateNewProject = Convert.ToInt32(CreateProject.Text);
+                int CanCreateNewProject = Convert.ToInt32(CreateProject.Text);
+                Settings1.Default.CanEditClient = Convert.ToInt32(CreateClient.Text);
+                int CanEditClient = Convert.ToInt32(CreateClient.Text);
+                Settings1.Default.ServerUrl = ServerIP.Text;
+                string ServerUrl = ServerIP.Text;
+                server.ChangeServerSettingsTwo(UserPort, AdminPort, CanCreateNewProject, CanEditClient, ServerUrl);
+            }
+            catch
+            {
+                MessageBox.Show("Порты - цифры,\nУровни - цифры");
+            }          
         }
     }
 }

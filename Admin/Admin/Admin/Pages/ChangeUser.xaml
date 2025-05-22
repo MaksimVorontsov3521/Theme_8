@@ -74,7 +74,7 @@
         <Button x:Name="Exit" FontSize="20" Content="Закрыть" Grid.Row="12" Grid.Column="0" HorizontalAlignment="Left" Click="Exit_Click"/>
 
         <Label Content="Заблокировать" Grid.Row="12" Grid.Column="4" HorizontalAlignment="Left"/>
-        <RadioButton x:Name="Blocked"  Grid.Row="12" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <CheckBox x:Name="Blocked"  Grid.Row="12" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
     </Grid>
 </Page>
