@@ -14,5 +14,8 @@
     <Setting Name="ServerUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">127.0.0.4</Value>
     </Setting>
+    <Setting Name="BackupFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Desktop\Backup</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

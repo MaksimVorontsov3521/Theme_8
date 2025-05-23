@@ -105,12 +105,22 @@ namespace Admin.Classes
             Settings1.Default.UserPort = settingsList[1].GetInt32();
             Settings1.Default.ServerUrl = settingsList[2].GetString();
             Settings1.Default.BaseFolder = settingsList[3].GetString();
-            Settings1.Default.CanCreateNewProject = settingsList[4].GetInt32();
-            Settings1.Default.CanEditClient = settingsList[5].GetInt32();
+            Settings1.Default.BackupFolder = settingsList[4].GetString();
+
+            Settings1.Default.CanCreateNewProject = settingsList[5].GetInt32();
+            Settings1.Default.CanEditClient = settingsList[6].GetInt32();
+            Settings1.Default.BackupSchedule = settingsList[7].GetInt32();
+            Settings1.Default.KeepBackups = settingsList[8].GetInt32();
+
+            Settings1.Default.connectionString = settingsList[9].GetString();
             Settings1.Default.Save();
         }
-        internal async Task UpdateBaseFolder(string NewPath)
+        internal async Task UpdateBaseFolder(string NewPath,bool? Add)
         {
+            if (Add == false)
+            { NewPath += "\a-"; }
+            else { NewPath += "\a+"; }
+
             await Messenger.SendStrings(clientSocket, "UpdateBaseFolder\a"+ NewPath);
             GetTables(Messenger, clientSocket);
         }
@@ -138,6 +148,13 @@ namespace Admin.Classes
             StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
             GetTables(Messenger, clientSocket);
             
+        }
+
+        internal async void UpdateBackUp(string days ,string keep, string folder)
+        {
+            await Messenger.SendStrings(clientSocket, $"UpdateBackUp\a{folder}\a{days}\a{keep}");
+            byte[] bytes = await Messenger.ReedBytes(clientSocket);
+            StyleClass.TransactionResult(Encoding.UTF8.GetString(bytes), mainWindow);
         }
 
         internal async void ChangeServerSettingsTwo(int UserPort, int AdminPort, int CanCreateNewProject,int CanEditClient, string ServerUrl)

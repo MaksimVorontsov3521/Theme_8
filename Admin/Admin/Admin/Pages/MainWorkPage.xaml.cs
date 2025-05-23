@@ -43,8 +43,16 @@ namespace Admin.Pages
             AdminPortTB.Text =Settings1.Default.AdminPort.ToString();
             UsersPortTB.Text = Settings1.Default.UserPort.ToString();
             ServerIP.Text =Settings1.Default.ServerUrl;
+
+
+            BackupFolderTB.Text = Settings1.Default.BackupFolder;
+            BackupOftenTb.Text = Settings1.Default.BackupSchedule.ToString();
+            BackupsKeep.Text = Settings1.Default.KeepBackups.ToString();
+
             CreateClient.Text = Settings1.Default.CanEditClient.ToString();
             CreateProject.Text = Settings1.Default.CanCreateNewProject.ToString();
+
+            ConnectionStringTB.Text = Settings1.Default.connectionString;
         }
 
         private void ConnectionStringButton_Click(object sender, RoutedEventArgs e)
@@ -54,7 +62,7 @@ namespace Admin.Pages
 
         private void BaseFolderButton_Click(object sender, RoutedEventArgs e)
         {
-            server.UpdateBaseFolder(BaseFolderTB.Text);
+            server.UpdateBaseFolder(BaseFolderTB.Text, AddProjectsFromFolder.IsChecked);
             server.PrintGrids(this);
         }
 
@@ -159,6 +167,36 @@ namespace Admin.Pages
             {
                 MessageBox.Show("Порты - цифры,\nУровни - цифры");
             }          
+        }
+
+        private void BackupFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            int[] ints = new int[2];
+            try
+            {
+                ints[0] = Convert.ToInt32(BackupOftenTb.Text);
+                ints[1] = Convert.ToInt32(BackupsKeep.Text);
+            }
+            catch { MessageBox.Show("Только цифры");return; }
+
+            BackupOftenTb.BorderBrush = new SolidColorBrush(Colors.Gray);
+            BackupsKeep.BorderBrush = new SolidColorBrush(Colors.Gray);
+
+            if (ints[0] < 1)
+            {
+                BackupOftenTb.BorderBrush = new SolidColorBrush(Colors.Red);
+                StyleClass.TransactionResult("Не чаще одного раза в день", this);
+                return;
+            }else{BackupOftenTb.BorderBrush = new SolidColorBrush(Colors.Gray);}
+
+            if (ints[1] <0)
+            {
+                BackupsKeep.BorderBrush = new SolidColorBrush(Colors.Red);
+                StyleClass.TransactionResult("Число должно быть неотрицательным", this);
+                return;
+            }else{BackupsKeep.BorderBrush = new SolidColorBrush(Colors.Gray);}
+
+            server.UpdateBackUp(BackupOftenTb.Text, BackupsKeep.Text, BackupFolderTB.Text);
         }
     }
 }

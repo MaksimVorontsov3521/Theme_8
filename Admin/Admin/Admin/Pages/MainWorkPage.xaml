@@ -74,6 +74,8 @@
                 <TabItem.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" MaxWidth="200"/>
+                            <ColumnDefinition Width="15"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="15"/>
                             <ColumnDefinition Width="auto"/>
@@ -107,24 +109,27 @@
                         </Grid.RowDefinitions>
 
                         <Label Content="Connection String" Grid.Row="1" Grid.Column="0"/>
-                        <TextBox x:Name="ConnectionStringTB" Grid.Row="3" Grid.Column="0"/>
+                        <TextBox x:Name="ConnectionStringTB" Grid.Row="3" Grid.Column="0" MaxWidth="200"/>
                         <Button x:Name="ConnectionStringButton" Content="Изменить" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Height="20" Margin="0,0,15,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="ConnectionStringButton_Click"/>
 
 
                         <Label Content="Base Folder" Grid.Row="7" Grid.Column="0"/>
                         <TextBox x:Name="BaseFolderTB" Grid.Row="9" Grid.Column="0"/>
+                        <CheckBox x:Name="AddProjectsFromFolder" Grid.Row="9" Grid.Column="1" />
                         <Button x:Name="BaseFolderButton" Content="Изменить" Grid.Row="11" Grid.Column="0" Click="BaseFolderButton_Click"/>
 
 
                         <Label Content="Backup folder" Grid.Row="13" Grid.Column="0"/>
                         <TextBox x:Name="BackupFolderTB" Grid.Row="15" Grid.Column="0"/>
-                        <Button x:Name="BackupFolderButton" Content="Изменить" Grid.Row="17" Grid.Column="0"/>
+                        <Button x:Name="BackupFolderButton" Content="Изменить" Grid.ColumnSpan="5" Grid.Row="17" Grid.Column="0" Click="BackupFolderButton_Click"/>
 
 
-                        <Label Content="Часстота Backup в днях" Grid.Row="13" Grid.Column="2"/>
+                        <Label Content="Частота Backup в днях" Grid.Row="13" Grid.Column="2"/>
                         <TextBox x:Name="BackupOftenTb" Grid.Row="15" Grid.Column="2"/>
-                        <Button x:Name="BackupOftenAply" Content="Изменить" Grid.Row="17" Grid.Column="2"/>
-                        
+
+                        <Label Content="Сколько backup сохранять" Grid.Row="13" Grid.Column="4"/>
+                        <TextBox x:Name="BackupsKeep" Grid.Row="15" Grid.Column="4"/>
+
                     </Grid>
                 </TabItem.Content>
 

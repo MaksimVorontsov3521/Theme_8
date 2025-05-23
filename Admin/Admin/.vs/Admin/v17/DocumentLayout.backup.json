@@ -11,8 +11,8 @@
       "RelativeMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|solutionrelative:admin\\pages\\mainworkpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|f:\\program\\theme_8\\admin\\admin\\admin\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|solutionrelative:admin\\pages\\mainworkpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|f:\\program\\theme_8\\admin\\admin\\admin\\classes\\styleclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E303C5-E377-4A7E-9614-2C10F9D833EB}|Admin\\Admin.csproj|solutionrelative:admin\\classes\\styleclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,13 +27,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MainWorkPage.xaml",
-              "DocumentMoniker": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml",
-              "RelativeDocumentMoniker": "Admin\\Pages\\MainWorkPage.xaml",
-              "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml",
-              "RelativeToolTip": "Admin\\Pages\\MainWorkPage.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-22T09:37:43.297Z",
+              "Title": "StyleClass.cs",
+              "DocumentMoniker": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\StyleClass.cs",
+              "RelativeDocumentMoniker": "Admin\\Classes\\StyleClass.cs",
+              "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\StyleClass.cs",
+              "RelativeToolTip": "Admin\\Classes\\StyleClass.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAA4wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T07:24:22.207Z",
               "EditorCaption": ""
             },
             {
@@ -44,7 +45,7 @@
               "RelativeDocumentMoniker": "Admin\\Classes\\Server.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Classes\\Server.cs",
               "RelativeToolTip": "Admin\\Classes\\Server.cs",
-              "ViewState": "AgIAAGoAAAAAAAAAAAAcwIMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAqwHoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-22T10:45:19.947Z",
               "EditorCaption": ""
@@ -57,7 +58,7 @@
               "RelativeDocumentMoniker": "Admin\\Pages\\MainWorkPage.xaml.cs",
               "ToolTip": "F:\\Program\\Theme_8\\Admin\\Admin\\Admin\\Pages\\MainWorkPage.xaml.cs",
               "RelativeToolTip": "Admin\\Pages\\MainWorkPage.xaml.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAqwDUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAqwEMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-22T10:45:12.304Z",
               "EditorCaption": ""

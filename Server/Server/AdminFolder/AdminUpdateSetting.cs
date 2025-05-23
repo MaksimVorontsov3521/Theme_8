@@ -14,6 +14,14 @@ namespace Server.AdminFolder
     internal class AdminUpdateSetting
     {
 
+        public void UpdateBackUp(string folder, string days, string keep)
+        {
+            Settings1.Default.BackupFolder = folder;
+
+            Settings2.Default.KeepBackups = Convert.ToInt32(keep);
+            Settings2.Default.BackupSchedule = Convert.ToInt32(days);
+        }
+
         public void updateConnectionStrings(string connectionString)
         {
             // Загружаем конфигурацию приложения
@@ -36,10 +44,20 @@ namespace Server.AdminFolder
             Settings2.Default.CanCreateNewProject = ints[2];
             Settings2.Default.CanEditClient = ints[3];
         }
-        public void UpdateBaseFolder(string NewPath)
+        public void UpdateBaseFolder(string NewPath,string add)
         {
             Settings1.Default.BaseFolder = NewPath;
             Settings1.Default.Save();
+
+
+            // Проверяем, существует ли директория, если нет — создаём
+            if (!Directory.Exists(NewPath))
+            {Directory.CreateDirectory(NewPath);}
+
+            //
+            if (add.Equals("-"))
+            { return; }
+
             // Получаем все подпапки
             string[] allDirectories = Directory.GetDirectories(NewPath);
 

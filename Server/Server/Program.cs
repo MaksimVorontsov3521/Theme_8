@@ -25,6 +25,9 @@ using Azure.Core;
 using System.Net.Security;
 using System.Security.Authentication;
 using System.Configuration;
+using System.IO.Compression;
+using System.Timers;
+using System;
 
 public class Program
 {
@@ -81,14 +84,11 @@ public class Program
         while (true)
         {
             Socket clientSocket = serverSocket.Accept();
-            
+            DocumentsAndFolders.isTimeForBackup();
             Thread clientThread = new Thread(() => HandelClient(clientSocket));
             clientThread.Start();
-            Console.WriteLine("1");
         }
-
     }
-
     private async void HandelClient(Socket clientSocket)
     {
         Security security = new Security(clientSocket);
@@ -209,7 +209,4 @@ public class Program
         }
 
     }
-    
 }
-
-

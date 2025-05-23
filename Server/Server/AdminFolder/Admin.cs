@@ -16,6 +16,7 @@ using System.IO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Server.Security;
 using System.Dynamic;
+using System.Configuration;
 
 namespace Server.AdminFolder
 {
@@ -27,9 +28,6 @@ namespace Server.AdminFolder
 
         async public void Connection()
         {
-            //AdminUpdateSetting setting = new AdminUpdateSetting();
-            //setting.UpdateBaseFolder("D:\\Desktop\\Root");
-
             Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Bind(new IPEndPoint(IPAddress.Parse(ipAddress), port));
             serverSocket.Listen(10); // Backlog
@@ -90,7 +88,7 @@ namespace Server.AdminFolder
                 switch (AdminCommand[0])
                 {
                     case "UpdateBaseFolder":
-                        adminUpdateSetting.UpdateBaseFolder(AdminCommand[1]);
+                        adminUpdateSetting.UpdateBaseFolder(AdminCommand[1], AdminCommand[2]);
                         SendTables(dataBase, Messenger, adminSocket);
                         break;
                     case "AddDepartment":
@@ -133,6 +131,10 @@ namespace Server.AdminFolder
                         adminUpdateSetting.updateConnectionStrings(AdminCommand[1]);
                         Messenger.SendStrings(adminSocket, "Успешно");
                         break;
+                    case "UpdateBackUp":
+                        adminUpdateSetting.UpdateBackUp(AdminCommand[1], AdminCommand[2], AdminCommand[3]);
+                        Messenger.SendStrings(adminSocket, "Успешно");
+                        break;
                     default:
                         whileBoll = false;
                         adminSocket.Close();
@@ -160,11 +162,17 @@ namespace Server.AdminFolder
             settingsList.Add(Settings.Settings1.Default.UserPort);
             settingsList.Add(Settings.Settings1.Default.ServerUrl);
             settingsList.Add(Settings.Settings1.Default.BaseFolder);
+            settingsList.Add(Settings.Settings1.Default.BackupFolder);
 
             settingsList.Add(Settings.Settings2.Default.CanCreateNewProject);
             settingsList.Add(Settings.Settings2.Default.CanEditClient);
+            settingsList.Add(Settings.Settings2.Default.BackupSchedule);
+            settingsList.Add(Settings.Settings2.Default.KeepBackups);
 
-            Messenger.SendJSON(adminSocket, settingsList);
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            settingsList.Add(config.ConnectionStrings.ConnectionStrings["DefaultConnection"].ConnectionString);
+
+            Messenger.SendJSON(adminSocket, settingsList);  
         }
     }
 }
