@@ -52,7 +52,7 @@ public class Program
                 bool canConnect = context.Database.CanConnect();
                 Console.WriteLine(canConnect ? "Подключение к БД успешно!" : "Не удалось подключиться");
 
-                // Альтернативный вариант - выполнить простой запрос
+                // простой запрос
                 var test = context.UserTable.FirstOrDefault();
                 Console.WriteLine("Подключение к БД работает, запрос выполнен");
             }
@@ -81,6 +81,7 @@ public class Program
         serverSocket.Listen(10);
 
         Console.WriteLine("Порт для пользователей запущен");
+        //Приём пользователя
         while (true)
         {
             Socket clientSocket = serverSocket.Accept();
@@ -133,6 +134,7 @@ public class Program
             userSession.level = LoginPassword.GetLevel(userSession.User.RoleID);
             //
             Messenger.SendStrings(clientSocket, "Right\a" + userSession.level);
+            Messenger.SendJSON(clientSocket, LoginPassword.CnaLevel(userSession.level));
             return userSession;
         }
         else
@@ -173,8 +175,7 @@ public class Program
                 case "ContinueProject":
                     ClientServerWorkClass.ContinueProject(userSession);
                     break;
-                default:
-                    userSession.clientSocket.Close();
+                default:                   
                     continueHandleClient = false;
                     break;
             }

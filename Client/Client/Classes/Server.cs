@@ -60,6 +60,7 @@ namespace Client
 
         public async Task Connection(string login, string password)
         {        
+            // Подключение к серверу
             try
             {
                 clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -72,6 +73,7 @@ namespace Client
                 MessageBox.Show("Сервер недоступен");
                 return;
             }
+
             await Messenger.SendStrings(clientSocket, login + "\a" + password + "\a");
             string response = Encoding.UTF8.GetString(await Messenger.ReedBytes(clientSocket));
             if (response.Contains("Right"))
@@ -82,7 +84,9 @@ namespace Client
                 LoginPassword[1] = password;
 
             }
+
             else { MessageBox.Show("Неверный логин или пароль");return; }
+            CanEdit();
             GetTables();
             CreateWorkPlace();
         }
@@ -151,6 +155,17 @@ namespace Client
             showDocuments.UpdateDocuments(FolderCount);
         }
 
+        public async void CanEdit()
+        {
+            byte[] jsonBytes = await Messenger.ReedBytes(clientSocket);
+            string json = Encoding.UTF8.GetString(jsonBytes);
+            bool[] bools = JsonSerializer.Deserialize<bool[]>(json);
+            if (bools[0]==false)
+            { page.PatternTab.Visibility = Visibility.Collapsed; }
+            if (bools[1] == false)
+            { page.ClientTab.Visibility = Visibility.Collapsed; }
+        }
+
         public async void GetTables()
         {
             byte[] jsonBytes = await Messenger.ReedBytes(clientSocket);
@@ -202,7 +217,6 @@ namespace Client
 
             await Messenger.SendStrings(clientSocket, "SendPath");
             await Messenger.SendStrings(clientSocket, folderPath + FileName);
-
 
             byte[] document = await Messenger.ReedBytes(clientSocket);
 

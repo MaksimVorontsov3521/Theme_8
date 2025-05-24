@@ -30,8 +30,6 @@ namespace Server.Security
                     using (ECDiffieHellman bobPublic = ECDiffieHellman.Create(ECCurve.NamedCurves.nistP256))
                     {
                         bobPublic.ImportSubjectPublicKeyInfo(clientPublicKey, out _);
-
-                        // 5. Алиса вычисляет общий секрет
                         PrivateKey = client.DeriveKeyFromHash(
                             bobPublic.PublicKey,
                             HashAlgorithmName.SHA256,

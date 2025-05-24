@@ -9,11 +9,47 @@ using System.Threading.Tasks;
 using Server.Settings;
 using System.IO;
 using System.Xml.Linq;
+using Server.Session;
 
 namespace Server.DataBaseFolder.Querys
 {
     internal class DBDocumentWork
     {
+        public static bool IsFolderExist(string Path, UserSession userSession)
+        {
+            string[] parts = Path.Split('\\');
+            string folder=null;
+            using (var context = new DataBase())
+            {
+                for (int i = 0; i < parts.Count() - 1; i++)
+                {
+                    folder += parts[i]+"\\";
+                }
+                Folder folder1 = context.Folder.FirstOrDefault(f => f.FolderPath == folder);
+                if (folder1 == null)
+                { return false; }
+                Entitys.Document document = context.Document.FirstOrDefault(d => d.DocumentName == parts.Last() &&
+                d.FolderID == folder1.FolderID);
+
+                if (document!= null)
+                {
+                    return CanEditThis(folder1,userSession);
+                }
+            }
+            return false;
+        }
+
+        public static bool CanEditThis(Folder folder, UserSession userSession)
+        {
+            using (var context = new DataBase())
+            { 
+                DepartmentFolder DF = context.DepartmentFolder.FirstOrDefault(d=> d.FolderID == folder.FolderID
+                && d.DepartmentID == userSession.User.DepartmentID);
+                if (DF != null) { return true; }
+            }
+            return false;
+        }
+
 
         public static int GetProjectId (string ProjectName)
         {

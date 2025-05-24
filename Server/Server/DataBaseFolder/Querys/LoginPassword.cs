@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Server.Settings;
 
 namespace Server.DataBaseFolder.DbContexts
 {
@@ -40,16 +41,28 @@ namespace Server.DataBaseFolder.DbContexts
         {
             using (var context = new DataBase())
             {
-                var X = context.RoleTable
-                    .Where(w => w.RoleId == UserRoleID);
-
-                foreach (var role in X)
-                {
-                    return role.RoleLevel;
-                }
-                return 100;
+                bool[] Rights = new bool[2];
+                RoleTable user = context.RoleTable
+                    .FirstOrDefault(w => w.RoleId == UserRoleID);
+                if (user.RoleId != null)
+                { return user.RoleLevel; }else { return 100; }
+                
             }
         }
+
+        public static bool[] CnaLevel(int userLevel)
+        {
+            bool[] Rights = new bool[2];
+            if (userLevel > Settings2.Default.CanCreateNewProject)
+            { Rights[0] = false; }
+            else { Rights[0] = true; }
+
+            if (userLevel > Settings2.Default.CanEditClient)
+            { Rights[1] = false; }
+            else { Rights[1] = true; }
+            return Rights;
+        }
+
 
         public bool LoginAdmin(string login, string enteredPassword)
         {

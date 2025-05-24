@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Admin.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Admin.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Resources\Settings1.Designer.cs">

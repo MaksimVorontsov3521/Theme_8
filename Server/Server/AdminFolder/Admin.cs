@@ -137,7 +137,6 @@ namespace Server.AdminFolder
                         break;
                     default:
                         whileBoll = false;
-                        adminSocket.Close();
                         break;
                 }
             }

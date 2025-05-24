@@ -6,12 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AppDesignerFolder>Resources</AppDesignerFolder>
+    <ApplicationIcon>Server.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="AppSettings\**" />
     <EmbeddedResource Remove="AppSettings\**" />
     <None Remove="AppSettings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Server.ico" />
   </ItemGroup>
 
   <ItemGroup>

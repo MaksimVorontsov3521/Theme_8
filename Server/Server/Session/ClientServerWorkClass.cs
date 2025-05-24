@@ -16,7 +16,16 @@ namespace Server.Session
         //
         public static async Task SendPath(string message, UserSession userSession)
         {
-            message = Encoding.UTF8.GetString( await userSession.Messenger.ReedBytes(userSession.clientSocket));
+            message = Encoding.UTF8.GetString(await userSession.Messenger.ReedBytes(userSession.clientSocket));
+            
+            if (DBDocumentWork.IsFolderExist(message, userSession) == false)
+            {
+                byte[] Error = new byte[1];
+                userSession.Messenger.SendBytes(userSession.clientSocket, Error);
+                userSession.Messenger.SendStrings(userSession.clientSocket, "Файла с таким именем не существует");
+                return;
+            }
+
             byte[] byffer = DocumentsAndFolders.ToSendPath(message);
             userSession.Messenger.SendBytes(userSession.clientSocket, byffer);
             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\n Файлы загружены");
@@ -229,5 +238,7 @@ namespace Server.Session
             DBDocumentWork.UpdateFolder(folder);
             userSession.Messenger.SendStrings(userSession.clientSocket, "Изменено успешно");
         }
+
+
     }
 }

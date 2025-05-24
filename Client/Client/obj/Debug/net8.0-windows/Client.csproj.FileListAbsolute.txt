@@ -52,3 +52,4 @@ F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Resources\Styles.baml
 F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\App.baml
 F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Pages\SettingsPage.g.cs
 F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Pages\SettingsPage.baml
+F:\Program\Theme_8\Client\Client\obj\Debug\net8.0-windows\Client_Content.g.cs

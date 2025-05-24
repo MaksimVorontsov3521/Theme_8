@@ -113,7 +113,7 @@
             </TabItem>
 
             <!-- Второй таб -->
-            <TabItem Name="Pattern">
+            <TabItem Name="PatternTab">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Rectangle x:Name="SimbolHead1" Height="10" Width="10" Fill="Black" />
@@ -232,7 +232,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem>
+            <TabItem  Name="ClientTab">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock x:Name="TBCilent" Margin="3">Клиенты</TextBlock>
