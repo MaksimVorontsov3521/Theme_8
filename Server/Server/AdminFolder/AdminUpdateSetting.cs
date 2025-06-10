@@ -14,15 +14,47 @@ namespace Server.AdminFolder
     internal class AdminUpdateSetting
     {
 
-        public void UpdateBackUp(string folder, string days, string keep)
+        public static void CheckSetting()
+        {
+            string connectionString;          
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (config != null)
+            {
+                connectionString = config.ConnectionStrings.ConnectionStrings["DefaultConnection"].ConnectionString;
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    Console.WriteLine("Введите строку подключения");
+                    connectionString = Console.ReadLine();
+                    updateConnectionStrings(connectionString);
+
+                    Console.WriteLine("Введите адрес сервера");
+
+                    string Url = Console.ReadLine();
+                    Settings1.Default.ServerUrl = Url;
+
+
+                    Console.WriteLine("Введите порт для администратора\n");
+                    Settings1.Default.AdminPort = int.Parse(Console.ReadLine());
+
+                    Settings1.Default.Save();
+                    Console.WriteLine("Перезапустите приложение");
+                }
+            }
+            else { Console.WriteLine("Нет файла конфигурации"); }          
+        }
+
+        public static void UpdateBackUp(string folder, string days, string keep)
         {
             Settings1.Default.BackupFolder = folder;
 
             Settings2.Default.KeepBackups = Convert.ToInt32(keep);
             Settings2.Default.BackupSchedule = Convert.ToInt32(days);
+
+            Settings1.Default.Save();
+            Settings2.Default.Save();
         }
 
-        public void updateConnectionStrings(string connectionString)
+        public static void updateConnectionStrings(string connectionString)
         {
             // Загружаем конфигурацию приложения
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -35,7 +67,7 @@ namespace Server.AdminFolder
             ConfigurationManager.RefreshSection("connectionStrings");
         }
 
-        public void updateTwo(int[] ints,string Url)
+        public static void updateTwo(int[] ints,string Url)
         {
             Settings1.Default.ServerUrl = Url;
             Settings1.Default.UserPort = ints[0];
@@ -43,8 +75,11 @@ namespace Server.AdminFolder
 
             Settings2.Default.CanCreateNewProject = ints[2];
             Settings2.Default.CanEditClient = ints[3];
+
+            Settings1.Default.Save();
+            Settings2.Default.Save();
         }
-        public void UpdateBaseFolder(string NewPath,string add)
+        public static void UpdateBaseFolder(string NewPath,string add)
         {
             Settings1.Default.BaseFolder = NewPath;
             Settings1.Default.Save();

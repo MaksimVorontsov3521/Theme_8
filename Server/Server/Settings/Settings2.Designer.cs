@@ -25,7 +25,7 @@ namespace Server.Settings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int CanCreateNewProject {
             get {
                 return ((int)(this["CanCreateNewProject"]));
@@ -37,7 +37,7 @@ namespace Server.Settings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int CanEditClient {
             get {
                 return ((int)(this["CanEditClient"]));

@@ -79,7 +79,7 @@ namespace Server.AdminFolder
             //
 
             AdminAdd adminAdd = new AdminAdd();
-            AdminUpdateSetting adminUpdateSetting = new AdminUpdateSetting();
+            
             bool whileBoll = true;
             string result;
             while (whileBoll)
@@ -88,7 +88,7 @@ namespace Server.AdminFolder
                 switch (AdminCommand[0])
                 {
                     case "UpdateBaseFolder":
-                        adminUpdateSetting.UpdateBaseFolder(AdminCommand[1], AdminCommand[2]);
+                        AdminUpdateSetting.UpdateBaseFolder(AdminCommand[1], AdminCommand[2]);
                         SendTables(dataBase, Messenger, adminSocket);
                         break;
                     case "AddDepartment":
@@ -122,17 +122,17 @@ namespace Server.AdminFolder
                         ServerSettingsTwo = await Messenger.ReedBytes(adminSocket);
                         string ServerUrl = Encoding.UTF8.GetString(ServerSettingsTwo);
 
-                        adminUpdateSetting.updateTwo(ints,ServerUrl);
+                        AdminUpdateSetting.updateTwo(ints,ServerUrl);
 
                         Messenger.SendStrings(adminSocket, "Успешно");
                         SendTables(dataBase, Messenger, adminSocket);
                         break;
                     case "UpdateConnectionStrings":
-                        adminUpdateSetting.updateConnectionStrings(AdminCommand[1]);
+                        AdminUpdateSetting.updateConnectionStrings(AdminCommand[1]);
                         Messenger.SendStrings(adminSocket, "Успешно");
                         break;
                     case "UpdateBackUp":
-                        adminUpdateSetting.UpdateBackUp(AdminCommand[1], AdminCommand[2], AdminCommand[3]);
+                        AdminUpdateSetting.UpdateBackUp(AdminCommand[1], AdminCommand[2], AdminCommand[3]);
                         Messenger.SendStrings(adminSocket, "Успешно");
                         break;
                     default:

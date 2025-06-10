@@ -45,7 +45,7 @@ namespace Server.Security
             using (Aes aes = Aes.Create())
             {
                 aes.Key = PrivateKey[..32]; // AES-256
-                aes.IV = IV; // В реальном коде IV должен быть случайным
+                aes.IV = IV; 
 
                 FullMessage = (DecryptMessage(aes, FullMessage));
 
@@ -63,7 +63,7 @@ namespace Server.Security
                 {
                     cs.Write(cipherText, 0, cipherText.Length);
                 }
-                return ms.ToArray(); // Возвращаем сырые байты
+                return ms.ToArray(); 
             }
         }
 
@@ -72,7 +72,7 @@ namespace Server.Security
             using (Aes aes = Aes.Create())
             {
                 aes.Key = PrivateKey[..32]; // AES-256
-                aes.GenerateIV(); // В реальном коде IV должен быть случайным
+                aes.GenerateIV();
 
                 socket.Send(aes.IV);
 

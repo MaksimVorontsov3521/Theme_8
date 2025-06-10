@@ -70,7 +70,7 @@
         <TextBox x:Name="TBEmail" Grid.Row="10" Grid.Column="4"/>
 
         <!-- -->
-        <Button x:Name="AddUserButton" FontSize="20" Content="Изменить" Grid.Row="12" Grid.Column="2" Click="AddUserButton_Click" />
+        <Button x:Name="AddUserButton" FontSize="20" Content="Добавить" Grid.Row="12" Grid.Column="2" Click="AddUserButton_Click" />
         <Button x:Name="Exit" FontSize="20" Content="Закрыть" Grid.Row="12" Grid.Column="0" HorizontalAlignment="Left" Click="Exit_Click"/>
     </Grid>
 </Page>

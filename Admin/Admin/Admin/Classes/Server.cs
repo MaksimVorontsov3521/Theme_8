@@ -89,8 +89,6 @@ namespace Admin.Classes
 
             GetSettings(settingsList);
         }
-
-
         internal async void CreateNewRole(Role role)
         {
             await Messenger.SendStrings(clientSocket, "CreateNewRole\a");

@@ -23,7 +23,7 @@ namespace Server.DataBaseFolder.DbContexts
         {
             using (var context = new DataBase())
             {
-                var X = context.UserTable.FirstOrDefault(w => w.UserLogin == login);
+                var X = context.UserTable.FirstOrDefault(w => w.UserLogin == login && w.RoleID != 1);
 
                 if(X==null)
                 { return null; }

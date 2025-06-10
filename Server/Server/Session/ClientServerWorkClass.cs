@@ -13,7 +13,7 @@ namespace Server.Session
 {
     internal class ClientServerWorkClass : Program
     {
-        //
+        // Скачать файл на ПК пользователя
         public static async Task SendPath(string message, UserSession userSession)
         {
             message = Encoding.UTF8.GetString(await userSession.Messenger.ReedBytes(userSession.clientSocket));
@@ -30,7 +30,7 @@ namespace Server.Session
             userSession.Messenger.SendBytes(userSession.clientSocket, byffer);
             userSession.Messenger.SendStrings(userSession.clientSocket, "Успешно\n Файлы загружены");
         }
-        //
+        // Добавить или заменить файл проекта
         public static async Task GetDocument(string message, UserSession userSession)
         {
             string Path = Encoding.UTF8.GetString(await userSession.Messenger.ReedBytes(userSession.clientSocket));

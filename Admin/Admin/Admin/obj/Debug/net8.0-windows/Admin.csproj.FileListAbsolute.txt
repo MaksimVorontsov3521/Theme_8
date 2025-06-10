@@ -31,3 +31,5 @@ F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Admin.sourcelink.j
 F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Pages\ChangeUser.g.cs
 F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Pages\ChangeUser.baml
 F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Admin_Content.g.cs
+F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Pages\ChangeLocalSettings.g.cs
+F:\Program\Theme_8\Admin\Admin\Admin\obj\Debug\net8.0-windows\Pages\ChangeLocalSettings.baml

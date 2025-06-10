@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="CanCreateNewProject" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="CanEditClient" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="BackupSchedule" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>

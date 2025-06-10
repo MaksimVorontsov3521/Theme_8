@@ -138,12 +138,12 @@ namespace Client.Pages
             }
             if (ProjectsListBox.SelectedIndex == -1)
             {
-                MessageBox.Show("Выберите проект");
+                StyleClass.TransactionResult("Выберите проект",this);
                 return;
             }
             if (DropBox.Length == 0)
             {
-                MessageBox.Show("Выберите файлы");
+                StyleClass.TransactionResult("Выберите файлы", this);
                 return;
             }
 
@@ -282,7 +282,7 @@ namespace Client.Pages
             {
                 Server.ChangeProjectProperties(ProjectDepartments.Items.OfType<string>().ToArray(), AplyedProjectPattern.SelectedIndex, FindProjectComboBox.SelectedItem.ToString(), DeadLine);
             }
-            else { StyleClass.TransactionResult("Все отмеченные поля обязательны для заполнения", this); }
+            else { StyleClass.TransactionResult("Все поля обязательны для заполнения", this); }
         }
         private void ProjectDepartmentsAddNew_Click(object sender, RoutedEventArgs e)
         {
@@ -325,7 +325,7 @@ namespace Client.Pages
             {
                 Server.CreateNewProject(ProjectDepartmentsNew.Items.OfType<string>().ToArray(), AplyedNewProjectPattern.SelectedIndex, NewProjectName.Text,DeadLine,FindClientComboBox.Text);
             }
-            else { StyleClass.TransactionResult("Все отмеченные поля обязательны для заполнения",this); }
+            else { StyleClass.TransactionResult("Все поля обязательны для заполнения",this); }
         }
 
         private void HideFileMenu_Click(object sender, RoutedEventArgs e)
@@ -399,6 +399,7 @@ namespace Client.Pages
 
         private void AddNewClient_Click(object sender, RoutedEventArgs e)
         {
+            int no = 0;
             bool isValidEmail = Regex.IsMatch(Email.Text,
                 @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
                 RegexOptions.IgnoreCase);
@@ -406,46 +407,54 @@ namespace Client.Pages
             if (!isValidEmail == true || Email.Text == null)
             {
                 Email.BorderBrush = Brushes.Red;
-                return;
+                no++;
             }
             else { Email.BorderBrush = Brushes.Gray; }
 
             if (!Regex.IsMatch(INN.Text, "^[0-9]{10}$") || INN.Text == "")
             {
                 INN.BorderBrush = Brushes.Red;
-                return;
+                no++;
             }
             else { INN.BorderBrush = Brushes.Gray; }
 
             if (!Regex.IsMatch(OGRN.Text, "^[0-9]{13}$") || OGRN.Text == "")
             {
                 OGRN.BorderBrush = Brushes.Red;
-                return;
+                no++;
             }
             else { OGRN.BorderBrush = Brushes.Gray; }
 
             if (!Regex.IsMatch(KPP.Text, "^[0-9]{9}$") || KPP.Text == "")
             {
                 KPP.BorderBrush = Brushes.Red;
-                return;
+                no++;
             }
             else { KPP.BorderBrush = Brushes.Gray; }
 
             if (ClientName.Text == "")
-            {
-                ErrorMessage("Поле имени обязательно для заполнения");
+            {           
                 ClientName.BorderBrush = Brushes.Red;
-                return;
+                no++;
             }
             else { ClientName.BorderBrush = Brushes.Gray; }
+
+
+            
 
             if (!Regex.IsMatch(ClientName.Text, @"^(ООО|АО|ПАО)\s+""[^""]+""$"))
             {
                 ErrorMessage("Форма для названия ООО/АО/ПАО + \"название организации\"");
                 ClientName.BorderBrush = Brushes.Red;
-                return;
+                no++;
             }
             else { ClientName.BorderBrush = Brushes.Gray; }
+
+            if (no > 0)
+            {
+                ErrorMessage("Все поля обязательные для заполнения");
+                return;
+            }
 
             string[] ClientInfo = new string[5];
             ClientInfo[0] = ClientName.Text;
@@ -458,6 +467,11 @@ namespace Client.Pages
 
         private void Find_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(ClientNameLabel.Text))
+            {
+                StyleClass.TransactionResult("Введите название",this);
+                return;
+            }
             Server.FindClient(ClientNameLabel.Text);
         }
 

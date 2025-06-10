@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Client.Classes.Visual;
 
 namespace Client.Pages
 {
@@ -46,12 +47,17 @@ namespace Client.Pages
         {
             if (Login.Text.Length < 3 && Password.Password.ToString().Length < 3)
             {
-                MessageBox.Show("Логин и Пароль не могут быть короче 3 символов");
+                StyleClass.TransactionResult("Логин и Пароль не могут быть короче 3 символов", this);
                 return;
             }
             string login = Login.Text;
             string password = Password.Password.ToString();
-            server.Connection(login, password);
+            server.Connection(login, password,this);
+        }
+
+        private void Enter_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            server.OpenSettings();
         }
     }
 }

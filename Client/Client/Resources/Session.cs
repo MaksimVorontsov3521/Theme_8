@@ -10,7 +10,6 @@ namespace Client.Resources
     public class Session
     {
         public ThisUser thisUser { get; set; }
-        public int level { get; set; }
         public List<Folder> receivedFolders = new List<Folder>();
         public List<Pattern> receivedPatterns = new List<Pattern>();
         public List<RequiredInPattern> receivedRequiredInPatterns = new List<RequiredInPattern>();

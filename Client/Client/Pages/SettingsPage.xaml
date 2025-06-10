@@ -43,15 +43,15 @@
 
         <Label Name="Label1" Content="Порт сервера" Grid.Row="1" Grid.Column="0"/>
         <TextBox x:Name="ServerPort" Grid.Row="3" Grid.Column="0"/>
-        <Button x:Name="ServerPortButton" Content="Изменить" Grid.Row="5" Grid.Column="0"/>
 
         <Label Name="Label2" Content="Порт сервера" Grid.Row="7" Grid.Column="0"/>
         <TextBox x:Name="ServerURL" Grid.Row="9" Grid.Column="0"/>
-        <Button x:Name="ServerURLButton" Content="Изменить" Grid.Row="11" Grid.Column="0"/>
 
         <Label Name="Label3" Content="Порт сервера" Grid.Row="1" Grid.Column="2"/>
         <TextBox x:Name="RootFolder" Grid.Row="3" Grid.Column="2"/>
-        <Button x:Name="RootFolderButton" Content="Изменить" Grid.Row="5" Grid.Column="2"/>
+        <Button x:Name="Find" Content="Проводник" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Click="Find_Click"/>
+
+        <Button x:Name="Change" Content="Изменить" Grid.Row="9" Grid.Column="2" Click="Change_Click"/>
 
     </Grid>
 </Page>

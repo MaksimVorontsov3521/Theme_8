@@ -10,6 +10,9 @@
     <Compile Update="Pages\AddNewUser.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\ChangeLocalSettings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\ChangeUser.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

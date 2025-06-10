@@ -52,7 +52,6 @@
                                  Grid.Column="0" Grid.Row="5" SelectionChanged="ProjectsListBox_SelectionChanged">
                             <ListBox.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Скачать"/>
                                     <MenuItem x:Name="CompleteProject" Header="Завершить" Click="CompleteProject_Click" />
                                     <MenuItem x:Name="Continue" Header="Продолжить" Click="Continue_Click"/>
                                 </ContextMenu>

@@ -38,9 +38,13 @@
         <Label Name="pas" Style="{StaticResource LabelCenter}" Content="Пароль" Grid.Row="3" Grid.Column="1"  />
 
 
-        <TextBox x:Name="Login" Text="AAaAA" Grid.Row="2" Grid.Column="1" />
-        <PasswordBox x:Name="Password" Grid.Row="4" Password="aaAaa" Grid.Column="1" />
-        <Button  Style="{StaticResource RoundedButtonStyle}" x:Name="Enter" Content="Войти" Grid.Row="6" Grid.Column="1" Click="Enter_Click"/>
-    
+        <TextBox x:Name="Login" Text="" Grid.Row="2" Grid.Column="1" />
+        <PasswordBox x:Name="Password" Grid.Row="4" Password="" Grid.Column="1" />
+        <Button  Style="{StaticResource RoundedButtonStyle}" x:Name="Enter" Content="Войти" Grid.Row="6" Grid.Column="1" Click="Enter_Click" PreviewMouseRightButtonDown="Enter_PreviewMouseRightButtonDown"/>
+
+        <Popup x:Name="Popup1" StaysOpen="False" Placement="Mouse" MaxWidth="180" AllowsTransparency="True"  >
+            <TextBlock x:Name="Popup1Text" FontSize="18" TextWrapping="Wrap" Width="180" Background="LightGreen" Opacity="0.9" >
+            </TextBlock>
+        </Popup>
     </Grid>
 </Page>

@@ -37,6 +37,7 @@ public class Program
 
     static void Main(string[] args)
     {
+        AdminUpdateSetting.CheckSetting();
         CheckDataBase();
         Program program = new Program();
         program.Setup();
@@ -121,25 +122,32 @@ public class Program
             return user; 
         }
     }
-
     private static UserSession SendUser(UserTable user, Socket clientSocket, Security security)
     {
         ReadAndWrite Messenger = new ReadAndWrite(security);
         UserSession userSession = new UserSession();
+
         if (user != null)
         {
             userSession.User = user;
+
+            if (user.Blocked == true)
+            {
+                Messenger.SendStrings(clientSocket, "Вы заблокированы");
+                return null;
+            }
+
             userSession.clientSocket = clientSocket;
             userSession.Messenger = Messenger;
             userSession.level = LoginPassword.GetLevel(userSession.User.RoleID);
             //
-            Messenger.SendStrings(clientSocket, "Right\a" + userSession.level);
+            Messenger.SendStrings(clientSocket, "Right\a");
             Messenger.SendJSON(clientSocket, LoginPassword.CnaLevel(userSession.level));
             return userSession;
         }
         else
         {
-            Messenger.SendStrings(clientSocket, "Wrong");
+            Messenger.SendStrings(clientSocket, "Неверный логин или пароль");
             return null;
         }
     }
@@ -154,24 +162,31 @@ public class Program
             message = Encoding.UTF8.GetString( await userSession.Messenger.ReedBytes(userSession.clientSocket));
             switch (message)
             { 
+                    // Скачать файл на ПК пользователя
                 case "SendPath":
                     ClientServerWorkClass.SendPath(message,userSession);
                     break;
+                    // Добавить или заменить файл проекта
                 case "GetDocument":
                     ClientServerWorkClass.GetDocument(message, userSession);
                     break;
+                    // Создать новый проект
                 case "CreateNewProject":
                     ClientServerWorkClass.CreateNewProject(userSession);
                     break;
+                    // Изменить проект
                 case "ChangeProjectProperties":
                     ClientServerWorkClass.ChangeProjectProperties(userSession);
                     break;
+                    // Добавить или обновить клиента
                 case "NewOrUpdateClient":
                     ClientServerWorkClass.NewOrUpdateClient(userSession);
                     break;
+                    // Найти клиента
                 case "FindClient":
                     ClientServerWorkClass.FindClient(userSession);
                     break;
+                    // Продолжить проект, изменить состояние проекта
                 case "ContinueProject":
                     ClientServerWorkClass.ContinueProject(userSession);
                     break;

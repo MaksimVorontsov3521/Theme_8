@@ -52,5 +52,11 @@ namespace Admin.Pages
             string password = Password.Password.ToString();
             server.Connection(login, password);
         }
+
+        private void Grid_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ChangeLocalSettings changeLocalSettings = new ChangeLocalSettings();
+            Settings.Navigate(changeLocalSettings);
+        }
     }
 }
